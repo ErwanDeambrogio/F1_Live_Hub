@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<!-- CARTE STATS (points, podiums, victoires) -->
+	<Style x:Key="StatCardStyle" TargetType="Border">
+		<Setter Property="Background" Value="#1A1A1A"/>
+		<Setter Property="CornerRadius" Value="8"/>
+		<Setter Property="Padding" Value="14,10"/>
+	</Style>
+
+	<!-- CARTE COURSE (Monaco GP, Imola...) -->
+	<Style x:Key="RaceCardStyle" TargetType="Border">
+		<Setter Property="Background" Value="#1A1A1A"/>
+		<Setter Property="CornerRadius" Value="10"/>
+		<Setter Property="Padding" Value="14,12"/>
+		<Setter Property="Margin" Value="0,0,0,10"/>
+	</Style>
+
+	<!-- CARTE FORMULAIRE (login, register) -->
+	<Style x:Key="FormCardStyle" TargetType="Border">
+		<Setter Property="Background" Value="#1A1A1A"/>
+		<Setter Property="CornerRadius" Value="18"/>
+		<Setter Property="Padding" Value="26,30"/>
+	</Style>
+
+	<!-- CARTE MONOPLACE / TELEMETRIE -->
+	<Style x:Key="TelemetryCardStyle" TargetType="Border">
+		<Setter Property="Background" Value="#1A1A1A"/>
+		<Setter Property="CornerRadius" Value="10"/>
+		<Setter Property="Padding" Value="16,14"/>
+	</Style>
+
+	<!-- LABEL DE SECTION (POINTS, PODIUMS...) -->
+	<Style x:Key="StatLabelStyle" TargetType="TextBlock">
+		<Setter Property="Foreground" Value="#888888"/>
+		<Setter Property="FontSize" Value="9"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="Margin" Value="0,0,0,4"/>
+	</Style>
+
+	<!-- SEPARATEUR HORIZONTAL -->
+	<Style x:Key="SeparatorStyle" TargetType="Rectangle">
+		<Setter Property="Height" Value="1"/>
+		<Setter Property="Fill" Value="#2A2A2A"/>
+		<Setter Property="Margin" Value="0,10,0,10"/>
+	</Style>
+
+</ResourceDictionary>
