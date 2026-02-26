@@ -1,0 +1,99 @@
+═══════════════════════════════════════════════════
+        F1 LIVE HUB — TO DO LIST
+═══════════════════════════════════════════════════
+
+LÉGENDE : [ ] = À faire  [~] = En cours  [x] = Terminé
+
+───────────────────────────────────────────────────
+ 1. RESOURCES
+───────────────────────────────────────────────────
+[ ] Créer Colors.xaml         (rouge #E10600, noir #0D0D0D, #1A1A1A)
+[ ] Créer ButtonStyles.xaml   (style bouton rouge réutilisable)
+[ ] Créer InputStyles.xaml    (style champs formulaires)
+[ ] Créer CardStyles.xaml     (style cartes stats)
+
+───────────────────────────────────────────────────
+ 2. MODELS
+───────────────────────────────────────────────────
+[ ] Créer Utilisateur.cs      (pseudo, email, motDePasse)
+[ ] Créer Pilote.cs           (nom, equipe, numero, points, podiums, victoires)
+[ ] Créer Course.cs           (nom, circuit, date, position, points)
+[ ] Créer Classement.cs       (position, pilote, points, ecart)
+[ ] Créer Meteo.cs            (temperature, vent, pluie, humidite)
+[ ] Créer Telemetrie.cs       (vitesse, acceleration, ers, secteur)
+
+───────────────────────────────────────────────────
+ 3. SERVICES
+───────────────────────────────────────────────────
+[ ] Créer SessionService.cs   (stocker utilisateur connecté)
+[ ] Créer NavigationService.cs(changer de page depuis le code)
+[ ] Créer AuthService.cs      (login, register, logout)
+[ ] Créer F1ApiService.cs     (récupérer pilotes, courses, classement)
+[ ] Créer MeteoService.cs     (récupérer météo par circuit)
+[ ] Créer LiveService.cs      (données temps réel / WebSocket)
+
+───────────────────────────────────────────────────
+ 4. ASSETS
+───────────────────────────────────────────────────
+[ ] Ajouter logo_f1hub.png
+[ ] Ajouter images pilotes    (leclerc.png, verstappen.png, hamilton.png...)
+[ ] Ajouter logos équipes     (ferrari.png, redbull.png...)
+[ ] Ajouter drapeaux circuits (monaco.png, italy.png, france.png...)
+
+───────────────────────────────────────────────────
+ 5. VIEWS — PAGES PUBLIQUES
+───────────────────────────────────────────────────
+[ ] AccueilPage.xaml          (design page d'accueil)
+[ ] AccueilPage.xaml.cs       (logique navigation)
+
+[ ] LoginPage.xaml            (design connexion)
+[ ] LoginPage.xaml.cs         (appel AuthService + redirection)
+
+[ ] RegisterPage.xaml         (design création de compte)
+[ ] RegisterPage.xaml.cs      (appel AuthService + validation champs)
+
+───────────────────────────────────────────────────
+ 6. VIEWS — PAGES PRIVÉES
+───────────────────────────────────────────────────
+[ ] PilotesPage.xaml          (design fiche pilote)
+[ ] PilotesPage.xaml.cs       (appel F1ApiService, affichage stats)
+
+[ ] CoursePage.xaml           (design calendrier & résultats)
+[ ] CoursePage.xaml.cs        (appel F1ApiService, liste courses)
+
+[ ] LivePage.xaml             (design données temps réel)
+[ ] LivePage.xaml.cs          (appel LiveService, rafraîchissement)
+
+[ ] MeteoPage.xaml            (design météo circuits)
+[ ] MeteoPage.xaml.cs         (appel MeteoService, affichage)
+
+[ ] ClassementPage.xaml       (design classement général)
+[ ] ClassementPage.xaml.cs    (appel F1ApiService, top 20)
+
+───────────────────────────────────────────────────
+ 7. NAVIGATION GLOBALE
+───────────────────────────────────────────────────
+[ ] Configurer MainWindow.xaml       (frame principale)
+[ ] Relier bottom nav bar à toutes les pages
+[ ] Bloquer pages privées si non connecté
+[ ] Redirection auto vers LoginPage si session vide
+
+───────────────────────────────────────────────────
+ 8. FINITIONS
+───────────────────────────────────────────────────
+[ ] Vérifier cohérence couleurs sur toutes les pages
+[ ] Tester navigation complète (toutes les pages)
+[ ] Tester login / logout / register
+[ ] Tester affichage sans données (cas vide)
+[ ] Corriger bugs visuels
+[ ] Build Release final
+
+───────────────────────────────────────────────────
+ PROGRESSION
+───────────────────────────────────────────────────
+ Pages terminées    : 0 / 8
+ Fichiers créés     : 0 / 38
+ Services prêts     : 0 / 6
+ Models prêts       : 0 / 6
+
+═══════════════════════════════════════════════════
