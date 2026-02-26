@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+	<!-- CONTENEUR DU CHAMP (la boite grise arrondie) -->
+	<Style x:Key="InputBoxStyle" TargetType="Border">
+		<Setter Property="Background" Value="#1C1C1C"/>
+		<Setter Property="CornerRadius" Value="10"/>
+		<Setter Property="Padding" Value="16,0"/>
+		<Setter Property="Height" Value="56"/>
+		<Setter Property="Margin" Value="0,0,0,20"/>
+	</Style>
+
+	<!-- CHAMP TEXTE (TextBox) -->
+	<Style x:Key="InputTextStyle" TargetType="TextBox">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Foreground" Value="#888888"/>
+		<Setter Property="FontSize" Value="15"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="CaretBrush" Value="White"/>
+		<Setter Property="SelectionBrush" Value="#E10600"/>
+	</Style>
+
+	<!-- CHAMP MOT DE PASSE (PasswordBox) -->
+	<Style x:Key="InputPasswordStyle" TargetType="PasswordBox">
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Foreground" Value="#888888"/>
+		<Setter Property="FontSize" Value="15"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+		<Setter Property="CaretBrush" Value="White"/>
+		<Setter Property="SelectionBrush" Value="#E10600"/>
+	</Style>
+
+	<!-- LABEL AU DESSUS DU CHAMP (NOM D'UTILISATEUR, MOT DE PASSE...) -->
+	<Style x:Key="FieldLabelStyle" TargetType="TextBlock">
+		<Setter Property="Foreground" Value="#CCCCCC"/>
+		<Setter Property="FontSize" Value="11"/>
+		<Setter Property="FontWeight" Value="Bold"/>
+		<Setter Property="Margin" Value="0,0,0,8"/>
+	</Style>
+
+	<!-- ICONE A DROITE DU CHAMP (🔒 👤 🛡) -->
+	<Style x:Key="InputIconStyle" TargetType="TextBlock">
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="Foreground" Value="#555555"/>
+		<Setter Property="HorizontalAlignment" Value="Right"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+
+	<!-- LABEL ROUGE AU DESSUS (icône rouge 🔒 👤) -->
+	<Style x:Key="FieldIconRedStyle" TargetType="TextBlock">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="Foreground" Value="#E10600"/>
+		<Setter Property="HorizontalAlignment" Value="Right"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+
+</ResourceDictionary>
