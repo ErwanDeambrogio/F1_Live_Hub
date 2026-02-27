@@ -5,8 +5,325 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:F1_Live_Hub.Views"
         mc:Ignorable="d"
-        Title="ClassementPage" Height="450" Width="800">
+        Title="F1 Live Hub - Classement" Height="900" Width="420"
+        Background="#0D0D0D">
+
+    <Window.Resources>
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background" Value="#1A1A1A"/>
+            <Setter Property="BorderBrush" Value="#2A2A2A"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+
+        <Style x:Key="TabBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#8A8A8A"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="Transparent">
+                            <ContentPresenter HorizontalAlignment="Center" Margin="0,10"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MenuBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bg" Background="Transparent" CornerRadius="4">
+                            <ContentPresenter Margin="10,7"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="#2A2A2A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <Border Grid.Row="0" Background="#111111"
+                BorderBrush="#2A2A2A" BorderThickness="0,0,0,1">
+            <Grid Margin="14,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#E8002D" CornerRadius="6" Width="26" Height="26">
+                        <TextBlock Text="F1" Foreground="White" FontSize="10"
+                                   FontWeight="Bold" HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock VerticalAlignment="Center" Margin="8,0,0,0">
+                        <Run Text="F1 " Foreground="White" FontSize="17" FontWeight="Bold"/>
+                        <Run Text="LIVE " Foreground="#E8002D" FontSize="17" FontWeight="Bold"/>
+                        <Run Text="HUB" Foreground="White" FontSize="17" FontWeight="Bold"/>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <Border Background="#1A1A1A" CornerRadius="20"
+                            Width="34" Height="34" Cursor="Hand" Margin="0,0,8,0">
+                        <Grid>
+                            <TextBlock Text="🔔" FontSize="14"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                            <Ellipse Fill="#E8002D" Width="8" Height="8"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Top" Margin="0,2,2,0"/>
+                        </Grid>
+                    </Border>
+                    <Border Background="#2A2A2A" CornerRadius="20"
+                            Width="34" Height="34" Cursor="Hand">
+                        <TextBlock Text="👤" FontSize="14"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- FILTRES -->
+        <Border Grid.Row="1" Background="#111111"
+                BorderBrush="#2A2A2A" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" Margin="14,8">
+
+                <!-- Année -->
+                <Grid Margin="0,0,8,0">
+                    <Border x:Name="BtnAnnee" Background="#1A1A1A"
+                            BorderBrush="#333333" BorderThickness="1"
+                            CornerRadius="6" Cursor="Hand"
+                            MouseLeftButtonUp="BtnAnnee_Click">
+                        <StackPanel Orientation="Horizontal" Margin="10,5">
+                            <TextBlock x:Name="TxtAnnee" Text="2024"
+                                       Foreground="White" FontSize="12"
+                                       FontWeight="Bold" VerticalAlignment="Center"/>
+                            <TextBlock Text=" ▾" Foreground="#8A8A8A"
+                                       FontSize="10" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Popup x:Name="PopupAnnee" PlacementTarget="{Binding ElementName=BtnAnnee}"
+                           Placement="Bottom" StaysOpen="False">
+                        <Border Background="#1E1E1E" BorderBrush="#333333"
+                                BorderThickness="1" CornerRadius="8">
+                            <StackPanel Margin="4">
+                                <Button Style="{StaticResource MenuBtn}" Content="2024" Tag="2024" Click="AnneeItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="2023" Tag="2023" Click="AnneeItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="2022" Tag="2022" Click="AnneeItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="2021" Tag="2021" Click="AnneeItem_Click"/>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <!-- GP -->
+                <Grid Margin="0,0,8,0">
+                    <Border x:Name="BtnGP" Background="#1A1A1A"
+                            BorderBrush="#333333" BorderThickness="1"
+                            CornerRadius="6" Cursor="Hand"
+                            MouseLeftButtonUp="BtnGP_Click">
+                        <StackPanel Orientation="Horizontal" Margin="10,5">
+                            <Ellipse Fill="#E8002D" Width="7" Height="7"
+                                     VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock x:Name="TxtGP" Text="Monaco GP"
+                                       Foreground="White" FontSize="12"
+                                       FontWeight="Bold" VerticalAlignment="Center"/>
+                            <TextBlock Text=" ▾" Foreground="#8A8A8A"
+                                       FontSize="10" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Popup x:Name="PopupGP" PlacementTarget="{Binding ElementName=BtnGP}"
+                           Placement="Bottom" StaysOpen="False">
+                        <Border Background="#1E1E1E" BorderBrush="#333333"
+                                BorderThickness="1" CornerRadius="8">
+                            <StackPanel Margin="4">
+                                <Button Style="{StaticResource MenuBtn}" Content="Monaco GP" Tag="Monaco GP" Click="GPItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="Silverstone GP" Tag="Silverstone GP" Click="GPItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="Monza GP" Tag="Monza GP" Click="GPItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="Spa GP" Tag="Spa GP" Click="GPItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="Suzuka GP" Tag="Suzuka GP" Click="GPItem_Click"/>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+                <!-- Session -->
+                <Grid>
+                    <Border x:Name="BtnSession" Background="#1A1A1A"
+                            BorderBrush="#333333" BorderThickness="1"
+                            CornerRadius="6" Cursor="Hand"
+                            MouseLeftButtonUp="BtnSession_Click">
+                        <StackPanel Orientation="Horizontal" Margin="10,5">
+                            <TextBlock x:Name="TxtSession" Text="Qualifying"
+                                       Foreground="White" FontSize="12"
+                                       FontWeight="Bold" VerticalAlignment="Center"/>
+                            <TextBlock Text=" ▾" Foreground="#8A8A8A"
+                                       FontSize="10" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <Popup x:Name="PopupSession" PlacementTarget="{Binding ElementName=BtnSession}"
+                           Placement="Bottom" StaysOpen="False">
+                        <Border Background="#1E1E1E" BorderBrush="#333333"
+                                BorderThickness="1" CornerRadius="8">
+                            <StackPanel Margin="4">
+                                <Button Style="{StaticResource MenuBtn}" Content="Qualifying" Tag="Qualifying" Click="SessionItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="Course" Tag="Course" Click="SessionItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="Sprint" Tag="Sprint" Click="SessionItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="FP1" Tag="FP1" Click="SessionItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="FP2" Tag="FP2" Click="SessionItem_Click"/>
+                                <Button Style="{StaticResource MenuBtn}" Content="FP3" Tag="FP3" Click="SessionItem_Click"/>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
+                </Grid>
+
+            </StackPanel>
+        </Border>
+
+        <!-- TABS -->
+        <Border Grid.Row="2" Background="#111111"
+                BorderBrush="#2A2A2A" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Classement" Foreground="White" FontSize="12"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10"/>
+                    <Border Background="#E8002D" Height="2" CornerRadius="1"/>
+                </StackPanel>
+                <Button Grid.Column="1" Style="{StaticResource TabBtn}" Content="Pilotes"/>
+                <Button Grid.Column="2" Style="{StaticResource TabBtn}" Content="Course"/>
+                <Button Grid.Column="3" Style="{StaticResource TabBtn}" Content="Météo"/>
+            </Grid>
+        </Border>
+
+        <!-- LIVE SESSION BAR -->
+        <Border Grid.Row="3" Background="#1A1A1A"
+                BorderBrush="#2A2A2A" BorderThickness="0,0,0,1">
+            <Grid Margin="14,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Ellipse Fill="#E8002D" Width="7" Height="7"
+                             VerticalAlignment="Center" Margin="0,0,5,0"/>
+                    <TextBlock Text="LIVE SESSION" Foreground="White"
+                               FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+                </StackPanel>
+                <TextBlock Grid.Column="1" Foreground="#8A8A8A" FontSize="10"
+                           FontWeight="Bold" VerticalAlignment="Center"
+                           HorizontalAlignment="Center">
+                    <Run Text="LAP "/><Run Text="52" Foreground="White"/><Run Text=" / 78"/>
+                </TextBlock>
+                <TextBlock Grid.Column="2" Foreground="#8A8A8A" FontSize="10"
+                           FontWeight="Bold" VerticalAlignment="Center">
+                    <Run Text="TRACK TEMP: "/><Run Text="42°C" Foreground="White"/>
+                </TextBlock>
+            </Grid>
+        </Border>
+
+        <!-- HEADER COLONNES -->
+        <Border Grid.Row="4" Background="#0D0D0D">
+            <Grid Margin="22,6,12,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="32"/>
+                    <ColumnDefinition Width="14"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="POS" Foreground="#5A5A5A"
+                           FontSize="9" FontWeight="Bold"/>
+                <TextBlock Grid.Column="2" Text="PILOTE / ÉQUIPE" Foreground="#5A5A5A"
+                           FontSize="9" FontWeight="Bold" Margin="4,0,0,0"/>
+                <TextBlock Grid.Column="3" Text="PTS" Foreground="#5A5A5A"
+                           FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock Grid.Column="4" Text="ÉCART" Foreground="#5A5A5A"
+                           FontSize="9" FontWeight="Bold" HorizontalAlignment="Right"/>
+            </Grid>
+        </Border>
+
+        <!-- SCROLL : 22 PILOTES -->
+        <ScrollViewer Grid.Row="5" VerticalScrollBarVisibility="Auto" Background="#0D0D0D">
+            <StackPanel x:Name="PilotsPanel" Margin="12,0,12,12"/>
+        </ScrollViewer>
+
+        <!-- BOTTOM NAV -->
+        <Border Grid.Row="6" Background="#111111"
+                BorderBrush="#2A2A2A" BorderThickness="0,1,0,0">
+            <Grid Margin="0,8,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                    <TextBlock Text="📡" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Text="LIVE" Foreground="#E8002D" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                    <Border Background="#E8002D" Height="2" Width="18" CornerRadius="1"
+                            HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock Text="📊" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Text="STANDINGS" Foreground="#5A5A5A" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                    <TextBlock Text="📰" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Text="NEWS" Foreground="#5A5A5A" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3" HorizontalAlignment="Center">
+                    <TextBlock Text="📅" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Text="CALENDAR" Foreground="#5A5A5A" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="4" HorizontalAlignment="Center">
+                    <TextBlock Text="⚙" FontSize="18" Foreground="#5A5A5A"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="HUB" Foreground="#5A5A5A" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
     </Grid>
 </Window>
