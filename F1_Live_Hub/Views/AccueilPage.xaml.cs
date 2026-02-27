@@ -17,7 +17,7 @@ namespace F1_Live_Hub.Views
     /// <summary>
     /// Logique d'interaction pour AccueilPage.xaml
     /// </summary>
-    public partial class AccueilPage : Window
+    public partial class AccueilPage : Page
     {
         public AccueilPage()
         {

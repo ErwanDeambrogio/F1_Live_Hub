@@ -23,5 +23,47 @@ namespace F1_Live_Hub.Views
         {
             InitializeComponent();
         }
+
+        private void BtnAnnee_Click(object sender, RoutedEventArgs e)
+        {
+            // Implementation for year button click
+        }
+
+        private void AnneeItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Implementation for year item selection
+            if (sender is Button btn && btn.Tag is string year)
+            {
+                TxtAnnee.Text = year;
+            }
+        }
+
+        private void BtnGP_Click(object sender, RoutedEventArgs e)
+        {
+            // Implementation for GP button click
+        }
+
+        private void GPItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Implementation for GP item selection
+            if (sender is Button btn && btn.Tag is string gp)
+            {
+                TxtGP.Text = gp;
+            }
+        }
+
+        private void BtnSession_Click(object sender, RoutedEventArgs e)
+        {
+            // Implementation for session button click
+        }
+
+        private void SessionItem_Click(object sender, RoutedEventArgs e)
+        {
+            // Implementation for session item selection
+            if (sender is Button btn && btn.Tag is string session)
+            {
+                TxtSession.Text = session;
+            }
+        }
     }
 }
