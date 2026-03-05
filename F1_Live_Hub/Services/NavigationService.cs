@@ -8,5 +8,7 @@ namespace F1_Live_Hub.Services
 {
     internal class NavigationService
     {
+
     }
+
 }
