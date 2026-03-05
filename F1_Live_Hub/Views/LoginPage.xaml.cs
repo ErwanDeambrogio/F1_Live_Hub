@@ -14,14 +14,25 @@ using System.Windows.Shapes;
 
 namespace F1_Live_Hub.Views
 {
-    /// <summary>
-    /// Logique d'interaction pour LoginPage.xaml
-    /// </summary>
     public partial class LoginPage : Window
     {
         public LoginPage()
         {
             InitializeComponent();
+        }
+
+        private void ConnecterButton_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
+
+        private void CreerProfil_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var register = new RegisterPage();
+            register.Show();
+            this.Close();
         }
     }
 }
