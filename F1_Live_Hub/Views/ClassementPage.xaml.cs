@@ -34,7 +34,7 @@ namespace F1_Live_Hub.Views
             // Implementation for year item selection
             if (sender is Button btn && btn.Tag is string year)
             {
-                TxtAnnee.Text = year;
+                // TODO: Update year display
             }
         }
 
@@ -48,7 +48,7 @@ namespace F1_Live_Hub.Views
             // Implementation for GP item selection
             if (sender is Button btn && btn.Tag is string gp)
             {
-                TxtGP.Text = gp;
+                // TODO: Update GP display
             }
         }
 
@@ -62,7 +62,7 @@ namespace F1_Live_Hub.Views
             // Implementation for session item selection
             if (sender is Button btn && btn.Tag is string session)
             {
-                TxtSession.Text = session;
+                // TODO: Update session display
             }
         }
     }
