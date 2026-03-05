@@ -205,7 +205,7 @@
                                            Style="{StaticResource LabelCap}"/>
                                 <TextBlock Grid.Column="1" Text="🌡" FontSize="14"/>
                             </Grid>
-                            <TextBlock Text="22°C" Style="{StaticResource LabelBig}"/>
+                            <TextBlock Name = "BTN_Tempaire" Text="22°C" Style="{StaticResource LabelBig}"/>
                             <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                                 <TextBlock Text="↓ " Foreground="#E8002D"
                                            FontSize="12" FontWeight="Bold"/>
@@ -226,7 +226,7 @@
                                            Style="{StaticResource LabelCap}"/>
                                 <TextBlock Grid.Column="1" Text="🏎" FontSize="14"/>
                             </Grid>
-                            <TextBlock Text="32°C" Style="{StaticResource LabelBig}"/>
+                            <TextBlock Name ="BTN_Temppist" Text="32°C" Style="{StaticResource LabelBig}"/>
                             <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                                 <TextBlock Text="↑ " Foreground="#4CAF50"
                                            FontSize="12" FontWeight="Bold"/>
@@ -256,7 +256,7 @@
                                            Style="{StaticResource LabelCap}"/>
                                 <TextBlock Grid.Column="1" Text="💧" FontSize="14"/>
                             </Grid>
-                            <TextBlock Text="78%" Style="{StaticResource LabelBig}"/>
+                            <TextBlock Name ="BTN_Humidité" Text="78%" Style="{StaticResource LabelBig}"/>
                             <Grid Height="5" Margin="0,8,0,0">
                                 <Border Background="#2A2A2A" CornerRadius="3"/>
                                 <Border Background="#00BCD4" CornerRadius="3"
@@ -276,7 +276,7 @@
                                            Style="{StaticResource LabelCap}"/>
                                 <TextBlock Grid.Column="1" Text="💨" FontSize="14"/>
                             </Grid>
-                            <TextBlock Text="14 km/h" Foreground="White"
+                            <TextBlock Name="BTN_Vent" Text="14 km/h" Foreground="White"
                                        FontSize="22" FontWeight="Bold"/>
                             <TextBlock Text="NW" Foreground="#00BCD4"
                                        FontSize="16" FontWeight="Bold"/>
@@ -305,7 +305,7 @@
                                            Style="{StaticResource LabelCap}"/>
                                 <TextBlock Grid.Column="1" Text="🌐" FontSize="14"/>
                             </Grid>
-                            <TextBlock Text="1013" Style="{StaticResource LabelBig}"/>
+                            <TextBlock Name="BTN_Pression" Text="1013" Style="{StaticResource LabelBig}"/>
                             <TextBlock Text="hPa" Foreground="#8A8A8A"
                                        FontSize="11" FontWeight="Bold"/>
                             <TextBlock Text="✔ Normale" Foreground="#4CAF50"
@@ -324,7 +324,7 @@
                                            Style="{StaticResource LabelCap}"/>
                                 <TextBlock Grid.Column="1" Text="🌧" FontSize="14"/>
                             </Grid>
-                            <TextBlock Text="3 mm" Style="{StaticResource LabelBig}"/>
+                            <TextBlock Name ="BTN_Precipitation"  Text="3 mm" Style="{StaticResource LabelBig}"/>
                             <Border Background="#1A2A3A" BorderBrush="#4A9EFF"
                                     BorderThickness="1" CornerRadius="4"
                                     Margin="0,6,0,0">
