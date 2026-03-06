@@ -6,7 +6,10 @@
         mc:Ignorable="d"
         Title="F1 Live Hub - Course" Height="1000" Width="420"
         Background="#0D0D0D"
-        WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
 
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">

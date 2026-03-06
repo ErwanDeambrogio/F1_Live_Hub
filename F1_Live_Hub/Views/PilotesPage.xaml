@@ -4,6 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
         Title="F1 HUB - Pilotes" Height="900" Width="420"
         Background="#0D0D0D" WindowStartupLocation="CenterScreen">
 
