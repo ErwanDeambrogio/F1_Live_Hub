@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:F1_Live_Hub.Views"
         mc:Ignorable="d"
         Title="F1 Live Hub - Live" Height="900" Width="420"
-        Background="#0D0D0D">
+        Background="#0D0D0D" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="Card" TargetType="Border">
@@ -25,7 +25,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- ═══ HEADER ═══ -->
+        <!-- HEADER -->
         <Border Grid.Row="0" Background="#111111"
                 BorderBrush="#2A2A2A" BorderThickness="0,0,0,1">
             <Grid Margin="14,10">
@@ -66,7 +66,7 @@
             </Grid>
         </Border>
 
-        <!-- ═══ LIVE BANNER ═══ -->
+        <!-- LIVE BANNER -->
         <Border Grid.Row="1">
             <Border.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -80,8 +80,6 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-
-                <!-- Live badge -->
                 <Border Grid.Column="0" Background="#E8002D" CornerRadius="5"
                         Margin="0,0,12,0">
                     <StackPanel Orientation="Horizontal" Margin="8,4">
@@ -92,8 +90,6 @@
                                    VerticalAlignment="Center"/>
                     </StackPanel>
                 </Border>
-
-                <!-- GP Info -->
                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
                     <TextBlock Text="GRAND PRIX DE MONACO" Foreground="White"
                                FontSize="13" FontWeight="Bold"/>
@@ -103,27 +99,23 @@
                         <Run Text=" / 78"/>
                     </TextBlock>
                 </StackPanel>
-
-                <!-- Flag -->
                 <TextBlock Grid.Column="2" Text="🇲🇨" FontSize="26"
                            VerticalAlignment="Center"/>
             </Grid>
         </Border>
 
-        <!-- ═══ SCROLL CONTENT ═══ -->
+        <!-- SCROLL CONTENT -->
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto"
                       Background="#0D0D0D">
             <StackPanel Margin="12,10,12,12">
 
-                <!-- ── CHRONO + MÉTÉO RAPIDE ── -->
+                <!-- CHRONO + MÉTÉO -->
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
-                    <!-- Chrono course -->
                     <Border Grid.Column="0" Style="{StaticResource Card}">
                         <StackPanel Margin="12,10">
                             <TextBlock Text="TEMPS ÉCOULÉ" Foreground="#8A8A8A"
@@ -141,8 +133,6 @@
                             </TextBlock>
                         </StackPanel>
                     </Border>
-
-                    <!-- Météo rapide -->
                     <Border Grid.Column="2" Style="{StaticResource Card}">
                         <StackPanel Margin="12,10">
                             <TextBlock Text="CONDITIONS" Foreground="#8A8A8A"
@@ -160,7 +150,7 @@
                     </Border>
                 </Grid>
 
-                <!-- ── LEADER DU MOMENT ── -->
+                <!-- LEADER -->
                 <Border Margin="0,0,0,10" CornerRadius="10" ClipToBounds="True">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
@@ -174,33 +164,23 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-
-                        <!-- Numéro -->
                         <Border Grid.Column="0" Background="#3B6FE8"
                                 CornerRadius="8" Width="44" Height="44"
                                 Margin="0,0,12,0">
                             <TextBlock Text="1" Foreground="White"
-                                       FontSize="22" FontWeight="Bold"
-                                       FontStyle="Italic"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
+                                       FontSize="22" FontWeight="Bold" FontStyle="Italic"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
-
-                        <!-- Infos -->
                         <StackPanel Grid.Column="1" VerticalAlignment="Center">
                             <Border Background="#E8002D" CornerRadius="3"
-                                    Padding="5,2" HorizontalAlignment="Left"
-                                    Margin="0,0,0,4">
+                                    Padding="5,2" HorizontalAlignment="Left" Margin="0,0,0,4">
                                 <TextBlock Text="🏆 EN TÊTE" Foreground="White"
                                            FontSize="8" FontWeight="Bold"/>
                             </Border>
                             <TextBlock Text="M. VERSTAPPEN" Foreground="White"
                                        FontSize="16" FontWeight="Bold"/>
-                            <TextBlock Text="Red Bull Racing" Foreground="#8A8A8A"
-                                       FontSize="10"/>
+                            <TextBlock Text="Red Bull Racing" Foreground="#8A8A8A" FontSize="10"/>
                         </StackPanel>
-
-                        <!-- Temps -->
                         <StackPanel Grid.Column="2" HorizontalAlignment="Right"
                                     VerticalAlignment="Center">
                             <TextBlock Text="1:14.234" Foreground="#3B6FE8"
@@ -209,21 +189,17 @@
                             <TextBlock Text="Meilleur tour" Foreground="#8A8A8A"
                                        FontSize="9" HorizontalAlignment="Right"/>
                             <Border Background="#1A2A1A" BorderBrush="#2A4A2A"
-                                    BorderThickness="1" CornerRadius="4"
-                                    Margin="0,4,0,0">
+                                    BorderThickness="1" CornerRadius="4" Margin="0,4,0,0">
                                 <TextBlock Text="⚡ +4.2s" Foreground="#4CAF50"
-                                           FontSize="11" FontWeight="Bold"
-                                           Margin="6,3"/>
+                                           FontSize="11" FontWeight="Bold" Margin="6,3"/>
                             </Border>
                         </StackPanel>
                     </Grid>
                 </Border>
 
-                <!-- ── CLASSEMENT LIVE (Top 5 + reste) ── -->
+                <!-- CLASSEMENT LIVE -->
                 <Border Style="{StaticResource Card}" Margin="0,0,0,10">
                     <StackPanel Margin="14,12">
-
-                        <!-- Header -->
                         <Grid Margin="0,0,0,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -232,9 +208,8 @@
                             <StackPanel Grid.Column="0" Orientation="Horizontal">
                                 <Ellipse Fill="#E8002D" Width="7" Height="7"
                                          VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                <TextBlock Text="CLASSEMENT EN DIRECT"
-                                           Foreground="White" FontSize="12"
-                                           FontWeight="Bold" VerticalAlignment="Center"/>
+                                <TextBlock Text="CLASSEMENT EN DIRECT" Foreground="White"
+                                           FontSize="12" FontWeight="Bold" VerticalAlignment="Center"/>
                             </StackPanel>
                             <TextBlock Grid.Column="1" Foreground="#8A8A8A"
                                        FontSize="10" VerticalAlignment="Center">
@@ -242,7 +217,6 @@
                             </TextBlock>
                         </Grid>
 
-                        <!-- Colonne headers -->
                         <Grid Margin="0,0,0,8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="28"/>
@@ -251,14 +225,10 @@
                                 <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="55"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="P" Foreground="#5A5A5A"
-                                       FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="PILOTE" Foreground="#5A5A5A"
-                                       FontSize="9" FontWeight="Bold" Margin="6,0,0,0"/>
-                            <TextBlock Grid.Column="3" Text="ÉCART" Foreground="#5A5A5A"
-                                       FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="4" Text="PNEU" Foreground="#5A5A5A"
-                                       FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="0" Text="P" Foreground="#5A5A5A" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="PILOTE" Foreground="#5A5A5A" FontSize="9" FontWeight="Bold" Margin="6,0,0,0"/>
+                            <TextBlock Grid.Column="3" Text="ÉCART" Foreground="#5A5A5A" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="4" Text="PNEU" Foreground="#5A5A5A" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
                         </Grid>
 
                         <!-- P1 -->
@@ -270,23 +240,15 @@
                                 <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="55"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="1" Foreground="#E8002D"
-                                       FontSize="15" FontWeight="Bold" FontStyle="Italic"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="1" Background="#3B6FE8" Width="3"
-                                    CornerRadius="2" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Column="0" Text="1" Foreground="#E8002D" FontSize="15" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#3B6FE8" Width="3" CornerRadius="2" HorizontalAlignment="Left"/>
                             <StackPanel Grid.Column="2" Margin="8,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="M. VERSTAPPEN" Foreground="White"
-                                           FontSize="12" FontWeight="Bold"/>
+                                <TextBlock Text="M. VERSTAPPEN" Foreground="White" FontSize="12" FontWeight="Bold"/>
                                 <TextBlock Text="Red Bull" Foreground="#8A8A8A" FontSize="9"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="3" Text="LEADER" Foreground="#E8002D"
-                                       FontSize="11" FontWeight="Bold"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="4" Background="#CC2200" CornerRadius="4"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="🔴 DUR" Foreground="White"
-                                           FontSize="9" FontWeight="Bold" Margin="5,3"/>
+                            <TextBlock Grid.Column="3" Text="LEADER" Foreground="#E8002D" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="4" Background="#CC2200" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="🔴 DUR" Foreground="White" FontSize="9" FontWeight="Bold" Margin="5,3"/>
                             </Border>
                         </Grid>
                         <Border Background="#2A2A2A" Height="1" Margin="0,0,0,8"/>
@@ -300,23 +262,15 @@
                                 <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="55"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="2" Foreground="#8A8A8A"
-                                       FontSize="15" FontWeight="Bold" FontStyle="Italic"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="1" Background="#E8002D" Width="3"
-                                    CornerRadius="2" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Column="0" Text="2" Foreground="#8A8A8A" FontSize="15" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#E8002D" Width="3" CornerRadius="2" HorizontalAlignment="Left"/>
                             <StackPanel Grid.Column="2" Margin="8,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="C. LECLERC" Foreground="White"
-                                           FontSize="12" FontWeight="Bold"/>
+                                <TextBlock Text="C. LECLERC" Foreground="White" FontSize="12" FontWeight="Bold"/>
                                 <TextBlock Text="Ferrari" Foreground="#8A8A8A" FontSize="9"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="3" Text="+4.218s" Foreground="#8A8A8A"
-                                       FontSize="11" FontWeight="Bold"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="4" Background="#CCAA00" CornerRadius="4"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="🟡 MED" Foreground="White"
-                                           FontSize="9" FontWeight="Bold" Margin="5,3"/>
+                            <TextBlock Grid.Column="3" Text="+4.218s" Foreground="#8A8A8A" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="4" Background="#CCAA00" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="🟡 MED" Foreground="White" FontSize="9" FontWeight="Bold" Margin="5,3"/>
                             </Border>
                         </Grid>
                         <Border Background="#2A2A2A" Height="1" Margin="0,0,0,8"/>
@@ -330,23 +284,15 @@
                                 <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="55"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="3" Foreground="#8A8A8A"
-                                       FontSize="15" FontWeight="Bold" FontStyle="Italic"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="1" Background="#00D2BE" Width="3"
-                                    CornerRadius="2" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Column="0" Text="3" Foreground="#8A8A8A" FontSize="15" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#00D2BE" Width="3" CornerRadius="2" HorizontalAlignment="Left"/>
                             <StackPanel Grid.Column="2" Margin="8,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="L. HAMILTON" Foreground="White"
-                                           FontSize="12" FontWeight="Bold"/>
+                                <TextBlock Text="L. HAMILTON" Foreground="White" FontSize="12" FontWeight="Bold"/>
                                 <TextBlock Text="Mercedes" Foreground="#8A8A8A" FontSize="9"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="3" Text="+7.542s" Foreground="#8A8A8A"
-                                       FontSize="11" FontWeight="Bold"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="4" Background="#CCAA00" CornerRadius="4"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="🟡 MED" Foreground="White"
-                                           FontSize="9" FontWeight="Bold" Margin="5,3"/>
+                            <TextBlock Grid.Column="3" Text="+7.542s" Foreground="#8A8A8A" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="4" Background="#CCAA00" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="🟡 MED" Foreground="White" FontSize="9" FontWeight="Bold" Margin="5,3"/>
                             </Border>
                         </Grid>
                         <Border Background="#2A2A2A" Height="1" Margin="0,0,0,8"/>
@@ -360,23 +306,15 @@
                                 <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="55"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="4" Foreground="#8A8A8A"
-                                       FontSize="14" FontWeight="Bold" FontStyle="Italic"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="1" Background="#FF8000" Width="3"
-                                    CornerRadius="2" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Column="0" Text="4" Foreground="#8A8A8A" FontSize="14" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#FF8000" Width="3" CornerRadius="2" HorizontalAlignment="Left"/>
                             <StackPanel Grid.Column="2" Margin="8,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="L. NORRIS" Foreground="White"
-                                           FontSize="12" FontWeight="Bold"/>
+                                <TextBlock Text="L. NORRIS" Foreground="White" FontSize="12" FontWeight="Bold"/>
                                 <TextBlock Text="McLaren" Foreground="#8A8A8A" FontSize="9"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="3" Text="+12.001s" Foreground="#8A8A8A"
-                                       FontSize="11" FontWeight="Bold"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="4" Background="#336600" CornerRadius="4"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="🟢 TEN" Foreground="White"
-                                           FontSize="9" FontWeight="Bold" Margin="5,3"/>
+                            <TextBlock Grid.Column="3" Text="+12.001s" Foreground="#8A8A8A" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="4" Background="#336600" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="🟢 TEN" Foreground="White" FontSize="9" FontWeight="Bold" Margin="5,3"/>
                             </Border>
                         </Grid>
                         <Border Background="#2A2A2A" Height="1" Margin="0,0,0,8"/>
@@ -390,23 +328,15 @@
                                 <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="55"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="5" Foreground="#8A8A8A"
-                                       FontSize="14" FontWeight="Bold" FontStyle="Italic"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="1" Background="#E8002D" Width="3"
-                                    CornerRadius="2" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Column="0" Text="5" Foreground="#8A8A8A" FontSize="14" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#E8002D" Width="3" CornerRadius="2" HorizontalAlignment="Left"/>
                             <StackPanel Grid.Column="2" Margin="8,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="C. SAINZ" Foreground="White"
-                                           FontSize="12" FontWeight="Bold"/>
+                                <TextBlock Text="C. SAINZ" Foreground="White" FontSize="12" FontWeight="Bold"/>
                                 <TextBlock Text="Ferrari" Foreground="#8A8A8A" FontSize="9"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="3" Text="+15.334s" Foreground="#8A8A8A"
-                                       FontSize="11" FontWeight="Bold"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="4" Background="#CC2200" CornerRadius="4"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="🔴 DUR" Foreground="White"
-                                           FontSize="9" FontWeight="Bold" Margin="5,3"/>
+                            <TextBlock Grid.Column="3" Text="+15.334s" Foreground="#8A8A8A" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="4" Background="#CC2200" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="🔴 DUR" Foreground="White" FontSize="9" FontWeight="Bold" Margin="5,3"/>
                             </Border>
                         </Grid>
                         <Border Background="#2A2A2A" Height="1" Margin="0,0,0,8"/>
@@ -420,23 +350,15 @@
                                 <ColumnDefinition Width="65"/>
                                 <ColumnDefinition Width="55"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="6" Foreground="#8A8A8A"
-                                       FontSize="14" FontWeight="Bold" FontStyle="Italic"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="1" Background="#358C75" Width="3"
-                                    CornerRadius="2" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Column="0" Text="6" Foreground="#8A8A8A" FontSize="14" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="1" Background="#358C75" Width="3" CornerRadius="2" HorizontalAlignment="Left"/>
                             <StackPanel Grid.Column="2" Margin="8,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="F. ALONSO" Foreground="White"
-                                           FontSize="12" FontWeight="Bold"/>
+                                <TextBlock Text="F. ALONSO" Foreground="White" FontSize="12" FontWeight="Bold"/>
                                 <TextBlock Text="Aston Martin" Foreground="#8A8A8A" FontSize="9"/>
                             </StackPanel>
-                            <TextBlock Grid.Column="3" Text="+19.887s" Foreground="#8A8A8A"
-                                       FontSize="11" FontWeight="Bold"
-                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            <Border Grid.Column="4" Background="#CC2200" CornerRadius="4"
-                                    HorizontalAlignment="Center" VerticalAlignment="Center">
-                                <TextBlock Text="🔴 DUR" Foreground="White"
-                                           FontSize="9" FontWeight="Bold" Margin="5,3"/>
+                            <TextBlock Grid.Column="3" Text="+19.887s" Foreground="#8A8A8A" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <Border Grid.Column="4" Background="#CC2200" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="🔴 DUR" Foreground="White" FontSize="9" FontWeight="Bold" Margin="5,3"/>
                             </Border>
                         </Grid>
                         <Border Background="#2A2A2A" Height="1" Margin="0,0,0,8"/>
@@ -451,17 +373,10 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="7" Foreground="#5A5A5A"
-                                               FontSize="11" FontWeight="Bold" FontStyle="Italic"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <Border Grid.Column="1" Background="#00D2BE" Width="2"
-                                            CornerRadius="1" HorizontalAlignment="Left"/>
-                                    <TextBlock Grid.Column="2" Text="G. RUSSELL"
-                                               Foreground="#AAAAAA" FontSize="11"
-                                               FontWeight="Bold" Margin="6,0,0,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="3" Text="+22.1s" Foreground="#5A5A5A"
-                                               FontSize="10" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="0" Text="7" Foreground="#5A5A5A" FontSize="11" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="1" Background="#00D2BE" Width="2" CornerRadius="1" HorizontalAlignment="Left"/>
+                                    <TextBlock Grid.Column="2" Text="G. RUSSELL" Foreground="#AAAAAA" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="+22.1s" Foreground="#5A5A5A" FontSize="10" VerticalAlignment="Center"/>
                                 </Grid>
                                 <Grid Margin="0,0,0,6">
                                     <Grid.ColumnDefinitions>
@@ -470,17 +385,10 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="8" Foreground="#5A5A5A"
-                                               FontSize="11" FontWeight="Bold" FontStyle="Italic"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <Border Grid.Column="1" Background="#358C75" Width="2"
-                                            CornerRadius="1" HorizontalAlignment="Left"/>
-                                    <TextBlock Grid.Column="2" Text="L. STROLL"
-                                               Foreground="#AAAAAA" FontSize="11"
-                                               FontWeight="Bold" Margin="6,0,0,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="3" Text="+28.4s" Foreground="#5A5A5A"
-                                               FontSize="10" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="0" Text="8" Foreground="#5A5A5A" FontSize="11" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="1" Background="#358C75" Width="2" CornerRadius="1" HorizontalAlignment="Left"/>
+                                    <TextBlock Grid.Column="2" Text="L. STROLL" Foreground="#AAAAAA" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="+28.4s" Foreground="#5A5A5A" FontSize="10" VerticalAlignment="Center"/>
                                 </Grid>
                                 <Grid Margin="0,0,0,6">
                                     <Grid.ColumnDefinitions>
@@ -489,17 +397,10 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="9" Foreground="#5A5A5A"
-                                               FontSize="11" FontWeight="Bold" FontStyle="Italic"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <Border Grid.Column="1" Background="#FF8000" Width="2"
-                                            CornerRadius="1" HorizontalAlignment="Left"/>
-                                    <TextBlock Grid.Column="2" Text="O. PIASTRI"
-                                               Foreground="#AAAAAA" FontSize="11"
-                                               FontWeight="Bold" Margin="6,0,0,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="3" Text="+31.7s" Foreground="#5A5A5A"
-                                               FontSize="10" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="0" Text="9" Foreground="#5A5A5A" FontSize="11" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="1" Background="#FF8000" Width="2" CornerRadius="1" HorizontalAlignment="Left"/>
+                                    <TextBlock Grid.Column="2" Text="O. PIASTRI" Foreground="#AAAAAA" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="+31.7s" Foreground="#5A5A5A" FontSize="10" VerticalAlignment="Center"/>
                                 </Grid>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -508,17 +409,10 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Grid.Column="0" Text="10" Foreground="#5A5A5A"
-                                               FontSize="11" FontWeight="Bold" FontStyle="Italic"
-                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    <Border Grid.Column="1" Background="#3B6FE8" Width="2"
-                                            CornerRadius="1" HorizontalAlignment="Left"/>
-                                    <TextBlock Grid.Column="2" Text="S. PÉREZ"
-                                               Foreground="#AAAAAA" FontSize="11"
-                                               FontWeight="Bold" Margin="6,0,0,0"
-                                               VerticalAlignment="Center"/>
-                                    <TextBlock Grid.Column="3" Text="+38.2s" Foreground="#5A5A5A"
-                                               FontSize="10" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="0" Text="10" Foreground="#5A5A5A" FontSize="11" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Border Grid.Column="1" Background="#3B6FE8" Width="2" CornerRadius="1" HorizontalAlignment="Left"/>
+                                    <TextBlock Grid.Column="2" Text="S. PÉREZ" Foreground="#AAAAAA" FontSize="11" FontWeight="Bold" Margin="6,0,0,0" VerticalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" Text="+38.2s" Foreground="#5A5A5A" FontSize="10" VerticalAlignment="Center"/>
                                 </Grid>
                             </StackPanel>
                         </Border>
@@ -526,164 +420,110 @@
                         <!-- Voir tout -->
                         <Border Background="#1A1A1A" BorderBrush="#2A2A2A"
                                 BorderThickness="1" CornerRadius="6"
-                                Cursor="Hand" Margin="0,8,0,0">
+                                Cursor="Hand" Margin="0,8,0,0"
+                                MouseLeftButtonDown="VoirTout_Click">
                             <TextBlock Text="Voir les 22 pilotes  ›"
                                        Foreground="#8A8A8A" FontSize="11"
                                        FontWeight="Bold" HorizontalAlignment="Center"
                                        Margin="0,8"/>
                         </Border>
-
                     </StackPanel>
                 </Border>
 
-                <!-- ── DERNIER TOUR + MEILLEURS TOURS ── -->
+                <!-- DERNIER TOUR + MEILLEUR TOUR -->
                 <Grid Margin="0,0,0,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
-                    <!-- Dernier tour du leader -->
                     <Border Grid.Column="0" Style="{StaticResource Card}">
                         <StackPanel Margin="12,10">
-                            <TextBlock Text="DERNIER TOUR" Foreground="#8A8A8A"
-                                       FontSize="9" FontWeight="Bold" Margin="0,0,0,6"/>
-                            <TextBlock Text="1:14.892" Foreground="White"
-                                       FontSize="20" FontWeight="Bold"/>
-                            <TextBlock Text="M. VERSTAPPEN" Foreground="#8A8A8A"
-                                       FontSize="9" Margin="0,3,0,0"/>
-                            <Border Background="#1A1A2A" BorderBrush="#2A2A4A"
-                                    BorderThickness="1" CornerRadius="4"
-                                    Margin="0,6,0,0">
-                                <TextBlock Text="▲ +0.234s vs tour préc."
-                                           Foreground="#FF6B6B" FontSize="9"
-                                           FontWeight="Bold" Margin="6,3"/>
+                            <TextBlock Text="DERNIER TOUR" Foreground="#8A8A8A" FontSize="9" FontWeight="Bold" Margin="0,0,0,6"/>
+                            <TextBlock Text="1:14.892" Foreground="White" FontSize="20" FontWeight="Bold"/>
+                            <TextBlock Text="M. VERSTAPPEN" Foreground="#8A8A8A" FontSize="9" Margin="0,3,0,0"/>
+                            <Border Background="#1A1A2A" BorderBrush="#2A2A4A" BorderThickness="1" CornerRadius="4" Margin="0,6,0,0">
+                                <TextBlock Text="▲ +0.234s vs tour préc." Foreground="#FF6B6B" FontSize="9" FontWeight="Bold" Margin="6,3"/>
                             </Border>
                         </StackPanel>
                     </Border>
-
-                    <!-- Meilleur tour absolu -->
                     <Border Grid.Column="2" Style="{StaticResource Card}">
                         <StackPanel Margin="12,10">
-                            <TextBlock Text="MEILLEUR TOUR" Foreground="#8A8A8A"
-                                       FontSize="9" FontWeight="Bold" Margin="0,0,0,6"/>
-                            <TextBlock Text="1:14.234" Foreground="#C060FF"
-                                       FontSize="20" FontWeight="Bold"/>
-                            <TextBlock Text="M. VERSTAPPEN" Foreground="#8A8A8A"
-                                       FontSize="9" Margin="0,3,0,0"/>
-                            <Border Background="#1A0A2A" BorderBrush="#3A1A5A"
-                                    BorderThickness="1" CornerRadius="4"
-                                    Margin="0,6,0,0">
-                                <TextBlock Text="🟣 Tour 48"
-                                           Foreground="#C060FF" FontSize="9"
-                                           FontWeight="Bold" Margin="6,3"/>
+                            <TextBlock Text="MEILLEUR TOUR" Foreground="#8A8A8A" FontSize="9" FontWeight="Bold" Margin="0,0,0,6"/>
+                            <TextBlock Text="1:14.234" Foreground="#C060FF" FontSize="20" FontWeight="Bold"/>
+                            <TextBlock Text="M. VERSTAPPEN" Foreground="#8A8A8A" FontSize="9" Margin="0,3,0,0"/>
+                            <Border Background="#1A0A2A" BorderBrush="#3A1A5A" BorderThickness="1" CornerRadius="4" Margin="0,6,0,0">
+                                <TextBlock Text="🟣 Tour 48" Foreground="#C060FF" FontSize="9" FontWeight="Bold" Margin="6,3"/>
                             </Border>
                         </StackPanel>
                     </Border>
                 </Grid>
 
-                <!-- ── ALERTES / INCIDENTS ── -->
+                <!-- ALERTES -->
                 <Border Style="{StaticResource Card}" Margin="0,0,0,10">
                     <StackPanel Margin="14,12">
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <Ellipse Fill="#E8002D" Width="7" Height="7"
-                                     VerticalAlignment="Center" Margin="0,0,6,0"/>
-                            <TextBlock Text="ALERTES COURSE" Foreground="White"
-                                       FontSize="12" FontWeight="Bold"/>
+                            <Ellipse Fill="#E8002D" Width="7" Height="7" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                            <TextBlock Text="ALERTES COURSE" Foreground="White" FontSize="12" FontWeight="Bold"/>
                         </StackPanel>
-
-                        <!-- Alerte 1 - SC -->
-                        <Border Background="#1A1400" BorderBrush="#FFD700"
-                                BorderThickness="1" CornerRadius="6"
-                                Margin="0,0,0,6">
+                        <Border Background="#1A1400" BorderBrush="#FFD700" BorderThickness="1" CornerRadius="6" Margin="0,0,0,6">
                             <Grid Margin="10,8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="#FFD700"
-                                        CornerRadius="4" Margin="0,0,8,0">
-                                    <TextBlock Text="SC" Foreground="#1A1400"
-                                               FontSize="10" FontWeight="Bold" Margin="5,2"/>
+                                <Border Grid.Column="0" Background="#FFD700" CornerRadius="4" Margin="0,0,8,0">
+                                    <TextBlock Text="SC" Foreground="#1A1400" FontSize="10" FontWeight="Bold" Margin="5,2"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Safety Car déployée" Foreground="#FFD700"
-                                               FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Text="Incident tour 38 — Virage Sainte-Dévote"
-                                               Foreground="#AAAAAA" FontSize="9"/>
+                                    <TextBlock Text="Safety Car déployée" Foreground="#FFD700" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Text="Incident tour 38 — Virage Sainte-Dévote" Foreground="#AAAAAA" FontSize="9"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="2" Text="T.38"
-                                           Foreground="#5A5A5A" FontSize="9"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Grid.Column="2" Text="T.38" Foreground="#5A5A5A" FontSize="9" VerticalAlignment="Top"/>
                             </Grid>
                         </Border>
-
-                        <!-- Alerte 2 - DRS -->
-                        <Border Background="#001A00" BorderBrush="#00CC00"
-                                BorderThickness="1" CornerRadius="6"
-                                Margin="0,0,0,6">
+                        <Border Background="#001A00" BorderBrush="#00CC00" BorderThickness="1" CornerRadius="6" Margin="0,0,0,6">
                             <Grid Margin="10,8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="#00CC00"
-                                        CornerRadius="4" Margin="0,0,8,0">
-                                    <TextBlock Text="DRS" Foreground="White"
-                                               FontSize="10" FontWeight="Bold" Margin="5,2"/>
+                                <Border Grid.Column="0" Background="#00CC00" CornerRadius="4" Margin="0,0,8,0">
+                                    <TextBlock Text="DRS" Foreground="White" FontSize="10" FontWeight="Bold" Margin="5,2"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="DRS activé" Foreground="#00CC00"
-                                               FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Text="Zone 1 et Zone 2 ouvertes"
-                                               Foreground="#AAAAAA" FontSize="9"/>
+                                    <TextBlock Text="DRS activé" Foreground="#00CC00" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Text="Zone 1 et Zone 2 ouvertes" Foreground="#AAAAAA" FontSize="9"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="2" Text="T.52"
-                                           Foreground="#5A5A5A" FontSize="9"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Grid.Column="2" Text="T.52" Foreground="#5A5A5A" FontSize="9" VerticalAlignment="Top"/>
                             </Grid>
                         </Border>
-
-                        <!-- Alerte 3 - Pénalité -->
-                        <Border Background="#1A0A00" BorderBrush="#FF6B00"
-                                BorderThickness="1" CornerRadius="6">
+                        <Border Background="#1A0A00" BorderBrush="#FF6B00" BorderThickness="1" CornerRadius="6">
                             <Grid Margin="10,8">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="#FF6B00"
-                                        CornerRadius="4" Margin="0,0,8,0">
-                                    <TextBlock Text="+5s" Foreground="White"
-                                               FontSize="10" FontWeight="Bold" Margin="5,2"/>
+                                <Border Grid.Column="0" Background="#FF6B00" CornerRadius="4" Margin="0,0,8,0">
+                                    <TextBlock Text="+5s" Foreground="White" FontSize="10" FontWeight="Bold" Margin="5,2"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="Pénalité — S. PÉREZ" Foreground="#FF6B00"
-                                               FontSize="11" FontWeight="Bold"/>
-                                    <TextBlock Text="Sortie de piste et avantage"
-                                               Foreground="#AAAAAA" FontSize="9"/>
+                                    <TextBlock Text="Pénalité — S. PÉREZ" Foreground="#FF6B00" FontSize="11" FontWeight="Bold"/>
+                                    <TextBlock Text="Sortie de piste et avantage" Foreground="#AAAAAA" FontSize="9"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="2" Text="T.50"
-                                           Foreground="#5A5A5A" FontSize="9"
-                                           VerticalAlignment="Top"/>
+                                <TextBlock Grid.Column="2" Text="T.50" Foreground="#5A5A5A" FontSize="9" VerticalAlignment="Top"/>
                             </Grid>
                         </Border>
-
                     </StackPanel>
                 </Border>
 
-                <!-- ── ARRÊTS AU STAND ── -->
+                <!-- ARRÊTS AU STAND -->
                 <Border Style="{StaticResource Card}" Margin="0,0,0,10">
                     <StackPanel Margin="14,12">
-                        <TextBlock Text="DERNIERS ARRÊTS AU STAND"
-                                   Foreground="White" FontSize="12"
-                                   FontWeight="Bold" Margin="0,0,0,10"/>
-
-                        <!-- Header cols -->
+                        <TextBlock Text="DERNIERS ARRÊTS AU STAND" Foreground="White" FontSize="12" FontWeight="Bold" Margin="0,0,0,10"/>
                         <Grid Margin="0,0,0,6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -691,17 +531,11 @@
                                 <ColumnDefinition Width="60"/>
                                 <ColumnDefinition Width="50"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="PILOTE" Foreground="#5A5A5A"
-                                       FontSize="9" FontWeight="Bold"/>
-                            <TextBlock Grid.Column="1" Text="TOUR" Foreground="#5A5A5A"
-                                       FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="DURÉE" Foreground="#5A5A5A"
-                                       FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="3" Text="PNEU" Foreground="#5A5A5A"
-                                       FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="0" Text="PILOTE" Foreground="#5A5A5A" FontSize="9" FontWeight="Bold"/>
+                            <TextBlock Grid.Column="1" Text="TOUR" Foreground="#5A5A5A" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="2" Text="DURÉE" Foreground="#5A5A5A" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="3" Text="PNEU" Foreground="#5A5A5A" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"/>
                         </Grid>
-
-                        <!-- Stop 1 -->
                         <Border Background="#141414" CornerRadius="6" Margin="0,0,0,4">
                             <Grid Margin="10,7">
                                 <Grid.ColumnDefinitions>
@@ -711,29 +545,16 @@
                                     <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                    <Border Background="#E8002D" Width="3"
-                                            CornerRadius="2" Margin="0,0,6,0"/>
-                                    <TextBlock Text="C. LECLERC" Foreground="White"
-                                               FontSize="11" FontWeight="Bold"
-                                               VerticalAlignment="Center"/>
+                                    <Border Background="#E8002D" Width="3" CornerRadius="2" Margin="0,0,6,0"/>
+                                    <TextBlock Text="C. LECLERC" Foreground="White" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="1" Text="T.41" Foreground="#8A8A8A"
-                                           FontSize="11" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="2" Text="2.4s" Foreground="#4CAF50"
-                                           FontSize="11" FontWeight="Bold"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-                                <Border Grid.Column="3" Background="#CCAA00"
-                                        CornerRadius="4" HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
-                                    <TextBlock Text="MED" Foreground="White"
-                                               FontSize="8" FontWeight="Bold" Margin="5,2"/>
+                                <TextBlock Grid.Column="1" Text="T.41" Foreground="#8A8A8A" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Text="2.4s" Foreground="#4CAF50" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Border Grid.Column="3" Background="#CCAA00" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="MED" Foreground="White" FontSize="8" FontWeight="Bold" Margin="5,2"/>
                                 </Border>
                             </Grid>
                         </Border>
-
-                        <!-- Stop 2 -->
                         <Border Background="#141414" CornerRadius="6" Margin="0,0,0,4">
                             <Grid Margin="10,7">
                                 <Grid.ColumnDefinitions>
@@ -743,29 +564,16 @@
                                     <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                    <Border Background="#3B6FE8" Width="3"
-                                            CornerRadius="2" Margin="0,0,6,0"/>
-                                    <TextBlock Text="S. PÉREZ" Foreground="White"
-                                               FontSize="11" FontWeight="Bold"
-                                               VerticalAlignment="Center"/>
+                                    <Border Background="#3B6FE8" Width="3" CornerRadius="2" Margin="0,0,6,0"/>
+                                    <TextBlock Text="S. PÉREZ" Foreground="White" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="1" Text="T.40" Foreground="#8A8A8A"
-                                           FontSize="11" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="2" Text="3.1s" Foreground="#FF6B6B"
-                                           FontSize="11" FontWeight="Bold"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-                                <Border Grid.Column="3" Background="#CC2200"
-                                        CornerRadius="4" HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
-                                    <TextBlock Text="DUR" Foreground="White"
-                                               FontSize="8" FontWeight="Bold" Margin="5,2"/>
+                                <TextBlock Grid.Column="1" Text="T.40" Foreground="#8A8A8A" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Text="3.1s" Foreground="#FF6B6B" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Border Grid.Column="3" Background="#CC2200" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="DUR" Foreground="White" FontSize="8" FontWeight="Bold" Margin="5,2"/>
                                 </Border>
                             </Grid>
                         </Border>
-
-                        <!-- Stop 3 -->
                         <Border Background="#141414" CornerRadius="6">
                             <Grid Margin="10,7">
                                 <Grid.ColumnDefinitions>
@@ -775,43 +583,26 @@
                                     <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                                    <Border Background="#FF8000" Width="3"
-                                            CornerRadius="2" Margin="0,0,6,0"/>
-                                    <TextBlock Text="L. NORRIS" Foreground="White"
-                                               FontSize="11" FontWeight="Bold"
-                                               VerticalAlignment="Center"/>
+                                    <Border Background="#FF8000" Width="3" CornerRadius="2" Margin="0,0,6,0"/>
+                                    <TextBlock Text="L. NORRIS" Foreground="White" FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="1" Text="T.38" Foreground="#8A8A8A"
-                                           FontSize="11" HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="2" Text="2.7s" Foreground="#4CAF50"
-                                           FontSize="11" FontWeight="Bold"
-                                           HorizontalAlignment="Center"
-                                           VerticalAlignment="Center"/>
-                                <Border Grid.Column="3" Background="#336600"
-                                        CornerRadius="4" HorizontalAlignment="Center"
-                                        VerticalAlignment="Center">
-                                    <TextBlock Text="TEN" Foreground="White"
-                                               FontSize="8" FontWeight="Bold" Margin="5,2"/>
+                                <TextBlock Grid.Column="1" Text="T.38" Foreground="#8A8A8A" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" Text="2.7s" Foreground="#4CAF50" FontSize="11" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Border Grid.Column="3" Background="#336600" CornerRadius="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock Text="TEN" Foreground="White" FontSize="8" FontWeight="Bold" Margin="5,2"/>
                                 </Border>
                             </Grid>
                         </Border>
-
                     </StackPanel>
                 </Border>
 
-                <!-- ── RADIO ÉQUIPE ── -->
+                <!-- RADIO ÉQUIPE -->
                 <Border Style="{StaticResource Card}" Margin="0,0,0,4">
                     <StackPanel Margin="14,12">
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                            <TextBlock Text="📻" FontSize="14" Margin="0,0,6,0"
-                                       VerticalAlignment="Center"/>
-                            <TextBlock Text="RADIO ÉQUIPE" Foreground="White"
-                                       FontSize="12" FontWeight="Bold"
-                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="📻" FontSize="14" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="RADIO ÉQUIPE" Foreground="White" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"/>
                         </StackPanel>
-
-                        <!-- Radio 1 -->
                         <Border Background="#141414" CornerRadius="6" Margin="0,0,0,6">
                             <Grid Margin="10,8">
                                 <Grid.ColumnDefinitions>
@@ -819,28 +610,16 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="#3B6FE8"
-                                        CornerRadius="16" Width="32" Height="32"
-                                        Margin="0,0,10,0">
-                                    <TextBlock Text="VER" Foreground="White"
-                                               FontSize="8" FontWeight="Bold"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
+                                <Border Grid.Column="0" Background="#3B6FE8" CornerRadius="16" Width="32" Height="32" Margin="0,0,10,0">
+                                    <TextBlock Text="VER" Foreground="White" FontSize="8" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="VERSTAPPEN → BOX" Foreground="White"
-                                               FontSize="10" FontWeight="Bold"/>
-                                    <TextBlock Text="&quot;Les pneus sont finis, rentrez-moi&quot;"
-                                               Foreground="#8A8A8A" FontSize="9"
-                                               TextWrapping="Wrap"/>
+                                    <TextBlock Text="VERSTAPPEN → BOX" Foreground="White" FontSize="10" FontWeight="Bold"/>
+                                    <TextBlock Text="&quot;Les pneus sont finis, rentrez-moi&quot;" Foreground="#8A8A8A" FontSize="9" TextWrapping="Wrap"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="2" Text="T.51"
-                                           Foreground="#5A5A5A" FontSize="9"
-                                           VerticalAlignment="Top" Margin="8,0,0,0"/>
+                                <TextBlock Grid.Column="2" Text="T.51" Foreground="#5A5A5A" FontSize="9" VerticalAlignment="Top" Margin="8,0,0,0"/>
                             </Grid>
                         </Border>
-
-                        <!-- Radio 2 -->
                         <Border Background="#141414" CornerRadius="6">
                             <Grid Margin="10,8">
                                 <Grid.ColumnDefinitions>
@@ -848,34 +627,23 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Border Grid.Column="0" Background="#E8002D"
-                                        CornerRadius="16" Width="32" Height="32"
-                                        Margin="0,0,10,0">
-                                    <TextBlock Text="LEC" Foreground="White"
-                                               FontSize="8" FontWeight="Bold"
-                                               HorizontalAlignment="Center"
-                                               VerticalAlignment="Center"/>
+                                <Border Grid.Column="0" Background="#E8002D" CornerRadius="16" Width="32" Height="32" Margin="0,0,10,0">
+                                    <TextBlock Text="LEC" Foreground="White" FontSize="8" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock Text="LECLERC → FERRARI" Foreground="White"
-                                               FontSize="10" FontWeight="Bold"/>
-                                    <TextBlock Text="&quot;Je suis plus rapide que Verstappen ici&quot;"
-                                               Foreground="#8A8A8A" FontSize="9"
-                                               TextWrapping="Wrap"/>
+                                    <TextBlock Text="LECLERC → FERRARI" Foreground="White" FontSize="10" FontWeight="Bold"/>
+                                    <TextBlock Text="&quot;Je suis plus rapide que Verstappen ici&quot;" Foreground="#8A8A8A" FontSize="9" TextWrapping="Wrap"/>
                                 </StackPanel>
-                                <TextBlock Grid.Column="2" Text="T.50"
-                                           Foreground="#5A5A5A" FontSize="9"
-                                           VerticalAlignment="Top" Margin="8,0,0,0"/>
+                                <TextBlock Grid.Column="2" Text="T.50" Foreground="#5A5A5A" FontSize="9" VerticalAlignment="Top" Margin="8,0,0,0"/>
                             </Grid>
                         </Border>
-
                     </StackPanel>
                 </Border>
 
             </StackPanel>
         </ScrollViewer>
 
-        <!-- ═══ BOTTOM NAV ═══ -->
+        <!-- BOTTOM NAV -->
         <Border Grid.Row="3" Background="#111111"
                 BorderBrush="#2A2A2A" BorderThickness="0,1,0,0">
             <Grid Margin="0,8,0,12">
@@ -886,6 +654,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+
+                <!-- LIVE (actif) -->
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center">
                     <TextBlock Text="📡" FontSize="18" HorizontalAlignment="Center"/>
                     <TextBlock Text="LIVE" Foreground="#E8002D" FontSize="8"
@@ -893,27 +663,40 @@
                     <Border Background="#E8002D" Height="2" Width="18" CornerRadius="1"
                             HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
-                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+
+                <!-- STANDINGS -->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Standings_Click">
                     <TextBlock Text="📊" FontSize="18" HorizontalAlignment="Center"/>
                     <TextBlock Text="STANDINGS" Foreground="#5A5A5A" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
-                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+
+                <!-- NEWS -->
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_News_Click">
                     <TextBlock Text="📰" FontSize="18" HorizontalAlignment="Center"/>
                     <TextBlock Text="NEWS" Foreground="#5A5A5A" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
-                <StackPanel Grid.Column="3" HorizontalAlignment="Center">
+
+                <!-- CALENDAR -->
+                <StackPanel Grid.Column="3" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Calendar_Click">
                     <TextBlock Text="📅" FontSize="18" HorizontalAlignment="Center"/>
                     <TextBlock Text="CALENDAR" Foreground="#5A5A5A" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
-                <StackPanel Grid.Column="4" HorizontalAlignment="Center">
+
+                <!-- HUB -->
+                <StackPanel Grid.Column="4" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Hub_Click">
                     <TextBlock Text="⚙" FontSize="18" Foreground="#5A5A5A"
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="HUB" Foreground="#5A5A5A" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
+
             </Grid>
         </Border>
 

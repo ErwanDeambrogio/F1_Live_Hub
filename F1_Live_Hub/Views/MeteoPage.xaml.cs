@@ -14,14 +14,45 @@ using System.Windows.Shapes;
 
 namespace F1_Live_Hub.Views
 {
-    /// <summary>
-    /// Logique d'interaction pour MeteoPage.xaml
-    /// </summary>
     public partial class MeteoPage : Window
     {
         public MeteoPage()
         {
             InitializeComponent();
         }
+
+        private void OpenWindow(Window window)
+        {
+            window.Show();
+            this.Close();
+        }
+
+        // ── TABS ─────────────────────────────────────────────────
+
+        private void Tab_Stats_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new StatPage());
+
+        private void Tab_Pilotes_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new PilotesPage());
+
+        private void Tab_Course_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CoursePage());
+
+        // ── BOTTOM NAV ───────────────────────────────────────────
+
+        private void Nav_Home_Click(object sender, MouseButtonEventArgs e)
+        {
+            Application.Current.MainWindow.Show();
+            this.Close();
+        }
+
+        private void Nav_Timing_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new LivePage());
+
+        private void Nav_Track_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CoursePage());
+
+        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new ProfilPage());
     }
 }

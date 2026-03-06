@@ -6,43 +6,32 @@
         mc:Ignorable="d"
         Title="F1 Live Hub - Course" Height="1000" Width="420"
         Background="#0D0D0D"
-        WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize">
+        WindowStyle="SingleBorderWindow" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
 
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <StackPanel>
 
-                <!-- ═══════════════════════════════ -->
-                <!-- TOP BAR                         -->
-                <!-- ═══════════════════════════════ -->
+                <!-- TOP BAR -->
                 <Grid Height="60" Margin="16,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-
-                    <!-- Menu hamburger -->
                     <TextBlock Grid.Column="0" Text="☰" Foreground="White"
                                FontSize="22" VerticalAlignment="Center" Cursor="Hand"/>
-
-                    <!-- Titre centre -->
                     <StackPanel Grid.Column="1" VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
                         <TextBlock Text="F1 LIVE HUB" Foreground="White"
                                    FontSize="16" FontWeight="Bold"
                                    HorizontalAlignment="Center"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
                     </StackPanel>
-
-                    <!-- Icône droite -->
                     <TextBlock Grid.Column="2" Text="📡" Foreground="White"
                                FontSize="20" VerticalAlignment="Center"/>
                 </Grid>
 
-                <!-- ═══════════════════════════════ -->
-                <!-- NAV TABS                        -->
-                <!-- ═══════════════════════════════ -->
+                <!-- NAV TABS -->
                 <Grid Height="40" Margin="16,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -53,10 +42,13 @@
 
                     <TextBlock Grid.Column="0" Text="Classement" Foreground="#888888"
                                FontSize="12" HorizontalAlignment="Center"
-                               VerticalAlignment="Center" Cursor="Hand"/>
+                               VerticalAlignment="Center" Cursor="Hand"
+                               MouseLeftButtonDown="Tab_Classement_Click"/>
+
                     <TextBlock Grid.Column="1" Text="Pilotes" Foreground="#888888"
                                FontSize="12" HorizontalAlignment="Center"
-                               VerticalAlignment="Center" Cursor="Hand"/>
+                               VerticalAlignment="Center" Cursor="Hand"
+                               MouseLeftButtonDown="Tab_Pilotes_Click"/>
 
                     <!-- Course ACTIF -->
                     <StackPanel Grid.Column="2" VerticalAlignment="Center"
@@ -68,12 +60,11 @@
 
                     <TextBlock Grid.Column="3" Text="Météo" Foreground="#888888"
                                FontSize="12" HorizontalAlignment="Center"
-                               VerticalAlignment="Center" Cursor="Hand"/>
+                               VerticalAlignment="Center" Cursor="Hand"
+                               MouseLeftButtonDown="Tab_Meteo_Click"/>
                 </Grid>
 
-                <!-- ═══════════════════════════════ -->
-                <!-- DUEL VER vs HAM                 -->
-                <!-- ═══════════════════════════════ -->
+                <!-- DUEL VER vs HAM -->
                 <Border Margin="16,12,16,12" Background="#1A1A1A"
                         CornerRadius="12" Padding="16,14">
                     <Grid>
@@ -84,28 +75,21 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-
-                        <!-- VER gauche -->
                         <Border Grid.Column="0" Width="46" Height="46"
                                 CornerRadius="23" Background="#E10600">
                             <TextBlock Text="👤" FontSize="22"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"/>
                         </Border>
-
                         <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
                             <TextBlock Text="VER" Foreground="White"
                                        FontSize="13" FontWeight="Bold"/>
                             <TextBlock Text="1:32.445" Foreground="White"
                                        FontSize="18" FontWeight="Bold"/>
                         </StackPanel>
-
-                        <!-- VS -->
                         <TextBlock Grid.Column="2" Text="VS" Foreground="#E10600"
                                    FontSize="20" FontWeight="Bold"
                                    VerticalAlignment="Center" Margin="8,0"/>
-
-                        <!-- HAM droite -->
                         <StackPanel Grid.Column="3" VerticalAlignment="Center"
                                     Margin="8,0" HorizontalAlignment="Right">
                             <TextBlock Text="HAM" Foreground="White"
@@ -115,7 +99,6 @@
                                        FontSize="18" FontWeight="Bold"
                                        HorizontalAlignment="Right"/>
                         </StackPanel>
-
                         <Border Grid.Column="4" Width="46" Height="46"
                                 CornerRadius="23" Background="#00C8C8">
                             <TextBlock Text="👤" FontSize="22"
@@ -125,14 +108,10 @@
                     </Grid>
                 </Border>
 
-                <!-- ═══════════════════════════════ -->
-                <!-- GRAPHIQUE VITESSE               -->
-                <!-- ═══════════════════════════════ -->
+                <!-- GRAPHIQUE VITESSE -->
                 <Border Margin="16,0,16,12" Background="#1A1A1A"
                         CornerRadius="12" Padding="16,14">
                     <StackPanel>
-
-                        <!-- Header -->
                         <TextBlock Text="VITESSE (KM/H)" Foreground="#888888"
                                    FontSize="10" FontWeight="Bold" Margin="0,0,0,4"/>
                         <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
@@ -151,38 +130,19 @@
                                 <TextBlock Text="HAM" Foreground="#888888" FontSize="10"/>
                             </StackPanel>
                         </StackPanel>
-
-                        <!-- Graphique simulé avec Canvas -->
                         <Canvas Height="120" Margin="0,0,0,8">
-                            <!-- Grille légère -->
-                            <Rectangle Canvas.Left="0" Canvas.Top="0"
-                                       Width="380" Height="1"
-                                       Fill="#222222"/>
-                            <Rectangle Canvas.Left="0" Canvas.Top="40"
-                                       Width="380" Height="1"
-                                       Fill="#222222"/>
-                            <Rectangle Canvas.Left="0" Canvas.Top="80"
-                                       Width="380" Height="1"
-                                       Fill="#222222"/>
-                            <Rectangle Canvas.Left="0" Canvas.Top="119"
-                                       Width="380" Height="1"
-                                       Fill="#222222"/>
-
-                            <!-- Courbe VER rouge -->
+                            <Rectangle Canvas.Left="0" Canvas.Top="0" Width="380" Height="1" Fill="#222222"/>
+                            <Rectangle Canvas.Left="0" Canvas.Top="40" Width="380" Height="1" Fill="#222222"/>
+                            <Rectangle Canvas.Left="0" Canvas.Top="80" Width="380" Height="1" Fill="#222222"/>
+                            <Rectangle Canvas.Left="0" Canvas.Top="119" Width="380" Height="1" Fill="#222222"/>
                             <Polyline Canvas.Left="0" Canvas.Top="0"
                                       Points="0,90 40,60 80,30 120,70 160,40 200,80 240,20 280,55 320,15 360,10 388,0"
-                                      Stroke="#E10600" StrokeThickness="2.5"
-                                      StrokeLineJoin="Round"/>
-
-                            <!-- Courbe HAM cyan pointillée -->
+                                      Stroke="#E10600" StrokeThickness="2.5" StrokeLineJoin="Round"/>
                             <Polyline Canvas.Left="0" Canvas.Top="0"
                                       Points="0,100 40,70 80,45 120,80 160,55 200,90 240,35 280,68 320,28 360,22 388,12"
                                       Stroke="#00C8C8" StrokeThickness="2"
-                                      StrokeDashArray="4,3"
-                                      StrokeLineJoin="Round"/>
+                                      StrokeDashArray="4,3" StrokeLineJoin="Round"/>
                         </Canvas>
-
-                        <!-- Labels axe X -->
                         <Grid Margin="0,4,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -203,38 +163,29 @@
                     </StackPanel>
                 </Border>
 
-                <!-- ═══════════════════════════════ -->
-                <!-- LIVE TRACK MAP                  -->
-                <!-- ═══════════════════════════════ -->
+                <!-- LIVE TRACK MAP -->
                 <Border Margin="16,0,16,12" Background="#1A1A1A"
                         CornerRadius="12" Padding="16,14">
                     <StackPanel>
-
-                        <!-- Header -->
                         <Grid Margin="0,0,0,12">
                             <TextBlock Text="LIVE TRACK MAP" Foreground="White"
                                        FontSize="13" FontWeight="Bold"
                                        VerticalAlignment="Center"/>
-                            <StackPanel Orientation="Horizontal"
-                                        HorizontalAlignment="Right">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                 <Border Background="#E10600" CornerRadius="4"
                                         Padding="8,4" Margin="0,0,8,0">
                                     <TextBlock Text="LAP 42/57" Foreground="White"
                                                FontSize="10" FontWeight="Bold"/>
                                 </Border>
                                 <Border Background="Transparent" CornerRadius="4"
-                                        Padding="8,4"
-                                        BorderBrush="#00C851" BorderThickness="1.5">
+                                        Padding="8,4" BorderBrush="#00C851" BorderThickness="1.5">
                                     <TextBlock Text="DRS ENABLED" Foreground="#00C851"
                                                FontSize="10" FontWeight="Bold"/>
                                 </Border>
                             </StackPanel>
                         </Grid>
-
-                        <!-- Carte circuit -->
                         <Border Background="#2A2A2A" CornerRadius="8" Height="220">
                             <Canvas>
-                                <!-- Circuit simulé -->
                                 <Polyline
                                     Points="60,80 100,40 160,30 220,40 280,60 310,90 300,130 260,150 200,160 160,170 120,160 80,140 55,110 60,80"
                                     Stroke="#555555" StrokeThickness="8"
@@ -245,64 +196,45 @@
                                     Stroke="#444444" StrokeThickness="5"
                                     StrokeLineJoin="Round"
                                     Canvas.Left="20" Canvas.Top="10"/>
-
-                                <!-- Point VER rouge -->
                                 <Ellipse Width="14" Height="14" Fill="#E10600"
                                          Canvas.Left="138" Canvas.Top="44"
                                          StrokeThickness="2" Stroke="White"/>
-                                <!-- Point HAM cyan -->
                                 <Ellipse Width="14" Height="14" Fill="#00C8C8"
                                          Canvas.Left="156" Canvas.Top="44"
                                          StrokeThickness="2" Stroke="White"/>
-
-                                <!-- Petits points blancs positions autres -->
                                 <Ellipse Width="8" Height="8" Fill="#FFFFFF"
-                                         Opacity="0.4"
-                                         Canvas.Left="258" Canvas.Top="148"/>
+                                         Opacity="0.4" Canvas.Left="258" Canvas.Top="148"/>
                                 <Ellipse Width="8" Height="8" Fill="#FFFFFF"
-                                         Opacity="0.3"
-                                         Canvas.Left="298" Canvas.Top="126"/>
+                                         Opacity="0.3" Canvas.Left="298" Canvas.Top="126"/>
                             </Canvas>
                         </Border>
                     </StackPanel>
                 </Border>
 
-                <!-- ═══════════════════════════════ -->
-                <!-- TYRE WEAR + PIT WINDOW          -->
-                <!-- ═══════════════════════════════ -->
+                <!-- TYRE WEAR + PIT WINDOW -->
                 <Grid Margin="16,0,16,12">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
-                    <!-- Tyre Wear -->
-                    <Border Grid.Column="0" Background="#1A1A1A"
-                            CornerRadius="12" Padding="14,12">
+                    <Border Grid.Column="0" Background="#1A1A1A" CornerRadius="12" Padding="14,12">
                         <StackPanel>
                             <TextBlock Text="TYRE WEAR EST." Foreground="#888888"
                                        FontSize="9" FontWeight="Bold" Margin="0,0,0,12"/>
-
-                            <!-- VER -->
                             <Grid Margin="0,0,0,6">
                                 <TextBlock Text="VER (M)" Foreground="#AAAAAA" FontSize="10"/>
                                 <TextBlock Text="34%" Foreground="#E10600"
-                                           FontSize="10" FontWeight="Bold"
-                                           HorizontalAlignment="Right"/>
+                                           FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
                             </Grid>
-                            <Border Background="#2A2A2A" CornerRadius="3"
-                                    Height="5" Margin="0,0,0,12">
+                            <Border Background="#2A2A2A" CornerRadius="3" Height="5" Margin="0,0,0,12">
                                 <Border Background="#E10600" CornerRadius="3"
                                         HorizontalAlignment="Left" Width="120"/>
                             </Border>
-
-                            <!-- HAM -->
                             <Grid Margin="0,0,0,6">
                                 <TextBlock Text="HAM (H)" Foreground="#AAAAAA" FontSize="10"/>
                                 <TextBlock Text="12%" Foreground="#AAAAAA"
-                                           FontSize="10" FontWeight="Bold"
-                                           HorizontalAlignment="Right"/>
+                                           FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
                             </Grid>
                             <Border Background="#2A2A2A" CornerRadius="3" Height="5">
                                 <Border Background="#666666" CornerRadius="3"
@@ -310,17 +242,13 @@
                             </Border>
                         </StackPanel>
                     </Border>
-
-                    <!-- Pit Window -->
-                    <Border Grid.Column="2" Background="#1A1A1A"
-                            CornerRadius="12" Padding="14,12">
+                    <Border Grid.Column="2" Background="#1A1A1A" CornerRadius="12" Padding="14,12">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Text="PIT WINDOW" Foreground="#888888"
                                        FontSize="9" FontWeight="Bold"
                                        HorizontalAlignment="Center" Margin="0,0,0,8"/>
                             <TextBlock Text="Window Opening" Foreground="#AAAAAA"
-                                       FontSize="11" HorizontalAlignment="Center"
-                                       Margin="0,0,0,6"/>
+                                       FontSize="11" HorizontalAlignment="Center" Margin="0,0,0,6"/>
                             <TextBlock Text="3 Laps" Foreground="White"
                                        FontSize="26" FontWeight="Bold"
                                        HorizontalAlignment="Center"/>
@@ -328,16 +256,10 @@
                     </Border>
                 </Grid>
 
-                <!-- ═══════════════════════════════ -->
-                <!-- INCIDENT FEED                   -->
-                <!-- ═══════════════════════════════ -->
-                <Border Margin="16,0,16,12" Background="#1A1A1A"
-                        CornerRadius="12" Padding="0">
+                <!-- INCIDENT FEED -->
+                <Border Margin="16,0,16,12" Background="#1A1A1A" CornerRadius="12" Padding="0">
                     <StackPanel>
-
-                        <!-- Header rouge -->
-                        <Border Background="#2A0000" CornerRadius="12,12,0,0"
-                                Padding="16,12">
+                        <Border Background="#2A0000" CornerRadius="12,12,0,0" Padding="16,12">
                             <Grid>
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="🔔" FontSize="14" Margin="0,0,8,0"/>
@@ -350,10 +272,7 @@
                                            VerticalAlignment="Center"/>
                             </Grid>
                         </Border>
-
-                        <!-- Ligne 1 -->
-                        <Border Padding="16,14" BorderThickness="0,0,0,1"
-                                BorderBrush="#222222">
+                        <Border Padding="16,14" BorderThickness="0,0,0,1" BorderBrush="#222222">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"/>
@@ -366,15 +285,11 @@
                                     <TextBlock Text="YELLOW FLAG Sector 3" Foreground="White"
                                                FontSize="13" FontWeight="Bold"/>
                                     <TextBlock Text="Car 11 (PER) spun in Turn 15. Rejoined track."
-                                               Foreground="#888888" FontSize="11"
-                                               TextWrapping="Wrap"/>
+                                               Foreground="#888888" FontSize="11" TextWrapping="Wrap"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
-
-                        <!-- Ligne 2 -->
-                        <Border Padding="16,14" BorderThickness="0,0,0,1"
-                                BorderBrush="#222222">
+                        <Border Padding="16,14" BorderThickness="0,0,0,1" BorderBrush="#222222">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="50"/>
@@ -391,8 +306,6 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-
-                        <!-- Ligne 3 -->
                         <Border Padding="16,14">
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -410,19 +323,15 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-
                     </StackPanel>
                 </Border>
 
-                <!-- Espace pour la nav bar -->
                 <Rectangle Height="80"/>
 
             </StackPanel>
         </ScrollViewer>
 
-        <!-- ═══════════════════════════════ -->
-        <!-- BOTTOM NAV BAR                 -->
-        <!-- ═══════════════════════════════ -->
+        <!-- BOTTOM NAV BAR -->
         <Border VerticalAlignment="Bottom" Height="70"
                 BorderThickness="0,1,0,0" BorderBrush="#222222">
             <Border.Background>
@@ -431,27 +340,54 @@
             <Grid Margin="0,0,0,6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- Stats -->
-                <TextBlock Grid.Column="0" Text="📊" FontSize="22"
-                           Foreground="#555555" HorizontalAlignment="Center"
-                           VerticalAlignment="Center" Cursor="Hand"/>
+                <!-- LIVE -->
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Live_Click">
+                    <TextBlock Text="📡" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Text="LIVE" Foreground="#5A5A5A" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
 
-                <!-- FAB rouge pause -->
-                <Border Grid.Column="1" VerticalAlignment="Top"
-                        HorizontalAlignment="Center" Width="56" Height="56"
-                        CornerRadius="28" Background="#E10600" Margin="0,-20,0,0">
-                    <TextBlock Text="⏸" FontSize="22" Foreground="White"
-                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Border>
+                <!-- STANDINGS -->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Standings_Click">
+                    <TextBlock Text="📊" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Text="STANDINGS" Foreground="#5A5A5A" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
 
-                <!-- Chrono -->
-                <TextBlock Grid.Column="2" Text="⏱" FontSize="22"
-                           Foreground="#555555" HorizontalAlignment="Center"
-                           VerticalAlignment="Center" Cursor="Hand"/>
+                <!-- NEWS (actif) -->
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                    <TextBlock Text="📰" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Text="NEWS" Foreground="#E8002D" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                    <Border Background="#E8002D" Height="2" Width="18" CornerRadius="1"
+                            HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
+
+                <!-- CALENDAR -->
+                <StackPanel Grid.Column="3" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Calendar_Click">
+                    <TextBlock Text="📅" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Text="CALENDAR" Foreground="#5A5A5A" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
+
+                <!-- HUB -->
+                <StackPanel Grid.Column="4" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Hub_Click">
+                    <TextBlock Text="⚙" FontSize="18" Foreground="#5A5A5A"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="HUB" Foreground="#5A5A5A" FontSize="8"
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                </StackPanel>
+
             </Grid>
         </Border>
 
