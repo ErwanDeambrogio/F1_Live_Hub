@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:F1_Live_Hub.Views"
         mc:Ignorable="d"
         Title="F1 Live Hub"
-        Background="#0D0D0D">
+        Background="#0D0D0D" >
 
     <Page.Resources>
 

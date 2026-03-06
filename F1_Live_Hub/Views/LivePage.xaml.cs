@@ -14,14 +14,39 @@ using System.Windows.Shapes;
 
 namespace F1_Live_Hub.Views
 {
-    /// <summary>
-    /// Logique d'interaction pour LivePage.xaml
-    /// </summary>
     public partial class LivePage : Window
     {
         public LivePage()
         {
             InitializeComponent();
         }
+
+        private void OpenWindow(Window window)
+        {
+            window.Show();
+            this.Close();
+        }
+
+        // ── BOTTOM NAV ───────────────────────────────────────────
+
+        private void Nav_Standings_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new ClassementPage());
+
+        private void Nav_News_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CoursePage());
+
+        private void Nav_Calendar_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new PilotesPage());
+
+        private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
+        {
+            Application.Current.MainWindow.Show();
+            this.Close();
+        }
+
+        // ── VOIR TOUT ────────────────────────────────────────────
+
+        private void VoirTout_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new ClassementPage());
     }
 }

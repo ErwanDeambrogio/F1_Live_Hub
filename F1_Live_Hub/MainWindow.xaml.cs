@@ -15,55 +15,52 @@ namespace F1_Live_Hub
         {
             InitializeComponent();
             AppFrame.Navigate(new AccueilPage());
-            Loaded += async (s, e) => await RunSplashAnimation();
+
+            // Animation désactivée
+            SplashGrid.Visibility = Visibility.Collapsed;
+            AppFrame.Opacity = 1;
+
+            // Loaded += async (s, e) => await RunSplashAnimation();
         }
 
+        /*
         private async Task RunSplashAnimation()
         {
             var easeOut = new CubicEase { EasingMode = EasingMode.EaseOut };
             var easeInOut = new CubicEase { EasingMode = EasingMode.EaseInOut };
 
-            // 1. Grille fond
             await Anim(SplashGrid2, UIElement.OpacityProperty, 0, 1, 600, easeOut);
 
-            // 2. Lignes rouges
             await Task.WhenAll(
                 Anim(SplashLineTop, FrameworkElement.WidthProperty, 0, 300, 500, easeOut),
                 Anim(SplashLineBottom, FrameworkElement.WidthProperty, 0, 300, 500, easeOut)
             );
 
-            // 3. Glow centre
             await Anim(SplashGlow, UIElement.OpacityProperty, 0, 1, 400, easeOut);
 
-            // 4. Logo scale in
             await Task.WhenAll(
                 Anim(SplashLogoGroup, UIElement.OpacityProperty, 0.0, 1.0, 700, easeOut),
                 Anim(SplashLogoScale, ScaleTransform.ScaleXProperty, 0.6, 1.0, 700, easeOut),
                 Anim(SplashLogoScale, ScaleTransform.ScaleYProperty, 0.6, 1.0, 700, easeOut)
             );
 
-            // 5. Glow pulse badge
             await Anim(SplashLogoGlow, DropShadowEffect.BlurRadiusProperty, 0, 35, 400, easeOut);
             await Anim(SplashLogoGlow, DropShadowEffect.BlurRadiusProperty, 35, 18, 400, easeInOut);
 
-            // 6. HUB + sous-ligne
             await Task.WhenAll(
                 Anim(SplashHubText, UIElement.OpacityProperty, 0, 1, 400, easeOut),
                 Anim(SplashSubLine, FrameworkElement.WidthProperty, 0, 140, 500, easeOut)
             );
 
-            // 7. Tagline
             await Anim(SplashTagline, UIElement.OpacityProperty, 0, 1, 400, easeOut);
 
             await Task.Delay(200);
 
-            // 8. Barre de chargement
             await Anim(SplashLoadText, UIElement.OpacityProperty, 0, 1, 300, easeOut);
             await Anim(SplashLoadBar, FrameworkElement.WidthProperty, 0, 200, 1200, easeInOut);
 
             await Task.Delay(200);
 
-            // 9. Pulse final logo
             await Task.WhenAll(
                 Anim(SplashLogoScale, ScaleTransform.ScaleXProperty, 1.0, 1.08, 180, easeOut),
                 Anim(SplashLogoScale, ScaleTransform.ScaleYProperty, 1.0, 1.08, 180, easeOut)
@@ -75,13 +72,12 @@ namespace F1_Live_Hub
 
             await Task.Delay(150);
 
-            // 10. Flash blanc
             await Anim(SplashFlash, UIElement.OpacityProperty, 0, 1, 250, easeOut);
 
-            // Transition vers AccueilPage
             SplashGrid.Visibility = Visibility.Collapsed;
             await Anim(AppFrame, UIElement.OpacityProperty, 0, 1, 400, easeOut);
         }
+        */
 
         private Task Anim(
             DependencyObject target,

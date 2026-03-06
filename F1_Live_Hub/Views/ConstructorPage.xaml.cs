@@ -14,9 +14,9 @@ using System.Windows.Shapes;
 
 namespace F1_Live_Hub.Views
 {
-    public partial class CoursePage : Window
+    public partial class ConstructorPage : Window
     {
-        public CoursePage()
+        public ConstructorPage()
         {
             InitializeComponent();
         }
@@ -29,22 +29,19 @@ namespace F1_Live_Hub.Views
 
         // ── TABS ─────────────────────────────────────────────────
 
-        private void Tab_Classement_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new ClassementPage());
-
         private void Tab_Pilotes_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new PilotesPage());
 
-        private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new MeteoPage());
+        private void Tab_Historique_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new StatPage());
 
         // ── BOTTOM NAV ───────────────────────────────────────────
 
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new LivePage());
 
-        private void Nav_Standings_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new ClassementPage());
+        private void Nav_News_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CoursePage());
 
         private void Nav_Calendar_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new PilotesPage());
