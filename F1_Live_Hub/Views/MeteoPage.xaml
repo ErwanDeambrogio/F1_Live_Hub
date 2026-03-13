@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:F1_Live_Hub.Views"
         mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
         Title="F1 Live Hub - Météo" Height="900" Width="420"
-        Background="#0D0D0D">
+        Background="#0D0D0D" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style x:Key="Card" TargetType="Border">
@@ -69,15 +72,26 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
+
                     <TextBlock Grid.Column="0" Text="STATS" Foreground="#5A5A5A"
                                FontSize="11" FontWeight="Bold"
-                               HorizontalAlignment="Center"/>
+                               HorizontalAlignment="Center"
+                               Cursor="Hand"
+                               MouseLeftButtonDown="Tab_Stats_Click"/>
+
                     <TextBlock Grid.Column="1" Text="PILOTES" Foreground="#5A5A5A"
                                FontSize="11" FontWeight="Bold"
-                               HorizontalAlignment="Center"/>
+                               HorizontalAlignment="Center"
+                               Cursor="Hand"
+                               MouseLeftButtonDown="Tab_Pilotes_Click"/>
+
                     <TextBlock Grid.Column="2" Text="COURSE" Foreground="#5A5A5A"
                                FontSize="11" FontWeight="Bold"
-                               HorizontalAlignment="Center"/>
+                               HorizontalAlignment="Center"
+                               Cursor="Hand"
+                               MouseLeftButtonDown="Tab_Course_Click"/>
+
+                    <!-- MÉTÉO actif -->
                     <StackPanel Grid.Column="3" HorizontalAlignment="Center">
                         <TextBlock Text="MÉTÉO" Foreground="#E8002D"
                                    FontSize="11" FontWeight="Bold"
@@ -120,34 +134,26 @@
                     <Grid>
                         <Border Background="#1B2A1B" CornerRadius="8"/>
                         <Canvas>
-                            <!-- Circuit Monaco simplifié -->
                             <Path Stroke="#3A6A3A" StrokeThickness="8"
-                                  StrokeLineJoin="Round"
-                                  StrokeStartLineCap="Round"
-                                  StrokeEndLineCap="Round"
-                                  Opacity="0.6"
+                                  StrokeLineJoin="Round" StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round" Opacity="0.6"
                                   Data="M 80,140 L 80,100 C 80,75 100,60 130,58
                                         L 220,55 C 245,55 258,68 258,85
                                         L 255,105 C 252,118 240,122 224,120
                                         L 190,117 C 172,115 162,126 165,142
                                         L 170,158 C 174,170 165,180 150,180
                                         L 118,180 C 100,180 85,168 80,155 Z"/>
-                            <!-- Secteur 2 en rouge -->
                             <Path Stroke="#E8002D" StrokeThickness="8"
-                                  StrokeLineJoin="Round"
-                                  StrokeStartLineCap="Round"
+                                  StrokeLineJoin="Round" StrokeStartLineCap="Round"
                                   StrokeEndLineCap="Round"
                                   Data="M 220,55 C 245,55 258,68 258,85
                                         L 255,105 C 252,118 240,122 224,120
                                         L 190,117"/>
-                            <!-- Point rouge secteur actif -->
                             <Ellipse Canvas.Left="246" Canvas.Top="78"
                                      Width="12" Height="12" Fill="#E8002D"/>
                             <Ellipse Canvas.Left="249" Canvas.Top="81"
                                      Width="6" Height="6" Fill="White"/>
                         </Canvas>
-
-                        <!-- Badge secteur -->
                         <Border Background="#33E8002D" BorderBrush="#E8002D"
                                 BorderThickness="1" CornerRadius="4"
                                 HorizontalAlignment="Left" VerticalAlignment="Bottom"
@@ -156,8 +162,6 @@
                                        Foreground="#E8002D" FontSize="9"
                                        FontWeight="Bold" Margin="6,3"/>
                         </Border>
-
-                        <!-- Zoom buttons -->
                         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center"
                                     Margin="0,0,8,0">
                             <Border Background="#1A1A1A" BorderBrush="#333333"
@@ -175,7 +179,6 @@
                                            VerticalAlignment="Center"/>
                             </Border>
                         </StackPanel>
-
                         <Border Background="#00BCD4" CornerRadius="4"
                                 HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                 Margin="0,0,8,8" Width="30" Height="30">
@@ -193,7 +196,6 @@
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
                     <Border Grid.Column="0" Style="{StaticResource Card}">
                         <StackPanel Margin="12">
                             <Grid Margin="0,0,0,4">
@@ -214,7 +216,6 @@
                             </StackPanel>
                         </StackPanel>
                     </Border>
-
                     <Border Grid.Column="2" Style="{StaticResource Card}">
                         <StackPanel Margin="12">
                             <Grid Margin="0,0,0,4">
@@ -244,7 +245,6 @@
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
                     <Border Grid.Column="0" Style="{StaticResource Card}">
                         <StackPanel Margin="12">
                             <Grid Margin="0,0,0,4">
@@ -264,7 +264,6 @@
                             </Grid>
                         </StackPanel>
                     </Border>
-
                     <Border Grid.Column="2" Style="{StaticResource Card}">
                         <StackPanel Margin="12">
                             <Grid Margin="0,0,0,4">
@@ -293,7 +292,6 @@
                         <ColumnDefinition Width="10"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
                     <Border Grid.Column="0" Style="{StaticResource Card}">
                         <StackPanel Margin="12">
                             <Grid Margin="0,0,0,4">
@@ -312,7 +310,6 @@
                                        FontSize="10" Margin="0,4,0,0"/>
                         </StackPanel>
                     </Border>
-
                     <Border Grid.Column="2" Style="{StaticResource Card}">
                         <StackPanel Margin="12">
                             <Grid Margin="0,0,0,4">
@@ -356,7 +353,6 @@
                                            FontWeight="Bold" Margin="6,3"/>
                             </Border>
                         </Grid>
-
                         <Grid Height="96">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -370,38 +366,17 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Grid.Column="0" Background="#E8002D"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="76" Margin="2,0"/>
-                            <Border Grid.Column="1" Background="#CC1122"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="62" Margin="2,0"/>
-                            <Border Grid.Column="2" Background="#AA1111"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="52" Margin="2,0"/>
-                            <Border Grid.Column="3" Background="#881100"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="44" Margin="2,0"/>
-                            <Border Grid.Column="4" Background="#661100"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="30" Margin="2,0"/>
-                            <Border Grid.Column="5" Background="#00BCD4"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="18" Margin="2,0"/>
-                            <Border Grid.Column="6" Background="#00BCD4"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="34" Margin="2,0"/>
-                            <Border Grid.Column="7" Background="#00BCD4"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="56" Margin="2,0"/>
-                            <Border Grid.Column="8" Background="#00BCD4"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="68" Margin="2,0"/>
-                            <Border Grid.Column="9" Background="#00BCD4"
-                                    CornerRadius="3" VerticalAlignment="Bottom"
-                                    Height="50" Margin="2,0"/>
+                            <Border Grid.Column="0" Background="#E8002D" CornerRadius="3" VerticalAlignment="Bottom" Height="76" Margin="2,0"/>
+                            <Border Grid.Column="1" Background="#CC1122" CornerRadius="3" VerticalAlignment="Bottom" Height="62" Margin="2,0"/>
+                            <Border Grid.Column="2" Background="#AA1111" CornerRadius="3" VerticalAlignment="Bottom" Height="52" Margin="2,0"/>
+                            <Border Grid.Column="3" Background="#881100" CornerRadius="3" VerticalAlignment="Bottom" Height="44" Margin="2,0"/>
+                            <Border Grid.Column="4" Background="#661100" CornerRadius="3" VerticalAlignment="Bottom" Height="30" Margin="2,0"/>
+                            <Border Grid.Column="5" Background="#00BCD4" CornerRadius="3" VerticalAlignment="Bottom" Height="18" Margin="2,0"/>
+                            <Border Grid.Column="6" Background="#00BCD4" CornerRadius="3" VerticalAlignment="Bottom" Height="34" Margin="2,0"/>
+                            <Border Grid.Column="7" Background="#00BCD4" CornerRadius="3" VerticalAlignment="Bottom" Height="56" Margin="2,0"/>
+                            <Border Grid.Column="8" Background="#00BCD4" CornerRadius="3" VerticalAlignment="Bottom" Height="68" Margin="2,0"/>
+                            <Border Grid.Column="9" Background="#00BCD4" CornerRadius="3" VerticalAlignment="Bottom" Height="50" Margin="2,0"/>
                         </Grid>
-
                         <Grid Margin="0,4,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -415,15 +390,9 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="MAIN."
-                                       Foreground="#5A5A5A" FontSize="7"
-                                       HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="4" Text="+30M"
-                                       Foreground="#5A5A5A" FontSize="7"
-                                       HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="9" Text="+60M"
-                                       Foreground="#5A5A5A" FontSize="7"
-                                       HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="0" Text="MAIN." Foreground="#5A5A5A" FontSize="7" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="4" Text="+30M" Foreground="#5A5A5A" FontSize="7" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="9" Text="+60M" Foreground="#5A5A5A" FontSize="7" HorizontalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -439,7 +408,6 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-
                             <StackPanel Grid.Column="0" HorizontalAlignment="Center">
                                 <TextBlock Text="SESSION" Style="{StaticResource LabelCap}"
                                            HorizontalAlignment="Center" Margin="0,0,0,4"/>
@@ -447,11 +415,8 @@
                                            FontSize="14" FontWeight="Bold"
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
-
                             <Border Grid.Column="0" Background="#2A2A2A"
-                                    Width="1" HorizontalAlignment="Right"
-                                    Margin="0,4"/>
-
+                                    Width="1" HorizontalAlignment="Right" Margin="0,4"/>
                             <StackPanel Grid.Column="1" HorizontalAlignment="Center">
                                 <TextBlock Text="MEETING" Style="{StaticResource LabelCap}"
                                            HorizontalAlignment="Center" Margin="0,0,0,4"/>
@@ -459,11 +424,8 @@
                                            FontSize="14" FontWeight="Bold"
                                            HorizontalAlignment="Center"/>
                             </StackPanel>
-
                             <Border Grid.Column="1" Background="#2A2A2A"
-                                    Width="1" HorizontalAlignment="Right"
-                                    Margin="0,4"/>
-
+                                    Width="1" HorizontalAlignment="Right" Margin="0,4"/>
                             <StackPanel Grid.Column="2" HorizontalAlignment="Center">
                                 <TextBlock Text="MÀJ" Style="{StaticResource LabelCap}"
                                            HorizontalAlignment="Center" Margin="0,0,0,4"/>
@@ -514,18 +476,23 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                <!-- HOME -->
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Home_Click">
                     <TextBlock Text="🏠" FontSize="20" HorizontalAlignment="Center"/>
                     <TextBlock Text="Home" Foreground="#5A5A5A" FontSize="9"
                                HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                <!-- TIMING -->
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Timing_Click">
                     <TextBlock Text="⏱" FontSize="20" HorizontalAlignment="Center"/>
                     <TextBlock Text="Timing" Foreground="#5A5A5A" FontSize="9"
                                HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
 
+                <!-- MÉTÉO (actif) -->
                 <StackPanel Grid.Column="2" HorizontalAlignment="Center">
                     <Border Background="#E8002D" CornerRadius="30"
                             HorizontalAlignment="Center" Margin="0,-22,0,0">
@@ -535,17 +502,22 @@
                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="3" HorizontalAlignment="Center">
+                <!-- TRACK -->
+                <StackPanel Grid.Column="3" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Track_Click">
                     <TextBlock Text="🏎" FontSize="20" HorizontalAlignment="Center"/>
                     <TextBlock Text="Track" Foreground="#5A5A5A" FontSize="9"
                                HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="4" HorizontalAlignment="Center">
+                <!-- PROFIL -->
+                <StackPanel Grid.Column="4" HorizontalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Profil_Click">
                     <TextBlock Text="👤" FontSize="20" HorizontalAlignment="Center"/>
                     <TextBlock Text="Profil" Foreground="#5A5A5A" FontSize="9"
                                HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
+
             </Grid>
         </Border>
 

@@ -20,9 +20,6 @@ using System.Windows.Shapes;
 
 namespace F1_Live_Hub.Views
 {
-    /// <summary>
-    /// Logique d'interaction pour MeteoPage.xaml
-    /// </summary>
     public partial class MeteoPage : Window
     {
         public MeteoPage()
