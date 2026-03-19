@@ -11,6 +11,10 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Window.Resources>
+
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <StackPanel>
@@ -42,33 +46,93 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
                     <TextBlock Grid.Column="0" Text="Classement" Foreground="#888888"
                                FontSize="12" HorizontalAlignment="Center"
                                VerticalAlignment="Center" Cursor="Hand"
                                MouseLeftButtonDown="Tab_Classement_Click"/>
-
                     <TextBlock Grid.Column="1" Text="Pilotes" Foreground="#888888"
                                FontSize="12" HorizontalAlignment="Center"
                                VerticalAlignment="Center" Cursor="Hand"
                                MouseLeftButtonDown="Tab_Pilotes_Click"/>
-
-                    <!-- Course ACTIF -->
                     <StackPanel Grid.Column="2" VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
                         <TextBlock Text="Course" Foreground="White" FontSize="12"
                                    FontWeight="SemiBold" HorizontalAlignment="Center"/>
                         <Rectangle Height="2" Fill="#E10600" Width="46" Margin="0,4,0,0"/>
                     </StackPanel>
-
                     <TextBlock Grid.Column="3" Text="Météo" Foreground="#888888"
                                FontSize="12" HorizontalAlignment="Center"
                                VerticalAlignment="Center" Cursor="Hand"
                                MouseLeftButtonDown="Tab_Meteo_Click"/>
                 </Grid>
 
+                <!-- ══════════════════════════════════════════════════════ -->
+                <!-- INFOS SESSION  ← données bindées depuis CourseViewModel -->
+                <!-- Root.circuit_short_name / country_name / session_type  -->
+                <!-- Root.date_start / year / gmt_offset / country_code     -->
+                <!-- ══════════════════════════════════════════════════════ -->
+                <Border Margin="16,12,16,8" Background="#1A1A1A"
+                        CornerRadius="12" Padding="16,14">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <!-- Root.circuit_short_name -->
+                            <TextBlock Text="{Binding CircuitShortName}"
+                                       Foreground="White" FontSize="20" FontWeight="Bold"/>
+                            <!-- Root.country_name · Root.location -->
+                            <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
+                                <TextBlock Text="{Binding CountryName}"
+                                           Foreground="#888888" FontSize="12"/>
+                                <TextBlock Text=" · " Foreground="#555555" FontSize="12"/>
+                                <TextBlock Text="{Binding Location}"
+                                           Foreground="#888888" FontSize="12"/>
+                            </StackPanel>
+                            <!-- Root.date_start -->
+                            <TextBlock Text="{Binding DateStart}"
+                                       Foreground="#555555" FontSize="10" Margin="0,6,0,0"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" HorizontalAlignment="Right"
+                                    VerticalAlignment="Top">
+                            <!-- Root.session_type -->
+                            <Border Background="#E10600" CornerRadius="4" Padding="8,4">
+                                <TextBlock Text="{Binding SessionType}"
+                                           Foreground="White" FontSize="10" FontWeight="Bold"/>
+                            </Border>
+                            <!-- Root.year -->
+                            <TextBlock Text="{Binding Year}"
+                                       Foreground="#555555" FontSize="10"
+                                       HorizontalAlignment="Center" Margin="0,6,0,0"/>
+                            <!-- Root.gmt_offset -->
+                            <TextBlock Text="{Binding GmtOffset}"
+                                       Foreground="#555555" FontSize="9"
+                                       HorizontalAlignment="Center"/>
+                            <!-- Root.country_code -->
+                            <TextBlock Text="{Binding CountryCode}"
+                                       Foreground="#888888" FontSize="10" FontWeight="Bold"
+                                       HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Chargement en cours -->
+                <Border Margin="16,0,16,8" Background="#1A1A1A" CornerRadius="8" Padding="12,8"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="⏳ Chargement des données session..."
+                               Foreground="#888888" FontSize="11" HorizontalAlignment="Center"/>
+                </Border>
+
+                <!-- Erreur API -->
+                <Border Margin="16,0,16,8" Background="#2A0000" CornerRadius="8" Padding="12,8"
+                        Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <TextBlock Text="{Binding ErrorMessage}"
+                               Foreground="#E10600" FontSize="11" HorizontalAlignment="Center"/>
+                </Border>
+
                 <!-- DUEL VER vs HAM -->
-                <Border Margin="16,12,16,12" Background="#1A1A1A"
+                <Border Margin="16,0,16,12" Background="#1A1A1A"
                         CornerRadius="12" Padding="16,14">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -348,24 +412,18 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <!-- LIVE -->
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Live_Click">
                     <TextBlock Text="📡" FontSize="18" HorizontalAlignment="Center"/>
                     <TextBlock Text="LIVE" Foreground="#5A5A5A" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
-
-                <!-- STANDINGS -->
                 <StackPanel Grid.Column="1" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Standings_Click">
                     <TextBlock Text="📊" FontSize="18" HorizontalAlignment="Center"/>
                     <TextBlock Text="STANDINGS" Foreground="#5A5A5A" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
-
-                <!-- NEWS (actif) -->
                 <StackPanel Grid.Column="2" HorizontalAlignment="Center">
                     <TextBlock Text="📰" FontSize="18" HorizontalAlignment="Center"/>
                     <TextBlock Text="NEWS" Foreground="#E8002D" FontSize="8"
@@ -373,16 +431,12 @@
                     <Border Background="#E8002D" Height="2" Width="18" CornerRadius="1"
                             HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
-
-                <!-- CALENDAR -->
                 <StackPanel Grid.Column="3" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Calendar_Click">
                     <TextBlock Text="📅" FontSize="18" HorizontalAlignment="Center"/>
                     <TextBlock Text="CALENDAR" Foreground="#5A5A5A" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
-
-                <!-- HUB -->
                 <StackPanel Grid.Column="4" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Hub_Click">
                     <TextBlock Text="⚙" FontSize="18" Foreground="#5A5A5A"
@@ -390,7 +444,6 @@
                     <TextBlock Text="HUB" Foreground="#5A5A5A" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
-
             </Grid>
         </Border>
 

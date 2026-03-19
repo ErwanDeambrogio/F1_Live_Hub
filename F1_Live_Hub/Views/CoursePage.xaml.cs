@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using F1_Live_Hub.Models;
 
 namespace F1_Live_Hub.Views
 {
@@ -19,6 +20,9 @@ namespace F1_Live_Hub.Views
         public CoursePage()
         {
             InitializeComponent();
+            var viewModel = new Course();
+            DataContext = viewModel;
+            Loaded += async (s, e) => await viewModel.LoadSessionDataAsync();
         }
 
         private void OpenWindow(Window window)
@@ -55,4 +59,5 @@ namespace F1_Live_Hub.Views
             this.Close();
         }
     }
+
 }

@@ -58,6 +58,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Root.cs" />
+    <Compile Include="Models\Root.xaml.cs" />
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\F1ApiService.cs" />
     <Compile Include="Services\LiveService.cs" />
