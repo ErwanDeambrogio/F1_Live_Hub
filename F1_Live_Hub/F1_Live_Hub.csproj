@@ -58,16 +58,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\Circuits.cs" />
     <Compile Include="Models\Root.cs" />
     <Compile Include="Models\Root.xaml.cs" />
     <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Services\Circuits.cs" />
     <Compile Include="Services\F1ApiService.cs" />
     <Compile Include="Services\LiveService.cs" />
-    <Compile Include="Services\MeteoService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Views\AccueilPage.xaml.cs">
       <DependentUpon>AccueilPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CircuitsPage.xaml.cs">
+      <DependentUpon>CircuitsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClassementPage.xaml.cs">
       <DependentUpon>ClassementPage.xaml</DependentUpon>
@@ -83,9 +87,6 @@
     </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MeteoPage.xaml.cs">
-      <DependentUpon>MeteoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PilotesPage.xaml.cs">
       <DependentUpon>PilotesPage.xaml</DependentUpon>
@@ -131,6 +132,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\CircuitsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ClassementPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -148,10 +153,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoginPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MeteoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -175,7 +176,6 @@
   <ItemGroup>
     <Compile Include="Models\Classement.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\Meteo.cs" />
     <Compile Include="Models\Pilote.cs" />
     <Compile Include="Models\Telemetrie.cs" />
     <Compile Include="Models\Utilisateur.cs" />

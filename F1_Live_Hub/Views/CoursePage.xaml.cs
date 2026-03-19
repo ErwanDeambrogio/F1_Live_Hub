@@ -39,8 +39,7 @@ namespace F1_Live_Hub.Views
         private void Tab_Pilotes_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new PilotesPage());
 
-        private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new MeteoPage());
+       
 
         // ── BOTTOM NAV ───────────────────────────────────────────
 

@@ -63,7 +63,7 @@
                     <TextBlock Grid.Column="3" Text="Météo" Foreground="#888888"
                                FontSize="12" HorizontalAlignment="Center"
                                VerticalAlignment="Center" Cursor="Hand"
-                               MouseLeftButtonDown="Tab_Meteo_Click"/>
+                               />
                 </Grid>
 
                 <!-- ══════════════════════════════════════════════════════ -->
