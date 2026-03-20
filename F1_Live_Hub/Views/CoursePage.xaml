@@ -4,15 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="F1 Live Hub - Course" Height="1000" Width="420"
-        Background="#0D0D0D"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        ResizeMode="NoResize"
+        Title="F1 Live Hub - Course" Height="900" Width="420"
+        Background="#0D0D0D" WindowStyle="None"
+        AllowsTransparency="True" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
     </Window.Resources>
 
     <Grid>
@@ -20,22 +18,23 @@
             <StackPanel>
 
                 <!-- TOP BAR -->
-                <Grid Height="60" Margin="16,0">
+                <Grid Height="56" Margin="16,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="☰" Foreground="White"
-                               FontSize="22" VerticalAlignment="Center" Cursor="Hand"/>
-                    <StackPanel Grid.Column="1" VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
-                        <TextBlock Text="F1 LIVE HUB" Foreground="White"
-                                   FontSize="16" FontWeight="Bold"
-                                   HorizontalAlignment="Center"/>
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Width="22" Height="22" Background="#E10600"
+                                CornerRadius="4" Margin="0,0,6,0">
+                            <TextBlock Text="F1" Foreground="White" FontSize="9" FontWeight="Bold"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="F1 HUB" Foreground="White" FontSize="16"
+                                   FontWeight="Bold" VerticalAlignment="Center"/>
                     </StackPanel>
-                    <TextBlock Grid.Column="2" Text="📡" Foreground="White"
-                               FontSize="20" VerticalAlignment="Center"/>
+                    <TextBlock Grid.Column="2" Text="🔔" FontSize="18"
+                               Foreground="White" VerticalAlignment="Center"/>
                 </Grid>
 
                 <!-- NAV TABS -->
@@ -47,363 +46,409 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Classement" Foreground="#888888"
-                               FontSize="12" HorizontalAlignment="Center"
-                               VerticalAlignment="Center" Cursor="Hand"
-                               MouseLeftButtonDown="Tab_Classement_Click"/>
+                               FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Cursor="Hand" MouseLeftButtonDown="Tab_Classement_Click"/>
                     <TextBlock Grid.Column="1" Text="Pilotes" Foreground="#888888"
-                               FontSize="12" HorizontalAlignment="Center"
-                               VerticalAlignment="Center" Cursor="Hand"
-                               MouseLeftButtonDown="Tab_Pilotes_Click"/>
-                    <StackPanel Grid.Column="2" VerticalAlignment="Center"
-                                HorizontalAlignment="Center">
-                        <TextBlock Text="Course" Foreground="White" FontSize="12"
+                               FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Cursor="Hand" MouseLeftButtonDown="Tab_Pilotes_Click"/>
+                    <StackPanel Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Course" Foreground="#E10600" FontSize="12"
                                    FontWeight="SemiBold" HorizontalAlignment="Center"/>
                         <Rectangle Height="2" Fill="#E10600" Width="46" Margin="0,4,0,0"/>
                     </StackPanel>
                     <TextBlock Grid.Column="3" Text="Météo" Foreground="#888888"
-                               FontSize="12" HorizontalAlignment="Center"
-                               VerticalAlignment="Center" Cursor="Hand"
-                               MouseLeftButtonDown="Tab_Meteo_Click"/>
+                               FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Cursor="Hand" MouseLeftButtonDown="Tab_Meteo_Click"/>
                 </Grid>
 
-                <!-- ══════════════════════════════════════════════════════ -->
-                <!-- INFOS SESSION  ← données bindées depuis CourseViewModel -->
-                <!-- Root.circuit_short_name / country_name / session_type  -->
-                <!-- Root.date_start / year / gmt_offset / country_code     -->
-                <!-- ══════════════════════════════════════════════════════ -->
-                <Border Margin="16,12,16,8" Background="#1A1A1A"
-                        CornerRadius="12" Padding="16,14">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <!-- Root.circuit_short_name -->
-                            <TextBlock Text="{Binding CircuitShortName}"
-                                       Foreground="White" FontSize="20" FontWeight="Bold"/>
-                            <!-- Root.country_name · Root.location -->
-                            <StackPanel Orientation="Horizontal" Margin="0,2,0,0">
-                                <TextBlock Text="{Binding CountryName}"
-                                           Foreground="#888888" FontSize="12"/>
-                                <TextBlock Text=" · " Foreground="#555555" FontSize="12"/>
-                                <TextBlock Text="{Binding Location}"
-                                           Foreground="#888888" FontSize="12"/>
-                            </StackPanel>
-                            <!-- Root.date_start -->
-                            <TextBlock Text="{Binding DateStart}"
-                                       Foreground="#555555" FontSize="10" Margin="0,6,0,0"/>
+                <!-- BOUTONS LAST / NEXT -->
+                <Grid Margin="16,10,16,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Cursor="Hand" Click="BtnLast_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#1A1A1A" CornerRadius="8"
+                                        BorderBrush="#333333" BorderThickness="1">
+                                    <TextBlock Text="⬅  Dernière" Foreground="White"
+                                               FontSize="11" FontWeight="Bold"
+                                               HorizontalAlignment="Center" Margin="0,10"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                    <Button Grid.Column="2" Cursor="Hand" Click="BtnNext_Click">
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="#E10600" CornerRadius="8">
+                                    <TextBlock Text="Prochaine  ➡" Foreground="White"
+                                               FontSize="11" FontWeight="Bold"
+                                               HorizontalAlignment="Center" Margin="0,10"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </Grid>
+
+                <!-- RECHERCHE PAR ANNÉE / ROUND -->
+                <Border Margin="16,10,16,0" Background="#1A1A1A" CornerRadius="10" Padding="14,12">
+                    <StackPanel>
+                        <TextBlock Text="🔍  RECHERCHER UNE COURSE" Foreground="#888888"
+                                   FontSize="9" FontWeight="Bold" Margin="0,0,0,8"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="8"/>
+                                <ColumnDefinition Width="44"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="#111111"
+                                    CornerRadius="6" BorderBrush="#333333" BorderThickness="1">
+                                <TextBox x:Name="TxtYear" Background="Transparent"
+                                         Foreground="White" FontSize="13" FontWeight="Bold"
+                                         BorderThickness="0" Padding="10,7"
+                                         Text="2024" CaretBrush="White"/>
+                            </Border>
+                            <Border Grid.Column="2" Background="#111111"
+                                    CornerRadius="6" BorderBrush="#333333" BorderThickness="1">
+                                <TextBox x:Name="TxtRound" Background="Transparent"
+                                         Foreground="White" FontSize="13" FontWeight="Bold"
+                                         BorderThickness="0" Padding="10,7"
+                                         Text="1" CaretBrush="White"/>
+                            </Border>
+                            <Button Grid.Column="4" Cursor="Hand" Click="BtnSearch_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="#E10600" CornerRadius="6">
+                                            <TextBlock Text="OK" Foreground="White"
+                                                       FontSize="11" FontWeight="Bold"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center" Margin="0,8"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Margin="2,5,0,0">
+                            <TextBlock Text="Année" Foreground="#555555" FontSize="9"/>
+                            <TextBlock Text="                              Round"
+                                       Foreground="#555555" FontSize="9"/>
                         </StackPanel>
-                        <StackPanel Grid.Column="1" HorizontalAlignment="Right"
-                                    VerticalAlignment="Top">
-                            <!-- Root.session_type -->
-                            <Border Background="#E10600" CornerRadius="4" Padding="8,4">
-                                <TextBlock Text="{Binding SessionType}"
+                    </StackPanel>
+                </Border>
+
+                <!-- CHARGEMENT -->
+                <Border Margin="16,8,16,0" Background="#1A1A1A" CornerRadius="8" Padding="12,8"
+                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Text="⏳  Chargement..." Foreground="#888888"
+                               FontSize="11" HorizontalAlignment="Center"/>
+                </Border>
+
+                <!-- ERREUR -->
+                <Border Margin="16,8,16,0" Background="#2A0000" CornerRadius="8" Padding="12,8"
+                        Visibility="{Binding HasError, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Text="{Binding ErrorMessage}" Foreground="#E10600"
+                               FontSize="11" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                </Border>
+
+                <!-- HERO COURSE -->
+                <Border Margin="16,10,16,0" Background="#1A1A1A" CornerRadius="12" Padding="16,14">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                            <Border Background="#E10600" CornerRadius="4" Padding="7,3" Margin="0,0,8,0">
+                                <TextBlock Text="{Binding Round, StringFormat='Round {0}'}"
                                            Foreground="White" FontSize="10" FontWeight="Bold"/>
                             </Border>
-                            <!-- Root.year -->
-                            <TextBlock Text="{Binding Year}"
-                                       Foreground="#555555" FontSize="10"
-                                       HorizontalAlignment="Center" Margin="0,6,0,0"/>
-                            <!-- Root.gmt_offset -->
-                            <TextBlock Text="{Binding GmtOffset}"
-                                       Foreground="#555555" FontSize="9"
-                                       HorizontalAlignment="Center"/>
-                            <!-- Root.country_code -->
-                            <TextBlock Text="{Binding CountryCode}"
-                                       Foreground="#888888" FontSize="10" FontWeight="Bold"
-                                       HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                            <TextBlock Text="{Binding Year}" Foreground="#888888"
+                                       FontSize="11" VerticalAlignment="Center"/>
                         </StackPanel>
-                    </Grid>
-                </Border>
-
-                <!-- Chargement en cours -->
-                <Border Margin="16,0,16,8" Background="#1A1A1A" CornerRadius="8" Padding="12,8"
-                        Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <TextBlock Text="⏳ Chargement des données session..."
-                               Foreground="#888888" FontSize="11" HorizontalAlignment="Center"/>
-                </Border>
-
-                <!-- Erreur API -->
-                <Border Margin="16,0,16,8" Background="#2A0000" CornerRadius="8" Padding="12,8"
-                        Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <TextBlock Text="{Binding ErrorMessage}"
-                               Foreground="#E10600" FontSize="11" HorizontalAlignment="Center"/>
-                </Border>
-
-                <!-- DUEL VER vs HAM -->
-                <Border Margin="16,0,16,12" Background="#1A1A1A"
-                        CornerRadius="12" Padding="16,14">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <Border Grid.Column="0" Width="46" Height="46"
-                                CornerRadius="23" Background="#E10600">
-                            <TextBlock Text="👤" FontSize="22"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
-                            <TextBlock Text="VER" Foreground="White"
-                                       FontSize="13" FontWeight="Bold"/>
-                            <TextBlock Text="1:32.445" Foreground="White"
-                                       FontSize="18" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding RaceName}" Foreground="White"
+                                   FontSize="18" FontWeight="Bold" TextWrapping="Wrap"/>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock Text="{Binding City}" Foreground="#888888" FontSize="12"/>
+                            <TextBlock Text="  ·  " Foreground="#444444" FontSize="12"/>
+                            <TextBlock Text="{Binding Country}" Foreground="#888888" FontSize="12"/>
                         </StackPanel>
-                        <TextBlock Grid.Column="2" Text="VS" Foreground="#E10600"
-                                   FontSize="20" FontWeight="Bold"
-                                   VerticalAlignment="Center" Margin="8,0"/>
-                        <StackPanel Grid.Column="3" VerticalAlignment="Center"
-                                    Margin="8,0" HorizontalAlignment="Right">
-                            <TextBlock Text="HAM" Foreground="White"
-                                       FontSize="13" FontWeight="Bold"
-                                       HorizontalAlignment="Right"/>
-                            <TextBlock Text="+0.124" Foreground="White"
-                                       FontSize="18" FontWeight="Bold"
-                                       HorizontalAlignment="Right"/>
-                        </StackPanel>
-                        <Border Grid.Column="4" Width="46" Height="46"
-                                CornerRadius="23" Background="#00C8C8">
-                            <TextBlock Text="👤" FontSize="22"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"/>
-                        </Border>
-                    </Grid>
+                    </StackPanel>
                 </Border>
 
-                <!-- GRAPHIQUE VITESSE -->
-                <Border Margin="16,0,16,12" Background="#1A1A1A"
-                        CornerRadius="12" Padding="16,14">
+                <!-- INFOS CIRCUIT -->
+                <Border Margin="16,8,16,0" Background="#1A1A1A" CornerRadius="12" Padding="16,14">
                     <StackPanel>
-                        <TextBlock Text="VITESSE (KM/H)" Foreground="#888888"
-                                   FontSize="10" FontWeight="Bold" Margin="0,0,0,4"/>
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
-                            <TextBlock Text="324" Foreground="White"
-                                       FontSize="28" FontWeight="Bold"/>
-                            <TextBlock Text=" +2.4 △" Foreground="#E10600"
-                                       FontSize="14" VerticalAlignment="Bottom"
-                                       Margin="6,0,0,4"/>
-                            <StackPanel Orientation="Horizontal"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Bottom"
-                                        Margin="80,0,0,4">
-                                <Ellipse Width="8" Height="8" Fill="#E10600" Margin="0,0,4,0"/>
-                                <TextBlock Text="VER" Foreground="#888888" FontSize="10" Margin="0,0,12,0"/>
-                                <Ellipse Width="8" Height="8" Fill="#00C8C8" Margin="0,0,4,0"/>
-                                <TextBlock Text="HAM" Foreground="#888888" FontSize="10"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <Canvas Height="120" Margin="0,0,0,8">
-                            <Rectangle Canvas.Left="0" Canvas.Top="0" Width="380" Height="1" Fill="#222222"/>
-                            <Rectangle Canvas.Left="0" Canvas.Top="40" Width="380" Height="1" Fill="#222222"/>
-                            <Rectangle Canvas.Left="0" Canvas.Top="80" Width="380" Height="1" Fill="#222222"/>
-                            <Rectangle Canvas.Left="0" Canvas.Top="119" Width="380" Height="1" Fill="#222222"/>
-                            <Polyline Canvas.Left="0" Canvas.Top="0"
-                                      Points="0,90 40,60 80,30 120,70 160,40 200,80 240,20 280,55 320,15 360,10 388,0"
-                                      Stroke="#E10600" StrokeThickness="2.5" StrokeLineJoin="Round"/>
-                            <Polyline Canvas.Left="0" Canvas.Top="0"
-                                      Points="0,100 40,70 80,45 120,80 160,55 200,90 240,35 280,68 320,28 360,22 388,12"
-                                      Stroke="#00C8C8" StrokeThickness="2"
-                                      StrokeDashArray="4,3" StrokeLineJoin="Round"/>
-                        </Canvas>
-                        <Grid Margin="0,4,0,0">
+                        <TextBlock Text="CIRCUIT" Foreground="#888888"
+                                   FontSize="9" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="{Binding CircuitName}" Foreground="White"
+                                   FontSize="14" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <Grid Margin="0,0,0,8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="LONGUEUR" Foreground="#555555"
+                                           FontSize="9" FontWeight="Bold" Margin="0,0,0,3"/>
+                                <TextBlock Text="{Binding CircuitLength}" Foreground="White"
+                                           FontSize="13" FontWeight="SemiBold"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="VIRAGES" Foreground="#555555"
+                                           FontSize="9" FontWeight="Bold" Margin="0,0,0,3"/>
+                                <TextBlock Text="{Binding Corners}" Foreground="White"
+                                           FontSize="13" FontWeight="SemiBold"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="1ÈRE COURSE" Foreground="#555555"
+                                           FontSize="9" FontWeight="Bold" Margin="0,0,0,3"/>
+                                <TextBlock Text="{Binding CircuitFirstYear}" Foreground="White"
+                                           FontSize="13" FontWeight="SemiBold"/>
+                            </StackPanel>
+                        </Grid>
+                        <Rectangle Height="1" Fill="#2A2A2A" Margin="0,4,0,8"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="START" Foreground="#555555"
-                                       FontSize="9" HorizontalAlignment="Left"/>
-                            <TextBlock Grid.Column="1" Text="S1" Foreground="#555555"
-                                       FontSize="9" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="S2" Foreground="#555555"
-                                       FontSize="9" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="4" Text="FINISH" Foreground="#555555"
-                                       FontSize="9" HorizontalAlignment="Right"/>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <!-- LIVE TRACK MAP -->
-                <Border Margin="16,0,16,12" Background="#1A1A1A"
-                        CornerRadius="12" Padding="16,14">
-                    <StackPanel>
-                        <Grid Margin="0,0,0,12">
-                            <TextBlock Text="LIVE TRACK MAP" Foreground="White"
-                                       FontSize="13" FontWeight="Bold"
-                                       VerticalAlignment="Center"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Border Background="#E10600" CornerRadius="4"
-                                        Padding="8,4" Margin="0,0,8,0">
-                                    <TextBlock Text="LAP 42/57" Foreground="White"
-                                               FontSize="10" FontWeight="Bold"/>
-                                </Border>
-                                <Border Background="Transparent" CornerRadius="4"
-                                        Padding="8,4" BorderBrush="#00C851" BorderThickness="1.5">
-                                    <TextBlock Text="DRS ENABLED" Foreground="#00C851"
-                                               FontSize="10" FontWeight="Bold"/>
-                                </Border>
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="RECORD DU TOUR" Foreground="#555555"
+                                           FontSize="9" FontWeight="Bold" Margin="0,0,0,3"/>
+                                <TextBlock Text="{Binding LapRecord}" Foreground="#E10600"
+                                           FontSize="13" FontWeight="Bold"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="MEILLEUR TOUR COURSE" Foreground="#555555"
+                                           FontSize="9" FontWeight="Bold" Margin="0,0,0,3"/>
+                                <TextBlock Text="{Binding FastLap}" Foreground="White"
+                                           FontSize="13" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding FastLapDriverId}" Foreground="#888888"
+                                           FontSize="10"/>
                             </StackPanel>
                         </Grid>
-                        <Border Background="#2A2A2A" CornerRadius="8" Height="220">
-                            <Canvas>
-                                <Polyline
-                                    Points="60,80 100,40 160,30 220,40 280,60 310,90 300,130 260,150 200,160 160,170 120,160 80,140 55,110 60,80"
-                                    Stroke="#555555" StrokeThickness="8"
-                                    StrokeLineJoin="Round" StrokeStartLineCap="Round"
-                                    Canvas.Left="20" Canvas.Top="10"/>
-                                <Polyline
-                                    Points="60,80 100,40 160,30 220,40 280,60 310,90 300,130 260,150 200,160 160,170 120,160 80,140 55,110 60,80"
-                                    Stroke="#444444" StrokeThickness="5"
-                                    StrokeLineJoin="Round"
-                                    Canvas.Left="20" Canvas.Top="10"/>
-                                <Ellipse Width="14" Height="14" Fill="#E10600"
-                                         Canvas.Left="138" Canvas.Top="44"
-                                         StrokeThickness="2" Stroke="White"/>
-                                <Ellipse Width="14" Height="14" Fill="#00C8C8"
-                                         Canvas.Left="156" Canvas.Top="44"
-                                         StrokeThickness="2" Stroke="White"/>
-                                <Ellipse Width="8" Height="8" Fill="#FFFFFF"
-                                         Opacity="0.4" Canvas.Left="258" Canvas.Top="148"/>
-                                <Ellipse Width="8" Height="8" Fill="#FFFFFF"
-                                         Opacity="0.3" Canvas.Left="298" Canvas.Top="126"/>
-                            </Canvas>
-                        </Border>
                     </StackPanel>
                 </Border>
 
-                <!-- TYRE WEAR + PIT WINDOW -->
-                <Grid Margin="16,0,16,12">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="10"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Border Grid.Column="0" Background="#1A1A1A" CornerRadius="12" Padding="14,12">
-                        <StackPanel>
-                            <TextBlock Text="TYRE WEAR EST." Foreground="#888888"
-                                       FontSize="9" FontWeight="Bold" Margin="0,0,0,12"/>
-                            <Grid Margin="0,0,0,6">
-                                <TextBlock Text="VER (M)" Foreground="#AAAAAA" FontSize="10"/>
-                                <TextBlock Text="34%" Foreground="#E10600"
-                                           FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
-                            </Grid>
-                            <Border Background="#2A2A2A" CornerRadius="3" Height="5" Margin="0,0,0,12">
-                                <Border Background="#E10600" CornerRadius="3"
-                                        HorizontalAlignment="Left" Width="120"/>
-                            </Border>
-                            <Grid Margin="0,0,0,6">
-                                <TextBlock Text="HAM (H)" Foreground="#AAAAAA" FontSize="10"/>
-                                <TextBlock Text="12%" Foreground="#AAAAAA"
-                                           FontSize="10" FontWeight="Bold" HorizontalAlignment="Right"/>
-                            </Grid>
-                            <Border Background="#2A2A2A" CornerRadius="3" Height="5">
-                                <Border Background="#666666" CornerRadius="3"
-                                        HorizontalAlignment="Left" Width="42"/>
-                            </Border>
-                        </StackPanel>
-                    </Border>
-                    <Border Grid.Column="2" Background="#1A1A1A" CornerRadius="12" Padding="14,12">
-                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <TextBlock Text="PIT WINDOW" Foreground="#888888"
-                                       FontSize="9" FontWeight="Bold"
-                                       HorizontalAlignment="Center" Margin="0,0,0,8"/>
-                            <TextBlock Text="Window Opening" Foreground="#AAAAAA"
-                                       FontSize="11" HorizontalAlignment="Center" Margin="0,0,0,6"/>
-                            <TextBlock Text="3 Laps" Foreground="White"
-                                       FontSize="26" FontWeight="Bold"
-                                       HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </Border>
-                </Grid>
-
-                <!-- INCIDENT FEED -->
-                <Border Margin="16,0,16,12" Background="#1A1A1A" CornerRadius="12" Padding="0">
+                <!-- SESSIONS -->
+                <Border Margin="16,8,16,0" Background="#1A1A1A" CornerRadius="12" Padding="16,14">
                     <StackPanel>
-                        <Border Background="#2A0000" CornerRadius="12,12,0,0" Padding="16,12">
-                            <Grid>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="🔔" FontSize="14" Margin="0,0,8,0"/>
-                                    <TextBlock Text="INCIDENT FEED" Foreground="#E10600"
-                                               FontSize="13" FontWeight="Bold"
-                                               VerticalAlignment="Center"/>
-                                </StackPanel>
-                                <TextBlock Text="Real-time Updates" Foreground="#E10600"
-                                           FontSize="10" HorizontalAlignment="Right"
-                                           VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
-                        <Border Padding="16,14" BorderThickness="0,0,0,1" BorderBrush="#222222">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="LAP 41" Foreground="#555555"
-                                           FontSize="10" FontWeight="Bold"
-                                           VerticalAlignment="Top" Margin="0,2,0,0"/>
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="YELLOW FLAG Sector 3" Foreground="White"
-                                               FontSize="13" FontWeight="Bold"/>
-                                    <TextBlock Text="Car 11 (PER) spun in Turn 15. Rejoined track."
-                                               Foreground="#888888" FontSize="11" TextWrapping="Wrap"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <Border Padding="16,14" BorderThickness="0,0,0,1" BorderBrush="#222222">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="LAP 39" Foreground="#555555"
-                                           FontSize="10" FontWeight="Bold"
-                                           VerticalAlignment="Top" Margin="0,2,0,0"/>
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="FASTEST LAP: VER" Foreground="White"
-                                               FontSize="13" FontWeight="Bold"/>
-                                    <TextBlock Text="1:32.445 - Sector 1 Purple"
-                                               Foreground="#888888" FontSize="11"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                        <Border Padding="16,14">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0" Text="LAP 38" Foreground="#555555"
-                                           FontSize="10" FontWeight="Bold"
-                                           VerticalAlignment="Top" Margin="0,2,0,0"/>
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock Text="PIT STOP: RUS" Foreground="White"
-                                               FontSize="13" FontWeight="Bold"/>
-                                    <TextBlock Text="Stationary time: 2.4s (Hard Tyres)"
-                                               Foreground="#888888" FontSize="11"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
+                        <TextBlock Text="SESSIONS" Foreground="#888888"
+                                   FontSize="9" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                        <!-- FP1 -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="#222222" CornerRadius="6"
+                                    Width="28" Height="28" HorizontalAlignment="Left">
+                                <TextBlock Text="P1" Foreground="#888888" FontSize="10" FontWeight="Bold"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="Essais Libres 1" Foreground="White"
+                                       FontSize="12" VerticalAlignment="Center" Margin="10,0"/>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding Fp1Date}" Foreground="#888888"
+                                           FontSize="11" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding Fp1Time}" Foreground="#555555"
+                                           FontSize="10" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- FP2 -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="#222222" CornerRadius="6"
+                                    Width="28" Height="28" HorizontalAlignment="Left">
+                                <TextBlock Text="P2" Foreground="#888888" FontSize="10" FontWeight="Bold"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="Essais Libres 2" Foreground="White"
+                                       FontSize="12" VerticalAlignment="Center" Margin="10,0"/>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding Fp2Date}" Foreground="#888888"
+                                           FontSize="11" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding Fp2Time}" Foreground="#555555"
+                                           FontSize="10" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- FP3 -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="#222222" CornerRadius="6"
+                                    Width="28" Height="28" HorizontalAlignment="Left">
+                                <TextBlock Text="P3" Foreground="#888888" FontSize="10" FontWeight="Bold"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="Essais Libres 3" Foreground="White"
+                                       FontSize="12" VerticalAlignment="Center" Margin="10,0"/>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding Fp3Date}" Foreground="#888888"
+                                           FontSize="11" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding Fp3Time}" Foreground="#555555"
+                                           FontSize="10" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- SPRINT QUALY -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="#1A1500" CornerRadius="6"
+                                    Width="28" Height="28" HorizontalAlignment="Left">
+                                <TextBlock Text="SQ" Foreground="#FFD700" FontSize="9" FontWeight="Bold"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="Sprint Qualifs" Foreground="White"
+                                       FontSize="12" VerticalAlignment="Center" Margin="10,0"/>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding SprintQualyDate}" Foreground="#FFD700"
+                                           FontSize="11" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- SPRINT RACE -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="#1A1500" CornerRadius="6"
+                                    Width="28" Height="28" HorizontalAlignment="Left">
+                                <TextBlock Text="SP" Foreground="#FFD700" FontSize="10" FontWeight="Bold"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="Sprint" Foreground="White"
+                                       FontSize="12" VerticalAlignment="Center" Margin="10,0"/>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding SprintRaceDate}" Foreground="#FFD700"
+                                           FontSize="11" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding SprintRaceTime}" Foreground="#555555"
+                                           FontSize="10" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- QUALIFS -->
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="#111133" CornerRadius="6"
+                                    Width="28" Height="28" HorizontalAlignment="Left">
+                                <TextBlock Text="Q" Foreground="#4488FF" FontSize="11" FontWeight="Bold"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Grid.Column="1" Text="Qualifications" Foreground="White"
+                                       FontSize="12" VerticalAlignment="Center" Margin="10,0"/>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding QualyDate}" Foreground="#4488FF"
+                                           FontSize="11" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding QualyTime}" Foreground="#555555"
+                                           FontSize="10" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- COURSE -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0" Background="#2A0000" CornerRadius="6"
+                                    Width="28" Height="28" HorizontalAlignment="Left">
+                                <TextBlock Text="R" Foreground="#E10600" FontSize="11" FontWeight="Bold"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="10,0">
+                                <TextBlock Text="Course" Foreground="White"
+                                           FontSize="12" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Laps, StringFormat='{}{0} tours'}"
+                                           Foreground="#555555" FontSize="10"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Right">
+                                <TextBlock Text="{Binding RaceDate}" Foreground="#E10600"
+                                           FontSize="11" FontWeight="Bold" HorizontalAlignment="Right"/>
+                                <TextBlock Text="{Binding RaceTime}" Foreground="#555555"
+                                           FontSize="10" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </Grid>
                     </StackPanel>
                 </Border>
 
-                <Rectangle Height="80"/>
+                <!-- VAINQUEURS -->
+                <Border Margin="16,8,16,0" Background="#1A1A1A" CornerRadius="12" Padding="16,14">
+                    <StackPanel>
+                        <TextBlock Text="VAINQUEURS" Foreground="#888888"
+                                   FontSize="9" FontWeight="Bold" Margin="0,0,0,12"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="1"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
+                            <!-- Pilote -->
+                            <StackPanel Grid.Column="0">
+                                <TextBlock Text="🏆  PILOTE" Foreground="#555555"
+                                           FontSize="9" FontWeight="Bold" Margin="0,0,0,6"/>
+                                <Border Background="#2A0000" CornerRadius="6" Padding="6,3"
+                                        HorizontalAlignment="Left" Margin="0,0,0,6">
+                                    <TextBlock Text="{Binding WinnerShortName}"
+                                               Foreground="#E10600" FontSize="11" FontWeight="Bold"/>
+                                </Border>
+                                <TextBlock Text="{Binding WinnerName}" Foreground="White"
+                                           FontSize="14" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding WinnerSurname}" Foreground="#E10600"
+                                           FontSize="14" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding WinnerCountry}" Foreground="#888888"
+                                           FontSize="10" Margin="0,3,0,0"/>
+                                <TextBlock Text="{Binding WinnerNumber, StringFormat='#{0}'}"
+                                           Foreground="#555555" FontSize="10"/>
+                            </StackPanel>
+
+                            <Rectangle Grid.Column="1" Fill="#2A2A2A"/>
+
+                            <!-- Équipe -->
+                            <StackPanel Grid.Column="2" Margin="14,0,0,0">
+                                <TextBlock Text="🏎  ÉQUIPE" Foreground="#555555"
+                                           FontSize="9" FontWeight="Bold" Margin="0,0,0,6"/>
+                                <TextBlock Text="{Binding TeamWinnerName}" Foreground="White"
+                                           FontSize="14" FontWeight="Bold" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding TeamWinnerCountry}" Foreground="#888888"
+                                           FontSize="10" Margin="0,3,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <Rectangle Height="90"/>
             </StackPanel>
         </ScrollViewer>
 
         <!-- BOTTOM NAV BAR -->
-        <Border VerticalAlignment="Bottom" Height="70"
+        <Border VerticalAlignment="Bottom" Height="70" Background="#111111"
                 BorderThickness="0,1,0,0" BorderBrush="#222222">
-            <Border.Background>
-                <SolidColorBrush Color="#111111"/>
-            </Border.Background>
             <Grid Margin="0,0,0,6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -415,33 +460,33 @@
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Live_Click">
                     <TextBlock Text="📡" FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock Text="LIVE" Foreground="#5A5A5A" FontSize="8"
+                    <TextBlock Text="LIVE" Foreground="#555555" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Standings_Click">
                     <TextBlock Text="📊" FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock Text="STANDINGS" Foreground="#5A5A5A" FontSize="8"
+                    <TextBlock Text="STANDINGS" Foreground="#555555" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" HorizontalAlignment="Center">
-                    <TextBlock Text="📰" FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock Text="NEWS" Foreground="#E8002D" FontSize="8"
+                    <TextBlock Text="🏁" FontSize="18" HorizontalAlignment="Center"/>
+                    <TextBlock Text="COURSE" Foreground="#E10600" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
-                    <Border Background="#E8002D" Height="2" Width="18" CornerRadius="1"
-                            HorizontalAlignment="Center" Margin="0,3,0,0"/>
+                    <Border Background="#E10600" Height="2" Width="18" CornerRadius="1"
+                            HorizontalAlignment="Center" Margin="0,2,0,0"/>
                 </StackPanel>
                 <StackPanel Grid.Column="3" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Calendar_Click">
                     <TextBlock Text="📅" FontSize="18" HorizontalAlignment="Center"/>
-                    <TextBlock Text="CALENDAR" Foreground="#5A5A5A" FontSize="8"
+                    <TextBlock Text="CALENDAR" Foreground="#555555" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
                 <StackPanel Grid.Column="4" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Hub_Click">
-                    <TextBlock Text="⚙" FontSize="18" Foreground="#5A5A5A"
+                    <TextBlock Text="⚙" FontSize="18" Foreground="#555555"
                                HorizontalAlignment="Center"/>
-                    <TextBlock Text="HUB" Foreground="#5A5A5A" FontSize="8"
+                    <TextBlock Text="HUB" Foreground="#555555" FontSize="8"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,3,0,0"/>
                 </StackPanel>
             </Grid>

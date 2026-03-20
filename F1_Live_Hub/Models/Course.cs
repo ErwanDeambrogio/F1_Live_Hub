@@ -1,66 +1,35 @@
-﻿using F1_Live_Hub.Models;
-using F1_Live_Hub.Services;
-using F1_Live_Hub.Views;
-using System;
-using System.ComponentModel;
-using System.Linq;                          // ← AJOUTÉ pour .Where() et .LastOrDefault()
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
-using System.Windows.Data;
 
 namespace F1_Live_Hub.Models
 {
     public class Course : INotifyPropertyChanged
     {
-        private readonly SessionService _sessionService = new SessionService();
+        // ── Identifiants ──────────────────────────────────────────
+        public string RaceId { get; set; }
+        public string ChampionshipId { get; set; }
+        public string Url { get; set; }
 
-        private string _circuitShortName = "—";
-        public string CircuitShortName
+        // ── Infos course ──────────────────────────────────────────
+        private string _raceName = "—";
+        public string RaceName
         {
-            get => _circuitShortName;
-            set { _circuitShortName = value; OnPropertyChanged(); }
+            get => _raceName;
+            set { _raceName = value; OnPropertyChanged(); }
         }
 
-        private string _sessionType = "—";
-        public string SessionType
+        private int _round;
+        public int Round
         {
-            get => _sessionType;
-            set { _sessionType = value; OnPropertyChanged(); }
+            get => _round;
+            set { _round = value; OnPropertyChanged(); }
         }
 
-        private string _sessionName = "—";
-        public string SessionName
+        private int? _laps;
+        public int? Laps
         {
-            get => _sessionName;
-            set { _sessionName = value; OnPropertyChanged(); }
-        }
-
-        private string _countryName = "—";
-        public string CountryName
-        {
-            get => _countryName;
-            set { _countryName = value; OnPropertyChanged(); }
-        }
-
-        private string _countryCode = "—";
-        public string CountryCode
-        {
-            get => _countryCode;
-            set { _countryCode = value; OnPropertyChanged(); }
-        }
-
-        private string _location = "—";
-        public string Location
-        {
-            get => _location;
-            set { _location = value; OnPropertyChanged(); }
-        }
-
-        private string _dateStart = "—";
-        public string DateStart
-        {
-            get => _dateStart;
-            set { _dateStart = value; OnPropertyChanged(); }
+            get => _laps;
+            set { _laps = value; OnPropertyChanged(); }
         }
 
         private string _year = "—";
@@ -70,21 +39,230 @@ namespace F1_Live_Hub.Models
             set { _year = value; OnPropertyChanged(); }
         }
 
-        private string _gmtOffset = "—";
-        public string GmtOffset
+        // ── Circuit ───────────────────────────────────────────────
+        private string _circuitName = "—";
+        public string CircuitName
         {
-            get => _gmtOffset;
-            set { _gmtOffset = value; OnPropertyChanged(); }
+            get => _circuitName;
+            set { _circuitName = value; OnPropertyChanged(); }
         }
 
-        private bool _isLoading = false;
+        private string _country = "—";
+        public string Country
+        {
+            get => _country;
+            set { _country = value; OnPropertyChanged(); }
+        }
+
+        private string _city = "—";
+        public string City
+        {
+            get => _city;
+            set { _city = value; OnPropertyChanged(); }
+        }
+
+        private string _circuitLength = "—";
+        public string CircuitLength
+        {
+            get => _circuitLength;
+            set { _circuitLength = value; OnPropertyChanged(); }
+        }
+
+        private string _lapRecord = "—";
+        public string LapRecord
+        {
+            get => _lapRecord;
+            set { _lapRecord = value; OnPropertyChanged(); }
+        }
+
+        private int _corners;
+        public int Corners
+        {
+            get => _corners;
+            set { _corners = value; OnPropertyChanged(); }
+        }
+
+        private int _circuitFirstYear;
+        public int CircuitFirstYear
+        {
+            get => _circuitFirstYear;
+            set { _circuitFirstYear = value; OnPropertyChanged(); }
+        }
+
+        // ── Sessions ──────────────────────────────────────────────
+        private string _raceDate = "—";
+        public string RaceDate
+        {
+            get => _raceDate;
+            set { _raceDate = value; OnPropertyChanged(); }
+        }
+
+        private string _raceTime = "—";
+        public string RaceTime
+        {
+            get => _raceTime;
+            set { _raceTime = value; OnPropertyChanged(); }
+        }
+
+        private string _qualyDate = "—";
+        public string QualyDate
+        {
+            get => _qualyDate;
+            set { _qualyDate = value; OnPropertyChanged(); }
+        }
+
+        private string _qualyTime = "—";
+        public string QualyTime
+        {
+            get => _qualyTime;
+            set { _qualyTime = value; OnPropertyChanged(); }
+        }
+
+        private string _fp1Date = "—";
+        public string Fp1Date
+        {
+            get => _fp1Date;
+            set { _fp1Date = value; OnPropertyChanged(); }
+        }
+
+        private string _fp1Time = "—";
+        public string Fp1Time
+        {
+            get => _fp1Time;
+            set { _fp1Time = value; OnPropertyChanged(); }
+        }
+
+        private string _fp2Date = "—";
+        public string Fp2Date
+        {
+            get => _fp2Date;
+            set { _fp2Date = value; OnPropertyChanged(); }
+        }
+
+        private string _fp2Time = "—";
+        public string Fp2Time
+        {
+            get => _fp2Time;
+            set { _fp2Time = value; OnPropertyChanged(); }
+        }
+
+        private string _fp3Date = "—";
+        public string Fp3Date
+        {
+            get => _fp3Date;
+            set { _fp3Date = value; OnPropertyChanged(); }
+        }
+
+        private string _fp3Time = "—";
+        public string Fp3Time
+        {
+            get => _fp3Time;
+            set { _fp3Time = value; OnPropertyChanged(); }
+        }
+
+        private string _sprintRaceDate = "—";
+        public string SprintRaceDate
+        {
+            get => _sprintRaceDate;
+            set { _sprintRaceDate = value; OnPropertyChanged(); }
+        }
+
+        private string _sprintRaceTime = "—";
+        public string SprintRaceTime
+        {
+            get => _sprintRaceTime;
+            set { _sprintRaceTime = value; OnPropertyChanged(); }
+        }
+
+        private string _sprintQualyDate = "—";
+        public string SprintQualyDate
+        {
+            get => _sprintQualyDate;
+            set { _sprintQualyDate = value; OnPropertyChanged(); }
+        }
+
+        // ── Vainqueur pilote ──────────────────────────────────────
+        private string _winnerName = "—";
+        public string WinnerName
+        {
+            get => _winnerName;
+            set { _winnerName = value; OnPropertyChanged(); }
+        }
+
+        private string _winnerSurname = "—";
+        public string WinnerSurname
+        {
+            get => _winnerSurname;
+            set { _winnerSurname = value; OnPropertyChanged(); }
+        }
+
+        private string _winnerShortName = "—";
+        public string WinnerShortName
+        {
+            get => _winnerShortName;
+            set { _winnerShortName = value; OnPropertyChanged(); }
+        }
+
+        private string _winnerCountry = "—";
+        public string WinnerCountry
+        {
+            get => _winnerCountry;
+            set { _winnerCountry = value; OnPropertyChanged(); }
+        }
+
+        private int _winnerNumber;
+        public int WinnerNumber
+        {
+            get => _winnerNumber;
+            set { _winnerNumber = value; OnPropertyChanged(); }
+        }
+
+        // ── Vainqueur équipe ──────────────────────────────────────
+        private string _teamWinnerName = "—";
+        public string TeamWinnerName
+        {
+            get => _teamWinnerName;
+            set { _teamWinnerName = value; OnPropertyChanged(); }
+        }
+
+        private string _teamWinnerCountry = "—";
+        public string TeamWinnerCountry
+        {
+            get => _teamWinnerCountry;
+            set { _teamWinnerCountry = value; OnPropertyChanged(); }
+        }
+
+        // ── Meilleur tour ─────────────────────────────────────────
+        private string _fastLap = "—";
+        public string FastLap
+        {
+            get => _fastLap;
+            set { _fastLap = value; OnPropertyChanged(); }
+        }
+
+        private string _fastLapDriverId = "—";
+        public string FastLapDriverId
+        {
+            get => _fastLapDriverId;
+            set { _fastLapDriverId = value; OnPropertyChanged(); }
+        }
+
+        private string _fastLapTeamId = "—";
+        public string FastLapTeamId
+        {
+            get => _fastLapTeamId;
+            set { _fastLapTeamId = value; OnPropertyChanged(); }
+        }
+
+        // ── États UI ──────────────────────────────────────────────
+        private bool _isLoading;
         public bool IsLoading
         {
             get => _isLoading;
             set { _isLoading = value; OnPropertyChanged(); }
         }
 
-        private bool _hasError = false;
+        private bool _hasError;
         public bool HasError
         {
             get => _hasError;
@@ -96,53 +274,6 @@ namespace F1_Live_Hub.Models
         {
             get => _errorMessage;
             set { _errorMessage = value; OnPropertyChanged(); }
-        }
-
-        public async Task LoadSessionDataAsync()
-        {
-            IsLoading = true;
-            HasError = false;
-            ErrorMessage = string.Empty;
-
-            var sessions = await _sessionService.GetSessionDetails();
-
-            // TEMPORAIRE : vérifie ce que l'API retourne
-            if (sessions == null)
-            {
-                HasError = true;
-                ErrorMessage = "API n'a rien retourné (null).";
-                IsLoading = false;
-                return;
-            }
-
-            // TEMPORAIRE : affiche le nombre et les types reçus
-            var types = string.Join(", ", sessions.Select(s => s.session_type).Distinct());
-            ErrorMessage = $"Reçu {sessions.Count} sessions. Types: {types}";
-            HasError = true;
-
-            SessionRoot session = sessions
-                .Where(s => s.session_type == "Race")
-                .LastOrDefault();
-
-            if (session != null)
-            {
-                CircuitShortName = session.circuit_short_name ?? "—";
-                SessionType = session.session_type ?? "—";
-                SessionName = session.session_name ?? "—";
-                CountryName = session.country_name ?? "—";
-                CountryCode = session.country_code ?? "—";
-                Location = session.location ?? "—";
-                Year = session.year.ToString();
-                GmtOffset = session.gmt_offset ?? "—";
-                DateStart = session.date_start.ToString("dd MMM yyyy  HH:mm");
-            }
-            else
-            {
-                HasError = true;
-                ErrorMessage = "Aucune session Race trouvée.";
-            }
-
-            IsLoading = false;
         }
 
         // ── INotifyPropertyChanged ────────────────────────────────
