@@ -10,7 +10,8 @@
         Background="#0D0D0D" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <!-- Scrollbar slim custom -->
+
+        <!-- Scrollbar fine -->
         <Style x:Key="SlimScrollBar" TargetType="ScrollBar">
             <Setter Property="Width" Value="4"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -65,10 +66,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Window.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -121,29 +124,67 @@
                        Cursor="Hand" MouseLeftButtonDown="Tab_Meteo_Click"/>
         </Grid>
 
-        <!-- BARRE DE RECHERCHE -->
-        <Border Grid.Row="2" Margin="16,8,16,0" Background="#1A1A1A"
-                CornerRadius="10" Padding="12,8">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="🔍" FontSize="14"
-                           Foreground="#888888" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                <TextBox Grid.Column="1" x:Name="TxtSearch"
-                         Background="Transparent" Foreground="White" FontSize="13"
-                         BorderThickness="0" Padding="0,6" CaretBrush="White"
-                         TextChanged="TxtSearch_TextChanged"/>
-            </Grid>
-        </Border>
+        <!-- RECHERCHE + FILTRE FAVORIS -->
+        <Grid Grid.Row="2" Margin="16,8,16,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="8"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="#1A1A1A" CornerRadius="10" Padding="12,8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="🔍" FontSize="14"
+                               Foreground="#888888" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBox Grid.Column="1" x:Name="TxtSearch"
+                             Background="Transparent" Foreground="White" FontSize="13"
+                             BorderThickness="0" Padding="0,6" CaretBrush="White"
+                             TextChanged="TxtSearch_TextChanged"/>
+                </Grid>
+            </Border>
+
+            <Button Grid.Column="2" x:Name="BtnFavFilter"
+                    Click="BtnFavFilter_Click" Cursor="Hand"
+                    Content="★ Favoris (0) ▼">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="BdFav" Background="#1A1A1A" CornerRadius="10"
+                                Padding="10,8" BorderBrush="#333333" BorderThickness="1">
+                            <TextBlock Text="{TemplateBinding Content}"
+                                       Foreground="#FFD700" FontSize="11" FontWeight="Bold"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="BdFav" Property="Background" Value="#2A2500"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
 
         <!-- STATUS LISTE -->
         <TextBlock Grid.Row="3" x:Name="TxtStatus" Foreground="#888888" FontSize="11"
                    HorizontalAlignment="Center" Margin="0,6,0,0" Visibility="Collapsed"/>
 
-        <!-- CONTENU PRINCIPAL -->
-        <Grid Grid.Row="4">
+        <!-- BANNIÈRE FAVORIS ACTIF -->
+        <Border Grid.Row="4" x:Name="FavBanner" Margin="16,4,16,0"
+                Background="#1A1400" CornerRadius="8" Padding="10,5"
+                Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="★ " Foreground="#FFD700" FontSize="11" FontWeight="Bold"/>
+                <TextBlock Text="Favoris uniquement" Foreground="#FFD700"
+                           FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- CONTENU -->
+        <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="130"/>
                 <ColumnDefinition Width="*"/>
@@ -186,16 +227,17 @@
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="36"/>
+                                <ColumnDefinition Width="32"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="14"/>
                             </Grid.ColumnDefinitions>
 
-                            <!-- Logo écurie — fond blanc pour visibilité -->
-                            <Border Grid.Column="0" Width="32" Height="32"
+                            <!-- Logo écurie fond blanc -->
+                            <Border Grid.Column="0" Width="30" Height="30"
                                     CornerRadius="6" Background="White">
                                 <Grid>
                                     <Image Source="{Binding TeamLogoUrl}"
-                                           Width="26" Height="26" Stretch="Uniform"
+                                           Width="24" Height="24" Stretch="Uniform"
                                            RenderOptions.BitmapScalingMode="HighQuality">
                                         <Image.Style>
                                             <Style TargetType="Image">
@@ -208,8 +250,7 @@
                                             </Style>
                                         </Image.Style>
                                     </Image>
-                                    <!-- Fallback si pas de logo -->
-                                    <Border CornerRadius="6" Width="32" Height="32"
+                                    <Border CornerRadius="6" Width="30" Height="30"
                                             Background="{Binding TeamColor}">
                                         <Border.Style>
                                             <Style TargetType="Border">
@@ -233,12 +274,30 @@
                                            FontSize="11" FontWeight="Bold"/>
                                 <TextBlock Text="{Binding Surname}" Foreground="#AAAAAA" FontSize="10"/>
                             </StackPanel>
+
+                            <!-- Étoile favori -->
+                            <TextBlock Grid.Column="2" VerticalAlignment="Center"
+                                       HorizontalAlignment="Center" FontSize="10">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Text" Value=""/>
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsFavorite}" Value="True">
+                                                <Setter Property="Text" Value="★"/>
+                                                <Setter Property="Foreground" Value="#FFD700"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <!-- DETAIL PILOTE — scrollbar slim -->
+            <!-- DETAIL PILOTE -->
             <ScrollViewer Grid.Column="1"
                           Style="{StaticResource SlimScrollViewer}"
                           VerticalScrollBarVisibility="Auto"
@@ -251,56 +310,48 @@
 
                     <StackPanel x:Name="DetailPanel" Visibility="Collapsed">
 
-                        <!-- HERO CARD avec photo pilote -->
+                        <!-- HERO CARD -->
                         <Border Background="{Binding TeamColor}" CornerRadius="12"
                                 Height="150" Margin="0,0,0,8" ClipToBounds="True">
                             <Grid>
-                                <!-- Dégradé fond -->
+                                <!-- Dégradé -->
                                 <Rectangle>
                                     <Rectangle.Fill>
                                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                             <GradientStop Color="#00000000" Offset="0.4"/>
-                                            <GradientStop Color="#44000000" Offset="1"/>
+                                            <GradientStop Color="#55000000" Offset="1"/>
                                         </LinearGradientBrush>
                                     </Rectangle.Fill>
                                 </Rectangle>
 
-                                <!-- Photo pilote à droite -->
+                                <!-- Photo pilote -->
                                 <Image Source="{Binding PhotoUrl}"
-                                     HorizontalAlignment="Right"
-                                     VerticalAlignment="Top"
-                                      Width="110"
-                                      Stretch="UniformToFill"
-                                      RenderOptions.BitmapScalingMode="HighQuality">   
-
+                                   HorizontalAlignment="Right" VerticalAlignment="Top"
+                                   Width="115" Stretch="UniformToFill"
+                                   RenderOptions.BitmapScalingMode="HighQuality">
                                     <Image.Style>
                                         <Style TargetType="Image">
                                             <Setter Property="Visibility" Value="Visible"/>
-
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding PhotoUrl}" Value="">
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
-
                                         </Style>
-                                        <!-- ✅ fermeture manquante -->
                                     </Image.Style>
-
                                 </Image>
 
                                 <!-- Numéro filigrane -->
                                 <TextBlock Text="{Binding Number, StringFormat='#{0}'}"
                                            Foreground="#FFFFFF12" FontSize="65" FontWeight="Bold"
                                            FontStyle="Italic" HorizontalAlignment="Right"
-                                           VerticalAlignment="Bottom" Margin="0,0,6,0"/>
+                                           VerticalAlignment="Bottom" Margin="0,0,4,0"/>
 
-                                <!-- Infos à gauche -->
+                                <!-- Infos gauche -->
                                 <StackPanel VerticalAlignment="Center" Margin="14,0,120,0">
-                                    <!-- Logo équipe fond blanc -->
                                     <Border Background="White" CornerRadius="6"
                                             Padding="4,3" HorizontalAlignment="Left"
-                                            Margin="0,0,0,8" MaxWidth="100">
+                                            Margin="0,0,0,6" MaxWidth="100">
                                         <Image Source="{Binding TeamLogoUrl}" Height="16"
                                                Stretch="Uniform" HorizontalAlignment="Left"
                                                RenderOptions.BitmapScalingMode="HighQuality"/>
@@ -310,11 +361,48 @@
                                     <TextBlock Text="{Binding Surname}" Foreground="White"
                                                FontSize="20" FontWeight="Bold"/>
                                     <TextBlock Text="{Binding TeamName}"
-                                               Foreground="#FFFFFFAA"
-                                               FontSize="10" Margin="0,2,0,0"/>
+                                               Foreground="#FFFFFFAA" FontSize="10" Margin="0,2,0,0"/>
                                 </StackPanel>
                             </Grid>
                         </Border>
+
+                        <!-- BOUTON FAVORIS -->
+                        <Button x:Name="BtnFavDetail"
+                                Click="BtnFavorite_Click"
+                                Cursor="Hand"
+                                Margin="0,0,0,8"
+                                Content="☆ Ajouter aux favoris"
+                                Tag="inactive">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="#1A1A1A" CornerRadius="10"
+                                            BorderBrush="#333333" BorderThickness="1"
+                                            Padding="12,9">
+                                        <Grid>
+                                            <TextBlock Text="{TemplateBinding Content}"
+                                                       FontSize="12" FontWeight="Bold"
+                                                       VerticalAlignment="Center"
+                                                       HorizontalAlignment="Left">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Foreground" Value="#888888"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger
+                                                                Binding="{Binding Tag,
+                                                                    RelativeSource={RelativeSource
+                                                                        AncestorType=Button}}"
+                                                                Value="active">
+                                                                <Setter Property="Foreground" Value="#FFD700"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </Grid>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
 
                         <!-- CHAMPIONNAT PILOTES -->
                         <Border Background="#1A1A1A" CornerRadius="10"
@@ -373,13 +461,12 @@
                                 Padding="12,10" Margin="0,0,0,8">
                             <StackPanel>
                                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                    <TextBlock Text="CHAMPIONNAT CONSTRUCTEURS"
+                                    <TextBlock Text="CONSTRUCTEURS"
                                                Foreground="#888888" FontSize="8" FontWeight="Bold"
                                                VerticalAlignment="Center"/>
                                     <Border Background="{Binding TeamColor}" CornerRadius="4"
                                             Padding="5,2" Margin="6,0,0,0">
-                                        <TextBlock Text="{Binding TeamName}"
-                                                   Foreground="White"
+                                        <TextBlock Text="{Binding TeamName}" Foreground="White"
                                                    FontSize="8" FontWeight="Bold"/>
                                     </Border>
                                 </StackPanel>
@@ -581,6 +668,7 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
+
                                             <Border Grid.Column="0" Width="28" Height="28"
                                                     CornerRadius="6">
                                                 <Border.Style>
@@ -608,6 +696,7 @@
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"/>
                                             </Border>
+
                                             <StackPanel Grid.Column="1"
                                                         VerticalAlignment="Center" Margin="8,0">
                                                 <TextBlock Text="{Binding RaceName}"
@@ -640,6 +729,7 @@
                                                     <Run Text=" pts)"/>
                                                 </TextBlock>
                                             </StackPanel>
+
                                             <StackPanel Grid.Column="2"
                                                         HorizontalAlignment="Right"
                                                         VerticalAlignment="Center">
@@ -667,7 +757,7 @@
         </Grid>
 
         <!-- BOTTOM NAV BAR -->
-        <Border Grid.Row="5" Background="#111111" Height="70"
+        <Border Grid.Row="6" Background="#111111" Height="70"
                 BorderThickness="0,1,0,0" BorderBrush="#222222">
             <Grid Margin="0,0,0,6">
                 <Grid.ColumnDefinitions>
@@ -683,15 +773,13 @@
                     <TextBlock Text="⌂" Foreground="#555555" FontSize="20"
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="HUB" Foreground="#555555" FontSize="10"
-                               FontWeight="Bold" HorizontalAlignment="Center"
-                               Margin="0,4,0,0"/>
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center"
                             HorizontalAlignment="Center">
                     <TextBlock Text="👤" FontSize="20" HorizontalAlignment="Center"/>
                     <TextBlock Text="PILOTES" Foreground="#E10600" FontSize="10"
-                               FontWeight="Bold" HorizontalAlignment="Center"
-                               Margin="0,4,0,0"/>
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
                 <Border Grid.Column="2" VerticalAlignment="Top"
                         HorizontalAlignment="Center" Width="56" Height="56"
@@ -706,8 +794,7 @@
                             Cursor="Hand" MouseLeftButtonDown="Nav_Saison_Click">
                     <TextBlock Text="🏁" FontSize="20" HorizontalAlignment="Center"/>
                     <TextBlock Text="SAISON" Foreground="#555555" FontSize="10"
-                               FontWeight="Bold" HorizontalAlignment="Center"
-                               Margin="0,4,0,0"/>
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
                 <StackPanel Grid.Column="4" VerticalAlignment="Center"
                             HorizontalAlignment="Center"
@@ -715,8 +802,7 @@
                     <TextBlock Text="⚙" Foreground="#555555" FontSize="20"
                                HorizontalAlignment="Center"/>
                     <TextBlock Text="PROFIL" Foreground="#555555" FontSize="10"
-                               FontWeight="Bold" HorizontalAlignment="Center"
-                               Margin="0,4,0,0"/>
+                               FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
             </Grid>
         </Border>

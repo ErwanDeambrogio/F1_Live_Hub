@@ -4,8 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        WindowStyle="None"
-        AllowsTransparency="True"
+        WindowStyle="None" AllowsTransparency="True"
         ResizeMode="NoResize"
         Title="F1 Live Hub - Connexion" Height="900" Width="420"
         WindowStartupLocation="CenterScreen">
@@ -36,6 +35,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <StackPanel>
 
+                <!-- LOGO -->
                 <StackPanel HorizontalAlignment="Center" Margin="0,60,0,40">
                     <Border Width="80" Height="80" CornerRadius="22"
                             HorizontalAlignment="Center" Margin="0,0,0,18">
@@ -58,6 +58,7 @@
                                HorizontalAlignment="Center"/>
                 </StackPanel>
 
+                <!-- CARTE -->
                 <Border Margin="20,0,20,0" CornerRadius="20" Padding="28,32">
                     <Border.Background>
                         <SolidColorBrush Color="#1E1E1E"/>
@@ -75,8 +76,17 @@
 
                         <TextBlock Text="Accédez à votre paddock personnel"
                                    Foreground="#AAAAAA" FontSize="13"
-                                   HorizontalAlignment="Center" Margin="0,0,0,32"/>
+                                   HorizontalAlignment="Center" Margin="0,0,0,28"/>
 
+                        <!-- MESSAGE ERREUR -->
+                        <Border x:Name="TxtErrorBorder" Background="#2A0000"
+                                CornerRadius="8" Padding="12,8" Margin="0,0,0,16"
+                                Visibility="Collapsed">
+                            <TextBlock x:Name="TxtError" Foreground="#FF6666"
+                                       FontSize="12" TextWrapping="Wrap"/>
+                        </Border>
+
+                        <!-- NOM D'UTILISATEUR -->
                         <TextBlock Text="NOM D'UTILISATEUR" Foreground="#CCCCCC"
                                    FontSize="11" FontWeight="Bold" Margin="0,0,0,10"/>
                         <Border Background="#2A2A2A" CornerRadius="12"
@@ -89,39 +99,34 @@
                                 <TextBlock Grid.Column="0" Text="👤" FontSize="18"
                                            Foreground="#666666" VerticalAlignment="Center"
                                            Margin="0,0,12,0"/>
-                                <TextBox Grid.Column="1" Background="Transparent"
-                                         BorderThickness="0" Foreground="#666666"
+                                <TextBox x:Name="TxtUsername"
+                                         Grid.Column="1" Background="Transparent"
+                                         BorderThickness="0" Foreground="White"
                                          FontSize="15" VerticalAlignment="Center"
-                                         CaretBrush="White" Text="Pilote_123"/>
+                                         CaretBrush="White"/>
                             </Grid>
                         </Border>
 
+                        <!-- MOT DE PASSE -->
                         <TextBlock Text="MOT DE PASSE" Foreground="#CCCCCC"
                                    FontSize="11" FontWeight="Bold" Margin="0,0,0,10"/>
                         <Border Background="#2A2A2A" CornerRadius="12"
-                                Height="58" Padding="16,0" Margin="0,0,0,12">
+                                Height="58" Padding="16,0" Margin="0,0,0,24">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="🔒" FontSize="18"
                                            Foreground="#666666" VerticalAlignment="Center"
                                            Margin="0,0,12,0"/>
-                                <PasswordBox Grid.Column="1" Background="Transparent"
-                                             BorderThickness="0" Foreground="#888888"
+                                <PasswordBox x:Name="PwdPassword"
+                                             Grid.Column="1" Background="Transparent"
+                                             BorderThickness="0" Foreground="White"
                                              FontSize="15" VerticalAlignment="Center"
-                                             CaretBrush="White" Password="12345678"/>
-                                <TextBlock Grid.Column="2" Text="👁" FontSize="18"
-                                           Foreground="#666666" VerticalAlignment="Center"
-                                           Cursor="Hand"/>
+                                             CaretBrush="White"/>
                             </Grid>
                         </Border>
-
-                        <TextBlock Text="Mot de passe oublié ?" Foreground="#E10600"
-                                   FontSize="13" HorizontalAlignment="Right"
-                                   Cursor="Hand" Margin="0,0,0,28"/>
 
                         <!-- BOUTON SE CONNECTER -->
                         <Button Cursor="Hand" BorderThickness="0"
@@ -173,16 +178,6 @@
                                FontSize="14" FontWeight="Bold"
                                TextDecorations="Underline" Cursor="Hand"
                                MouseLeftButtonDown="CreerProfil_Click"/>
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Center" Margin="0,0,0,30">
-                    <TextBlock Text="📡" FontSize="22" Foreground="#444444"
-                               Margin="0,0,28,0" Cursor="Hand"/>
-                    <TextBlock Text="⏱" FontSize="22" Foreground="#444444"
-                               Margin="0,0,28,0" Cursor="Hand"/>
-                    <TextBlock Text="📊" FontSize="22" Foreground="#444444"
-                               Cursor="Hand"/>
                 </StackPanel>
 
             </StackPanel>

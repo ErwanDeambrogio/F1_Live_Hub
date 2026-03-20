@@ -27,14 +27,6 @@ namespace F1_Live_Hub.Models
         public string Url { get; set; }
         public string TeamUrl { get; set; }
 
-        private string _photoUrl = "";
-        public string PhotoUrl
-        {
-            get => _photoUrl;
-            set { _photoUrl = value; OnPropertyChanged(); }
-       
-        }
-
         private string _name = "—";
         public string Name
         {
@@ -168,7 +160,7 @@ namespace F1_Live_Hub.Models
             set { _raceResults = value; OnPropertyChanged(); }
         }
 
-        // ── Classement championnat pilotes ────────────────────────
+        // ── Championnat pilotes ───────────────────────────────────
         private int _championshipPosition;
         public int ChampionshipPosition
         {
@@ -195,7 +187,7 @@ namespace F1_Live_Hub.Models
             set { _championshipWins = value; OnPropertyChanged(); }
         }
 
-        // ── Classement constructeur ───────────────────────────────
+        // ── Championnat constructeurs ─────────────────────────────
         private int _constructorPosition;
         public int ConstructorPosition
         {
@@ -217,7 +209,22 @@ namespace F1_Live_Hub.Models
             set { _constructorWins = value; OnPropertyChanged(); }
         }
 
-        // ── Couleurs dynamiques ───────────────────────────────────
+        // ── Photo + Favoris ───────────────────────────────────────
+        private string _photoUrl = "";
+        public string PhotoUrl
+        {
+            get => _photoUrl;
+            set { _photoUrl = value; OnPropertyChanged(); }
+        }
+
+        private bool _isFavorite;
+        public bool IsFavorite
+        {
+            get => _isFavorite;
+            set { _isFavorite = value; OnPropertyChanged(); }
+        }
+
+        // ── Couleurs ──────────────────────────────────────────────
         public string ChampionshipPositionColor
         {
             get

@@ -53,6 +53,12 @@ namespace F1_Live_Hub.Views
             => OpenWindow(new CoursePage());
 
         private void Nav_Profil_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new ProfilPage());
+        {
+            var auth = new F1_Live_Hub.Services.AuthService();
+            if (auth.IsLoggedIn())
+                OpenWindow(new ProfilPage());
+            else
+                OpenWindow(new LoginPage());
+        }
     }
 }
