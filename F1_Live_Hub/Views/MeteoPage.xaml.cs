@@ -14,9 +14,9 @@ using System.Windows.Shapes;
 
 namespace F1_Live_Hub.Views
 {
-    public partial class ClassementPage : Window
+    public partial class MeteoPage : Window
     {
-        public ClassementPage()
+        public MeteoPage()
         {
             InitializeComponent();
         }
@@ -28,37 +28,37 @@ namespace F1_Live_Hub.Views
         }
 
         // ── TABS ─────────────────────────────────────────────────
+
+        private void Tab_Stats_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new StatPage());
+
         private void Tab_Pilotes_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new PilotesPage());
 
         private void Tab_Course_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CoursePage());
 
-     
-
         // ── BOTTOM NAV ───────────────────────────────────────────
-        private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new LivePage());
 
-        private void Nav_Standings_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new ClassementPage());
-
-        private void Nav_News_Click(object sender, MouseButtonEventArgs e)
-        {
-            // à implémenter si tu as une NewsPage
-        }
-
-        private void Nav_Calendar_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new CoursePage());
-
-        private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
+        private void Nav_Home_Click(object sender, MouseButtonEventArgs e)
         {
             Application.Current.MainWindow.Show();
             this.Close();
         }
 
-        private void BtnAnnee_Click(object sender, MouseButtonEventArgs e) { }
-        private void BtnGP_Click(object sender, MouseButtonEventArgs e) { }
-        private void BtnSession_Click(object sender, MouseButtonEventArgs e) { }
+        private void Nav_Timing_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new LivePage());
+
+        private void Nav_Track_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CoursePage());
+
+        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e)
+        {
+            var auth = new F1_Live_Hub.Services.AuthService();
+            if (auth.IsLoggedIn())
+                OpenWindow(new ProfilPage());
+            else
+                OpenWindow(new LoginPage());
+        }
     }
 }

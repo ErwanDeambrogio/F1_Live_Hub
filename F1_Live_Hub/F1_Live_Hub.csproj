@@ -64,6 +64,7 @@
     <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\Circuits.cs" />
     <Compile Include="Services\F1ApiService.cs" />
+    <Compile Include="Services\FavoritesService.cs" />
     <Compile Include="Services\LiveService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\SessionService.cs" />
