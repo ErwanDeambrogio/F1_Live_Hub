@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace F1_Live_Hub.Views
+
+//// https://f1api.dev/api/2021/drivers-championship ////
 {
     public partial class ClassementPage : Window
     {
@@ -34,8 +36,7 @@ namespace F1_Live_Hub.Views
         private void Tab_Course_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CoursePage());
 
-        private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new MeteoPage());
+     
 
         // ── BOTTOM NAV ───────────────────────────────────────────
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)

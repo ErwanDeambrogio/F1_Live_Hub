@@ -1,13 +1,14 @@
-﻿using System;
+﻿using F1_Live_Hub.Models;
+using F1_Live_Hub.Services;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using F1_Live_Hub.Models;
-using F1_Live_Hub.Services;
-using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
 
 namespace F1_Live_Hub.Views
 {
@@ -194,24 +195,21 @@ namespace F1_Live_Hub.Views
             => OpenWindow(new ClassementPage());
         private void Tab_Course_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CoursePage());
-        private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new MeteoPage());
+        // ONGLETS
+        private void Tab_Circuits_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CircuitsPage());
+
+        // NAVIGATION
         private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
         {
-            Application.Current.MainWindow.Show();
+            var win = new MainWindow();
+            win.Show();
             this.Close();
         }
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new LivePage());
         private void Nav_Saison_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new ClassementPage());
-        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e)
-        {
-            var auth = new F1_Live_Hub.Services.AuthService();
-            if (auth.IsLoggedIn())
-                OpenWindow(new ProfilPage());
-            else
-                OpenWindow(new LoginPage());
-        }
+        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e) { }
     }
-}
+} 

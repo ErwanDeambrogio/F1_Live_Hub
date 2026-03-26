@@ -97,17 +97,20 @@ namespace F1_Live_Hub.Views
             => OpenWindow(new ClassementPage());
         private void Tab_Pilotes_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new PilotesPage());
-        private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new MeteoPage());
+        // ONGLETS
+        private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e) { }
+
+        // NAVIGATION
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new LivePage());
         private void Nav_Standings_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new ClassementPage());
         private void Nav_Calendar_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new PilotesPage());
+            => OpenWindow(new CircuitsPage());
         private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
         {
-            Application.Current.MainWindow.Show();
+            var win = new MainWindow();
+            win.Show();
             this.Close();
         }
     }
