@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,17 +13,157 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using F1_Live_Hub.Models;
 
 namespace F1_Live_Hub.Views
 {
-    /// <summary>
-    /// Logique d'interaction pour CircuitsPage.xaml
-    /// </summary>
     public partial class CircuitsPage : Window
     {
+        private HttpClient _client = new HttpClient();
+        private Circuit _circuitSelectionne;
+
         public CircuitsPage()
         {
             InitializeComponent();
         }
+
+        // ═══════════════════════════════════════════════
+        //  1. RECHERCHE — déclenché à chaque lettre tapée
+        // ═══════════════════════════════════════════════
+        private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+        {
+            string texte = SearchBox.Text.Trim();
+
+            if (string.IsNullOrEmpty(texte))
+            {
+                EmptyState.Visibility = Visibility.Visible;
+                CircuitsCollection.Visibility = Visibility.Collapsed;
+                NoResultPanel.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            LoadingSpinner.Visibility = Visibility.Visible;
+            List<Circuit> resultats = await ChercherCircuitsAsync(texte);
+            LoadingSpinner.Visibility = Visibility.Collapsed;
+
+            if (resultats == null || resultats.Count == 0)
+            {
+                EmptyState.Visibility = Visibility.Collapsed;
+                CircuitsCollection.Visibility = Visibility.Collapsed;
+                NoResultPanel.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                EmptyState.Visibility = Visibility.Collapsed;
+                NoResultPanel.Visibility = Visibility.Collapsed;
+                CircuitsCollection.Visibility = Visibility.Visible;
+                CircuitsCollection.ItemsSource = resultats;
+            }
+        }
+
+        // ═══════════════════════════════════════════════
+        //  2. APPEL API
+        // ═══════════════════════════════════════════════
+        private async Task<List<Circuit>> ChercherCircuitsAsync(string recherche)
+        {
+            try
+            {
+                string url = "https://f1api.dev/api/circuits/search?q=" + Uri.EscapeDataString(recherche);
+                var response = await _client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string json = await response.Content.ReadAsStringAsync();
+                    Root resulat = JsonConvert.DeserializeObject<Root>(json);
+                    return resulat?.circuits;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur réseau : " + ex.Message);
+            }
+
+            return null;
+        }
+
+        // ═══════════════════════════════════════════════
+        //  3. CLIC SUR UNE CARTE — affiche le détail
+        // ═══════════════════════════════════════════════
+        private void OnCircuitSelected(object sender, MouseButtonEventArgs e)
+        {
+            var border = sender as FrameworkElement;
+            var circuit = border?.DataContext as Circuit;
+
+            if (circuit == null) return;
+
+            _circuitSelectionne = circuit;
+
+            HeroName.Text = circuit.circuitName;
+            HeroLocation.Text = circuit.city + ", " + circuit.country;
+
+            TxtLength.Text = circuit.circuitLength.HasValue ? circuit.circuitLength.ToString() : "N/A";
+            TxtCorners.Text = circuit.numberOfCorners.HasValue ? circuit.numberOfCorners.ToString() : "N/A";
+            TxtFirstYear.Text = circuit.firstParticipationYear.HasValue ? circuit.firstParticipationYear.ToString() : "N/A";
+            TxtLapRecord.Text = !string.IsNullOrEmpty(circuit.lapRecord) ? circuit.lapRecord : "N/A";
+
+            TxtLapRecordBig.Text = !string.IsNullOrEmpty(circuit.lapRecord) ? circuit.lapRecord : "N/A";
+            TxtFastestDriver.Text = circuit.fastestLapDriverId ?? "Inconnu";
+            TxtFastestTeam.Text = circuit.fastestLapTeamId ?? "—";
+            TxtFastestYear.Text = circuit.fastestLapYear.HasValue ? circuit.fastestLapYear.ToString() : "—";
+            TxtLengthDetail.Text = circuit.circuitLength.HasValue ? circuit.circuitLength.ToString() : "N/A";
+            TxtCornersDetail.Text = circuit.numberOfCorners.HasValue ? circuit.numberOfCorners.ToString() : "N/A";
+
+            TxtHistoryYear.Text = circuit.firstParticipationYear.HasValue ? circuit.firstParticipationYear.ToString() : "N/A";
+            TxtRecordDriver.Text = circuit.fastestLapDriverId ?? "Inconnu";
+            TxtRecordTeam.Text = circuit.fastestLapTeamId ?? "—";
+
+            TxtCity.Text = circuit.city ?? "—";
+            TxtCountry.Text = circuit.country ?? "—";
+            TxtRecordYear.Text = circuit.fastestLapYear.HasValue ? circuit.fastestLapYear.ToString() : "—";
+
+            PanelRecherche.Visibility = Visibility.Collapsed;
+            PanelDetail.Visibility = Visibility.Visible;
+        }
+
+        // ═══════════════════════════════════════════════
+        //  4. BOUTON RETOUR
+        // ═══════════════════════════════════════════════
+        private void OnBackClicked(object sender, MouseButtonEventArgs e)
+        {
+            PanelDetail.Visibility = Visibility.Collapsed;
+            PanelRecherche.Visibility = Visibility.Visible;
+        }
+
+        // ═══════════════════════════════════════════════
+        //  5. BOUTON WIKIPEDIA
+        // ═══════════════════════════════════════════════
+        private void OnWikipediaClicked(object sender, MouseButtonEventArgs e)
+        {
+            if (_circuitSelectionne == null || string.IsNullOrEmpty(_circuitSelectionne.url))
+                return;
+
+            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = _circuitSelectionne.url,
+                UseShellExecute = true
+            });
+        }
+
+        // ═══════════════════════════════════════════════
+        //  ONGLETS EN HAUT
+        // ═══════════════════════════════════════════════
+        private void Tab_Classement_Click(object sender, MouseButtonEventArgs e) { }
+        private void Tab_Course_Click(object sender, MouseButtonEventArgs e) { }
+        private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e) { }
+
+        // ═══════════════════════════════════════════════
+        //  NAVIGATION EN BAS
+        // ═══════════════════════════════════════════════
+        private void Nav_Home_Click(object sender, MouseButtonEventArgs e) { }
+        private void Nav_Pilotes_Click(object sender, MouseButtonEventArgs e) { }
+        private void Nav_Saison_Click(object sender, MouseButtonEventArgs e) { }
+        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e) { }
+        private void Nav_Calendar_Click(object sender, MouseButtonEventArgs e) { }
+        private void Nav_Live_Click(object sender, MouseButtonEventArgs e) { }
     }
 }
