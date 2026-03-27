@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace F1_Live_Hub.Views
-
-//// https://f1api.dev/api/2021/drivers-championship ////
 {
     public partial class ClassementPage : Window
     {
@@ -25,6 +12,8 @@ namespace F1_Live_Hub.Views
 
         private void OpenWindow(Window window)
         {
+            window.Left = this.Left;
+            window.Top = this.Top;
             window.Show();
             this.Close();
         }
@@ -36,8 +25,6 @@ namespace F1_Live_Hub.Views
         private void Tab_Course_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CoursePage());
 
-     
-
         // ── BOTTOM NAV ───────────────────────────────────────────
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new LivePage());
@@ -45,17 +32,17 @@ namespace F1_Live_Hub.Views
         private void Nav_Standings_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new ClassementPage());
 
-        private void Nav_News_Click(object sender, MouseButtonEventArgs e)
-        {
-            // à implémenter si tu as une NewsPage
-        }
+        private void Nav_News_Click(object sender, MouseButtonEventArgs e) { }
 
         private void Nav_Calendar_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CoursePage());
 
         private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
         {
-            Application.Current.MainWindow.Show();
+            var main = Application.Current.MainWindow;
+            main.Left = this.Left;
+            main.Top = this.Top;
+            main.Show();
             this.Close();
         }
 

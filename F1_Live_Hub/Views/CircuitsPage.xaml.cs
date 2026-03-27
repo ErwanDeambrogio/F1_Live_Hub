@@ -1,18 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using F1_Live_Hub.Models;
 
 namespace F1_Live_Hub.Views
@@ -27,10 +19,20 @@ namespace F1_Live_Hub.Views
             InitializeComponent();
         }
 
-        // ═══════════════════════════════════════════════
-        //  1. RECHERCHE — déclenché à chaque lettre tapée
-        // ═══════════════════════════════════════════════
-        private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
+        private void OpenWindow(Window window)
+        {
+            window.Width = this.Width;
+            window.Height = this.Height;
+            window.Top = this.Top;
+            window.Left = this.Left;
+            window.WindowStyle = this.WindowStyle;
+            window.ResizeMode = this.ResizeMode;
+            window.Show();
+            this.Close();
+        }
+
+        // ═══ RECHERCHE ═══
+        private async void OnSearchTextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             string texte = SearchBox.Text.Trim();
 
@@ -61,16 +63,13 @@ namespace F1_Live_Hub.Views
             }
         }
 
-        // ═══════════════════════════════════════════════
-        //  2. APPEL API
-        // ═══════════════════════════════════════════════
+        // ═══ APPEL API ═══
         private async Task<List<Circuit>> ChercherCircuitsAsync(string recherche)
         {
             try
             {
                 string url = "https://f1api.dev/api/circuits/search?q=" + Uri.EscapeDataString(recherche);
                 var response = await _client.GetAsync(url);
-
                 if (response.IsSuccessStatusCode)
                 {
                     string json = await response.Content.ReadAsStringAsync();
@@ -82,18 +81,14 @@ namespace F1_Live_Hub.Views
             {
                 MessageBox.Show("Erreur réseau : " + ex.Message);
             }
-
             return null;
         }
 
-        // ═══════════════════════════════════════════════
-        //  3. CLIC SUR UNE CARTE — affiche le détail
-        // ═══════════════════════════════════════════════
+        // ═══ SÉLECTION CIRCUIT ═══
         private void OnCircuitSelected(object sender, MouseButtonEventArgs e)
         {
             var border = sender as FrameworkElement;
             var circuit = border?.DataContext as Circuit;
-
             if (circuit == null) return;
 
             _circuitSelectionne = circuit;
@@ -125,23 +120,17 @@ namespace F1_Live_Hub.Views
             PanelDetail.Visibility = Visibility.Visible;
         }
 
-        // ═══════════════════════════════════════════════
-        //  4. BOUTON RETOUR
-        // ═══════════════════════════════════════════════
+        // ═══ RETOUR ═══
         private void OnBackClicked(object sender, MouseButtonEventArgs e)
         {
             PanelDetail.Visibility = Visibility.Collapsed;
             PanelRecherche.Visibility = Visibility.Visible;
         }
 
-        // ═══════════════════════════════════════════════
-        //  5. BOUTON WIKIPEDIA
-        // ═══════════════════════════════════════════════
+        // ═══ WIKIPEDIA ═══
         private void OnWikipediaClicked(object sender, MouseButtonEventArgs e)
         {
-            if (_circuitSelectionne == null || string.IsNullOrEmpty(_circuitSelectionne.url))
-                return;
-
+            if (_circuitSelectionne == null || string.IsNullOrEmpty(_circuitSelectionne.url)) return;
             System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
             {
                 FileName = _circuitSelectionne.url,
@@ -149,21 +138,28 @@ namespace F1_Live_Hub.Views
             });
         }
 
-        // ═══════════════════════════════════════════════
-        //  ONGLETS EN HAUT
-        // ═══════════════════════════════════════════════
+        // ═══ TABS ═══
         private void Tab_Classement_Click(object sender, MouseButtonEventArgs e) { }
         private void Tab_Course_Click(object sender, MouseButtonEventArgs e) { }
         private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e) { }
 
-        // ═══════════════════════════════════════════════
-        //  NAVIGATION EN BAS
-        // ═══════════════════════════════════════════════
-        private void Nav_Home_Click(object sender, MouseButtonEventArgs e) { }
-        private void Nav_Pilotes_Click(object sender, MouseButtonEventArgs e) { }
-        private void Nav_Saison_Click(object sender, MouseButtonEventArgs e) { }
-        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e) { }
+        // ═══ NAVIGATION ═══
+        private void Nav_Home_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new AccueilPage());
+        private void Nav_Pilotes_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new PilotesPage());
+        private void Nav_Saison_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CoursePage());
+        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new ProfilPage());
         private void Nav_Calendar_Click(object sender, MouseButtonEventArgs e) { }
-        private void Nav_Live_Click(object sender, MouseButtonEventArgs e) { }
+        private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new LivePage());
+
+        private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed)
+                this.DragMove();
+        }
     }
 }
