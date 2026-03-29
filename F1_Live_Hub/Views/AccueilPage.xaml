@@ -295,7 +295,7 @@
                                             </LinearGradientBrush>
                                         </Border.Background>
                                         <StackPanel>
-                                            <TextBlock Text="📺 Chaîne F1 Officielle" Foreground="White"
+                                            <TextBlock Text="📺 Chaine F1 Officielle" Foreground="White"
                                                        FontSize="10" FontWeight="Bold" TextWrapping="Wrap"/>
                                             <TextBlock Text="YouTube F1" Foreground="#888888" FontSize="9"/>
                                         </StackPanel>
