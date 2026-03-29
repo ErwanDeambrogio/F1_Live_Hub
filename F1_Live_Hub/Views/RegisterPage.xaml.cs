@@ -14,6 +14,11 @@ namespace F1_Live_Hub.Views
             _authService = new AuthService();
         }
 
+        private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed) this.DragMove();
+        }
+
         private void CreerCompte_Click(object sender, RoutedEventArgs e)
         {
             var username = TxtUsername.Text?.Trim() ?? "";
@@ -41,8 +46,10 @@ namespace F1_Live_Hub.Views
             if (_authService.Register(username, password))
             {
                 _authService.SaveCurrentUser(username);
-                var main = new MainWindow();
-                main.Show();
+                var accueil = new AccueilPage();
+                accueil.Left = this.Left;
+                accueil.Top = this.Top;
+                accueil.Show();
                 this.Close();
             }
             else
@@ -60,6 +67,8 @@ namespace F1_Live_Hub.Views
         private void RetourConnexion_Click(object sender, MouseButtonEventArgs e)
         {
             var login = new LoginPage();
+            login.Left = this.Left;
+            login.Top = this.Top;
             login.Show();
             this.Close();
         }

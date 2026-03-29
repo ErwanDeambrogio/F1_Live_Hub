@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using F1_Live_Hub.Models;
 
 namespace F1_Live_Hub.Services
@@ -113,29 +114,76 @@ namespace F1_Live_Hub.Services
             _httpClient = new HttpClient();
         }
 
-        // ── 3 endpoints ───────────────────────────────────────────
-
         public async Task<Course> GetNextRaceAsync()
             => await FetchCourse("https://f1api.dev/api/current/next");
 
         public async Task<Course> GetLastRaceAsync()
-            => await FetchCourse("https://f1api.dev/api/current/last");
+            => await FetchCourseWithResults("https://f1api.dev/api/current/last");
 
         public async Task<Course> GetRaceByYearRoundAsync(int year, int round)
-            => await FetchCourse($"https://f1api.dev/api/{year}/{round}");
-
-        // ── Méthode commune ───────────────────────────────────────
+            => await FetchCourseWithResults($"https://f1api.dev/api/{year}/{round}");
 
         private async Task<Course> FetchCourse(string url)
         {
             var response = await _httpClient.GetStringAsync(url);
             var root = JsonConvert.DeserializeObject<Root>(response);
+            if (root?.race == null || root.race.Count == 0) return null;
+            return BuildCourse(root.race[0], root.season);
+        }
 
-            if (root?.race == null || root.race.Count == 0)
-                return null;
+        private async Task<Course> FetchCourseWithResults(string url)
+        {
+            var response = await _httpClient.GetStringAsync(url);
+            var root = JsonConvert.DeserializeObject<Root>(response);
+            if (root?.race == null || root.race.Count == 0) return null;
 
             var race = root.race[0];
+            var course = BuildCourse(race, root.season);
 
+            if (string.IsNullOrEmpty(race.winner?.name))
+            {
+                try
+                {
+                    string resultsUrl = $"https://f1api.dev/api/{root.season}/{race.round}/race/results";
+                    var resResponse = await _httpClient.GetStringAsync(resultsUrl);
+                    var resJson = JObject.Parse(resResponse);
+                    var results = resJson["raceResults"] as JArray;
+                    if (results != null)
+                    {
+                        foreach (var r in results)
+                        {
+                            if (r["position"]?.ToObject<int>() == 1)
+                            {
+                                course.WinnerName = r["driver"]?["name"]?.ToString() ?? "—";
+                                course.WinnerSurname = r["driver"]?["surname"]?.ToString() ?? "—";
+                                course.WinnerShortName = r["driver"]?["shortName"]?.ToString() ?? "—";
+                                course.WinnerCountry = r["driver"]?["country"]?.ToString() ?? "—";
+                                course.WinnerNumber = r["driver"]?["number"]?.ToObject<int>() ?? 0;
+                                course.TeamWinnerName = r["team"]?["teamName"]?.ToString() ?? "—";
+                                course.TeamWinnerCountry = r["team"]?["country"]?.ToString() ?? "—";
+                                break;
+                            }
+                        }
+                        foreach (var r in results)
+                        {
+                            bool hasFl = r["fastestLap"]?.ToObject<bool>() ?? false;
+                            if (hasFl)
+                            {
+                                course.FastLap = r["fastestLapTime"]?.ToString() ?? "—";
+                                course.FastLapDriverId = r["driver"]?["shortName"]?.ToString() ?? "—";
+                                break;
+                            }
+                        }
+                    }
+                }
+                catch { }
+            }
+
+            return course;
+        }
+
+        private Course BuildCourse(Race race, int season)
+        {
             return new Course
             {
                 RaceId = race.raceId,
@@ -144,7 +192,7 @@ namespace F1_Live_Hub.Services
                 Round = race.round,
                 Laps = race.laps,
                 Url = race.url,
-                Year = root.season.ToString(),
+                Year = season.ToString(),
 
                 CircuitName = race.circuit?.circuitName ?? "—",
                 Country = race.circuit?.country ?? "—",

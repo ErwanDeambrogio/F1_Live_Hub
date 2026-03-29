@@ -8,7 +8,6 @@ using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Xml.Linq;
 
 namespace F1_Live_Hub.Views
 {
@@ -28,7 +27,19 @@ namespace F1_Live_Hub.Views
             LoadDriversAsync();
         }
 
-        // ── Chargement liste ──────────────────────────────────────
+        private void OpenWindow(Window window)
+        {
+            window.Left = this.Left;
+            window.Top = this.Top;
+            window.Show();
+            this.Close();
+        }
+
+        private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed) this.DragMove();
+        }
+
         private async void LoadDriversAsync()
         {
             TxtStatus.Text = "⏳ Chargement...";
@@ -39,10 +50,8 @@ namespace F1_Live_Hub.Views
                 _allPilotes = await _apiService.GetCurrentDriversAsync();
                 foreach (var p in _allPilotes)
                     p.IsFavorite = _favService.IsFavorite(p.DriverId);
-
                 TxtStatus.Visibility = Visibility.Collapsed;
                 RefreshList();
-
                 if (_allPilotes.Count > 0)
                     await LoadDriverDetail(_allPilotes[0]);
             }
@@ -53,11 +62,9 @@ namespace F1_Live_Hub.Views
             }
         }
 
-        // ── Rafraîchit la liste triée ─────────────────────────────
         private void RefreshList()
         {
             var q = TxtSearch.Text?.ToLower() ?? "";
-
             var filtered = new List<Pilote>();
             foreach (var p in _allPilotes)
             {
@@ -65,25 +72,17 @@ namespace F1_Live_Hub.Views
                     p.Name.ToLower().Contains(q) ||
                     p.Surname.ToLower().Contains(q) ||
                     p.ShortName.ToLower().Contains(q);
-
                 bool matchFav = !_showFavoritesOnly || p.IsFavorite;
-
-                if (matchSearch && matchFav)
-                    filtered.Add(p);
+                if (matchSearch && matchFav) filtered.Add(p);
             }
-
-            // Favoris en haut puis alphabétique
             filtered.Sort((a, b) =>
             {
                 if (a.IsFavorite && !b.IsFavorite) return -1;
                 if (!a.IsFavorite && b.IsFavorite) return 1;
-                return string.Compare(a.Surname, b.Surname,
-                    StringComparison.OrdinalIgnoreCase);
+                return string.Compare(a.Surname, b.Surname, StringComparison.OrdinalIgnoreCase);
             });
-
             DriversList.ItemsSource = filtered;
 
-            // Compteur favoris
             int favCount = 0;
             foreach (var p in _allPilotes)
                 if (p.IsFavorite) favCount++;
@@ -93,11 +92,9 @@ namespace F1_Live_Hub.Views
                 : string.Format("★ Favoris ({0}) ▼", favCount);
 
             FavBanner.Visibility = _showFavoritesOnly
-                ? Visibility.Visible
-                : Visibility.Collapsed;
+                ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        // ── Chargement détail pilote ──────────────────────────────
         private async System.Threading.Tasks.Task LoadDriverDetail(Pilote piloteBase)
         {
             DetailPanel.Visibility = Visibility.Collapsed;
@@ -107,7 +104,6 @@ namespace F1_Live_Hub.Views
                 var pilote = await _apiService.GetDriverDetailAsync(piloteBase.DriverId);
                 pilote.IsFavorite = _favService.IsFavorite(pilote.DriverId);
                 pilote.PhotoUrl = await GetWikipediaPhotoAsync(pilote.Url);
-
                 DetailPanel.DataContext = pilote;
                 ResultsList.ItemsSource = pilote.RaceResults;
                 UpdateFavButton(pilote.IsFavorite);
@@ -120,60 +116,46 @@ namespace F1_Live_Hub.Views
             }
         }
 
-        // ── Met à jour le bouton favori ───────────────────────────
         private void UpdateFavButton(bool isFav)
         {
-            BtnFavDetail.Content = isFav
-                ? "★ Retirer des favoris"
-                : "☆ Ajouter aux favoris";
+            BtnFavDetail.Content = isFav ? "★ Retirer des favoris" : "☆ Ajouter aux favoris";
             BtnFavDetail.Tag = isFav ? "active" : "inactive";
         }
 
-        // ── Toggle favori ─────────────────────────────────────────
         private void BtnFavorite_Click(object sender, RoutedEventArgs e)
         {
             var pilote = DetailPanel.DataContext as Pilote;
             if (pilote == null) return;
-
             _favService.Toggle(pilote.DriverId);
             pilote.IsFavorite = _favService.IsFavorite(pilote.DriverId);
-
             var match = _allPilotes.Find(p => p.DriverId == pilote.DriverId);
             if (match != null) match.IsFavorite = pilote.IsFavorite;
-
             UpdateFavButton(pilote.IsFavorite);
             RefreshList();
         }
 
-        // ── Toggle filtre favoris ─────────────────────────────────
         private void BtnFavFilter_Click(object sender, RoutedEventArgs e)
         {
             _showFavoritesOnly = !_showFavoritesOnly;
             RefreshList();
         }
 
-        // ── Recherche ─────────────────────────────────────────────
         private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
             => RefreshList();
 
-        // ── Sélection pilote ──────────────────────────────────────
-        private async void DriversList_SelectionChanged(
-            object sender, SelectionChangedEventArgs e)
+        private async void DriversList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (DriversList.SelectedItem is Pilote p)
                 await LoadDriverDetail(p);
         }
 
-        // ── Photo Wikipedia ───────────────────────────────────────
-        private async System.Threading.Tasks.Task<string> GetWikipediaPhotoAsync(
-            string wikiUrl)
+        private async System.Threading.Tasks.Task<string> GetWikipediaPhotoAsync(string wikiUrl)
         {
             try
             {
                 if (string.IsNullOrEmpty(wikiUrl)) return "";
                 var uri = new Uri(wikiUrl);
-                var title = Uri.UnescapeDataString(
-                    uri.Segments[uri.Segments.Length - 1]);
+                var title = Uri.UnescapeDataString(uri.Segments[uri.Segments.Length - 1]);
                 var response = await _httpClient.GetStringAsync(
                     "https://en.wikipedia.org/api/rest_v1/page/summary/" + title);
                 var json = JObject.Parse(response);
@@ -189,27 +171,30 @@ namespace F1_Live_Hub.Views
                 Process.Start(new ProcessStartInfo(p.Url) { UseShellExecute = true });
         }
 
-        private void OpenWindow(Window window) { window.Show(); this.Close(); }
-
+        // ── TABS ─────────────────────────────────────────────────
         private void Tab_Classement_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new ClassementPage());
         private void Tab_Course_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CoursePage());
-        // ONGLETS
         private void Tab_Circuits_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CircuitsPage());
 
-        // NAVIGATION
-        private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
-        {
-            var win = new MainWindow();
-            win.Show();
-            this.Close();
-        }
+        // ── BOTTOM NAV ───────────────────────────────────────────
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new LivePage());
+        {
+            var live = new LivePage();
+            live.Owner = this;
+            live.ShowDialog();
+        }
+        private void Nav_Stats_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new StatPage());
+        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new ProfilPage());
+        private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new AccueilPage());
         private void Nav_Saison_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new ClassementPage());
-        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e) { }
+            => OpenWindow(new CoursePage());
+        private void Tab_Accueil_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new AccueilPage());
     }
-} 
+}
