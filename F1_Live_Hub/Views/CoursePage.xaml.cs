@@ -17,6 +17,14 @@ namespace F1_Live_Hub.Views
             LoadLastRaceAsync();
         }
 
+        private void OpenWindow(Window window)
+        {
+            window.Left = this.Left;
+            window.Top = this.Top;
+            window.Show();
+            this.Close();
+        }
+
         private async void LoadLastRaceAsync()
         {
             SetLoading(true);
@@ -48,9 +56,7 @@ namespace F1_Live_Hub.Views
         }
 
         private void BtnLast_Click(object sender, RoutedEventArgs e)
-        {
-            LoadLastRaceAsync();
-        }
+            => LoadLastRaceAsync();
 
         private async void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
@@ -78,40 +84,37 @@ namespace F1_Live_Hub.Views
             if (this.DataContext is Course c)
                 c.IsLoading = loading;
             else
-            {
-                var blank = new Course { IsLoading = loading };
-                this.DataContext = blank;
-            }
+                this.DataContext = new Course { IsLoading = loading };
         }
 
         private Course ErrorCourse(string msg) =>
             new Course { HasError = true, ErrorMessage = msg };
 
-        private void OpenWindow(Window window)
+        private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            window.Show();
-            this.Close();
+            if (e.ButtonState == MouseButtonState.Pressed) this.DragMove();
         }
 
-        private void Tab_Classement_Click(object sender, MouseButtonEventArgs e)
+        // ── TABS ─────────────────────────────────────────────────
+        private void Tab_Accueil_Click(object sender, RoutedEventArgs e)
+            => OpenWindow(new AccueilPage());
+        private void Tab_Classement_Click(object sender, RoutedEventArgs e)
             => OpenWindow(new ClassementPage());
-        private void Tab_Pilotes_Click(object sender, MouseButtonEventArgs e)
+        private void Tab_Pilotes_Click(object sender, RoutedEventArgs e)
             => OpenWindow(new PilotesPage());
-        // ONGLETS
-        private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e) { }
 
-        // NAVIGATION
+        // ── BOTTOM NAV ───────────────────────────────────────────
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new LivePage());
-        private void Nav_Standings_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new ClassementPage());
-        private void Nav_Calendar_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new CircuitsPage());
-        private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
         {
-            var win = new MainWindow();
-            win.Show();
-            this.Close();
+            var live = new LivePage();
+            live.Owner = this;
+            live.ShowDialog();
         }
+        private void Nav_Stats_Click(object sender, RoutedEventArgs e)
+            => OpenWindow(new StatPage());
+        private void Nav_Profil_Click(object sender, RoutedEventArgs e)
+            => OpenWindow(new ProfilPage());
+        private void Nav_Accueil_Click(object sender, RoutedEventArgs e)
+            => OpenWindow(new AccueilPage());
     }
 }

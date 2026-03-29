@@ -34,21 +34,30 @@ namespace F1_Live_Hub.Views
             LoadStatsAsync();
         }
 
-        // ── Chargement données ────────────────────────────────────
+        private void OpenWindow(Window window)
+        {
+            window.Left = this.Left;
+            window.Top = this.Top;
+            window.Show();
+            this.Close();
+        }
+
+        private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed) this.DragMove();
+        }
+
         private async void LoadStatsAsync()
         {
             try
             {
-                // Nom utilisateur
                 var currentUser = _authService.GetCurrentUser();
                 if (!string.IsNullOrEmpty(currentUser))
                     TxtUsername.Text = currentUser;
 
-                // Temps total
                 _totalTimeSpent = LoadTotalTime();
                 UpdateTimeDisplay();
 
-                // Favoris pilotes
                 var favIds = _favService.GetAll();
                 var allPilotes = await _apiService.GetCurrentDriversAsync();
                 var favPilotes = new List<Pilote>();
@@ -146,7 +155,6 @@ namespace F1_Live_Hub.Views
 
                 int round = races[0]["round"]?.ToObject<int>() ?? 0;
                 int season = json["season"]?.ToObject<int>() ?? DateTime.Now.Year;
-
                 TxtGPPassed.Text = round.ToString();
                 TxtCurrentSeason.Text = season.ToString();
 
@@ -159,7 +167,6 @@ namespace F1_Live_Hub.Views
                     var next = racesNext[0];
                     TxtNextRace.Text = next["raceName"]?.ToString() ?? "—";
                     TxtNextRound.Text = "Round " + (next["round"]?.ToString() ?? "—");
-
                     string dateStr = next["schedule"]?["race"]?["date"]?.ToString() ?? "";
                     if (DateTime.TryParse(dateStr, out DateTime raceDate))
                     {
@@ -173,7 +180,6 @@ namespace F1_Live_Hub.Views
             catch { }
         }
 
-        // ── Gestion temps ─────────────────────────────────────────
         private TimeSpan LoadTotalTime()
         {
             try
@@ -215,41 +221,45 @@ namespace F1_Live_Hub.Views
             base.OnClosed(e);
         }
 
-        // ── Déconnexion ───────────────────────────────────────────
         private void BtnLogout_Click(object sender, MouseButtonEventArgs e)
         {
             SaveTotalTime();
             _authService.Logout();
             var login = new LoginPage();
+            login.Left = this.Left;
+            login.Top = this.Top;
             login.Show();
             this.Close();
         }
 
-        // ── Navigation ────────────────────────────────────────────
-        private void OpenWindow(Window window) { window.Show(); this.Close(); }
-
+        // ── TABS ─────────────────────────────────────────────────
+        private void Tab_Accueil_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new AccueilPage());
         private void Tab_Classement_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new ClassementPage());
         private void Tab_Pilotes_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new PilotesPage());
         private void Tab_Course_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CoursePage());
-        private void Tab_Meteo_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new CircuitsPage());
-        private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
-        {
-            Application.Current.MainWindow.Show();
-            this.Close();
-        }
+
+        // ── BOTTOM NAV ───────────────────────────────────────────
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new LivePage());
-        private void Nav_Saison_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new ClassementPage());
+        {
+            var live = new LivePage();
+            live.Owner = this;
+            live.ShowDialog();
+        }
+        private void Nav_Stats_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new StatPage());
+        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e) { }
+        private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new AccueilPage());
         private void Nav_Pilotes_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new PilotesPage());
+        private void Nav_Saison_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CoursePage());
     }
 
-    // ── Modèles locaux ────────────────────────────────────────────
     public class DriverStandingItem
     {
         public int Position { get; set; }
@@ -260,19 +270,9 @@ namespace F1_Live_Hub.Views
         public double Points { get; set; }
         public int Wins { get; set; }
 
-        public string PositionColor
-        {
-            get
-            {
-                switch (Position)
-                {
-                    case 1: return "#FFD700";
-                    case 2: return "#C0C0C0";
-                    case 3: return "#CD7F32";
-                    default: return "#888888";
-                }
-            }
-        }
+        public string PositionColor => Position == 1 ? "#FFD700"
+            : Position == 2 ? "#C0C0C0"
+            : Position == 3 ? "#CD7F32" : "#888888";
 
         public string TeamColor
         {
@@ -304,19 +304,9 @@ namespace F1_Live_Hub.Views
         public double Points { get; set; }
         public int Wins { get; set; }
 
-        public string PositionColor
-        {
-            get
-            {
-                switch (Position)
-                {
-                    case 1: return "#FFD700";
-                    case 2: return "#C0C0C0";
-                    case 3: return "#CD7F32";
-                    default: return "#888888";
-                }
-            }
-        }
+        public string PositionColor => Position == 1 ? "#FFD700"
+            : Position == 2 ? "#C0C0C0"
+            : Position == 3 ? "#CD7F32" : "#888888";
 
         public string TeamColor
         {
@@ -345,26 +335,16 @@ namespace F1_Live_Hub.Views
             {
                 switch (TeamId?.ToLower())
                 {
-                    case "red_bull":
-                        return "https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Red_Bull_Racing_logo.svg/200px-Red_Bull_Racing_logo.svg.png";
-                    case "ferrari":
-                        return "https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Scuderia_Ferrari_Logo.svg/200px-Scuderia_Ferrari_Logo.svg.png";
-                    case "mercedes":
-                        return "https://upload.wikimedia.org/wikipedia/en/thumb/f/fb/Mercedes-Benz_in_Formula_One_logo.svg/200px-Mercedes-Benz_in_Formula_One_logo.svg.png";
-                    case "mclaren":
-                        return "https://upload.wikimedia.org/wikipedia/en/thumb/6/66/McLaren_Racing_logo.svg/200px-McLaren_Racing_logo.svg.png";
-                    case "aston_martin":
-                        return "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Aston_Martin_F1_Logo.svg/200px-Aston_Martin_F1_Logo.svg.png";
-                    case "alpine":
-                        return "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Alpine_F1_Team_Logo.svg/200px-Alpine_F1_Team_Logo.svg.png";
-                    case "williams":
-                        return "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Williams_Racing_logo_2020.svg/200px-Williams_Racing_logo_2020.svg.png";
-                    case "haas":
-                        return "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Haas_F1_Team_Logo.svg/200px-Haas_F1_Team_Logo.svg.png";
-                    case "kick_sauber":
-                        return "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Sauber_Motorsport_AG_logo.svg/200px-Sauber_Motorsport_AG_logo.svg.png";
-                    case "rb":
-                        return "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Visa_Cash_App_RB_Formula_One_Team_logo.svg/200px-Visa_Cash_App_RB_Formula_One_Team_logo.svg.png";
+                    case "red_bull": return "https://upload.wikimedia.org/wikipedia/en/thumb/9/97/Red_Bull_Racing_logo.svg/200px-Red_Bull_Racing_logo.svg.png";
+                    case "ferrari": return "https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Scuderia_Ferrari_Logo.svg/200px-Scuderia_Ferrari_Logo.svg.png";
+                    case "mercedes": return "https://upload.wikimedia.org/wikipedia/en/thumb/f/fb/Mercedes-Benz_in_Formula_One_logo.svg/200px-Mercedes-Benz_in_Formula_One_logo.svg.png";
+                    case "mclaren": return "https://upload.wikimedia.org/wikipedia/en/thumb/6/66/McLaren_Racing_logo.svg/200px-McLaren_Racing_logo.svg.png";
+                    case "aston_martin": return "https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Aston_Martin_F1_Logo.svg/200px-Aston_Martin_F1_Logo.svg.png";
+                    case "alpine": return "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Alpine_F1_Team_Logo.svg/200px-Alpine_F1_Team_Logo.svg.png";
+                    case "williams": return "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Williams_Racing_logo_2020.svg/200px-Williams_Racing_logo_2020.svg.png";
+                    case "haas": return "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Haas_F1_Team_Logo.svg/200px-Haas_F1_Team_Logo.svg.png";
+                    case "kick_sauber": return "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Sauber_Motorsport_AG_logo.svg/200px-Sauber_Motorsport_AG_logo.svg.png";
+                    case "rb": return "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Visa_Cash_App_RB_Formula_One_Team_logo.svg/200px-Visa_Cash_App_RB_Formula_One_Team_logo.svg.png";
                     default: return "";
                 }
             }
