@@ -18,34 +18,32 @@ namespace F1_Live_Hub.Views
             this.Close();
         }
 
+        private void Header_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed) this.DragMove();
+        }
+
         // ── TABS ─────────────────────────────────────────────────
+        private void Tab_Accueil_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new AccueilPage());
         private void Tab_Pilotes_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new PilotesPage());
-
         private void Tab_Course_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CoursePage());
 
         // ── BOTTOM NAV ───────────────────────────────────────────
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new LivePage());
-
-        private void Nav_Standings_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new ClassementPage());
-
-        private void Nav_News_Click(object sender, MouseButtonEventArgs e) { }
-
-        private void Nav_Calendar_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new CoursePage());
-
-        private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
         {
-            var main = Application.Current.MainWindow;
-            main.Left = this.Left;
-            main.Top = this.Top;
-            main.Show();
-            this.Close();
+            var live = new LivePage();
+            live.Owner = this;
+            live.ShowDialog();
         }
+        private void Nav_Stats_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new StatPage());
+        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new ProfilPage());
 
+        // ── FILTRES ──────────────────────────────────────────────
         private void BtnAnnee_Click(object sender, MouseButtonEventArgs e) { }
         private void BtnGP_Click(object sender, MouseButtonEventArgs e) { }
         private void BtnSession_Click(object sender, MouseButtonEventArgs e) { }

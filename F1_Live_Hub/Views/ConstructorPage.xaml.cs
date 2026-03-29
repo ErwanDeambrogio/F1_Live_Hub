@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace F1_Live_Hub.Views
 {
-    public partial class ConstructorPage : Page
+    public partial class ConstructorPage : Window
     {
         public ConstructorPage()
         {
@@ -13,7 +13,7 @@ namespace F1_Live_Hub.Views
         private void OpenWindow(Window window)
         {
             window.Left = this.Left;
-            window.Top  = this.Top;
+            window.Top = this.Top;
             window.Show();
             this.Close();
         }
@@ -36,6 +36,8 @@ namespace F1_Live_Hub.Views
             => OpenWindow(new AccueilPage());
         private void Nav_Live_Click(object sender, RoutedEventArgs e)
             => OpenWindow(new LivePage());
+        private void Nav_Stats_Click(object sender, RoutedEventArgs e)
+            => OpenWindow(new StatPage());
         private void Nav_Course_Click(object sender, RoutedEventArgs e)
             => OpenWindow(new CoursePage());
         private void Nav_Profil_Click(object sender, RoutedEventArgs e)

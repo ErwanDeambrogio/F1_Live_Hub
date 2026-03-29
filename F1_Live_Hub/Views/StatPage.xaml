@@ -3,13 +3,479 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:F1_Live_Hub.Views"
         mc:Ignorable="d"
-        WindowStyle="None"
-        AllowsTransparency="True"
-        ResizeMode="NoResize"
-        Title="StatPage" Height="450" Width="800" WindowStartupLocation="CenterScreen">
+        WindowStyle="None" AllowsTransparency="True"
+        ResizeMode="NoResize" Title="F1 HUB - Stats"
+        Height="900" Width="420"
+        Background="#0A0A0A" WindowStartupLocation="CenterScreen">
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ═══ HEADER ═══ -->
+        <Border Grid.Row="0" Background="#0F0F0F"
+                BorderBrush="#1E1E1E" BorderThickness="0,0,0,1"
+                Padding="16,14" MouseLeftButtonDown="Header_MouseLeftButtonDown">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border CornerRadius="8" Width="32" Height="32" Margin="0,0,10,0">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#FF0028" Offset="0"/>
+                                <GradientStop Color="#CC0020" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <TextBlock Text="F1" Foreground="White" FontSize="12" FontWeight="Bold"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock VerticalAlignment="Center">
+                        <Run Text="F1 " Foreground="White" FontSize="19" FontWeight="Bold"/>
+                        <Run Text="LIVE " Foreground="#E8002D" FontSize="19" FontWeight="Bold"/>
+                        <Run Text="HUB" Foreground="#888888" FontSize="19" FontWeight="Bold"/>
+                    </TextBlock>
+                </StackPanel>
+                <Border Grid.Column="1" Background="#1C1C1C" CornerRadius="20"
+                        Width="36" Height="36" Cursor="Hand">
+                    <TextBlock Text="🔍" FontSize="14"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- ═══ TABS ═══ -->
+        <Border Grid.Row="1" Background="#0F0F0F"
+                BorderBrush="#1E1E1E" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Cursor="Hand" MouseLeftButtonDown="Tab_Accueil_Click">
+                    <TextBlock Text="ACCUEIL" Foreground="#606060" FontSize="10" FontWeight="Bold"
+                               HorizontalAlignment="Center" Padding="0,11,0,8"/>
+                    <Border Height="2" CornerRadius="1" Background="Transparent"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Cursor="Hand" MouseLeftButtonDown="Tab_Classement_Click">
+                    <TextBlock Text="CLASSEMENT" Foreground="#606060" FontSize="10" FontWeight="Bold"
+                               HorizontalAlignment="Center" Padding="0,11,0,8"/>
+                    <Border Height="2" CornerRadius="1" Background="Transparent"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Cursor="Hand" MouseLeftButtonDown="Tab_Pilotes_Click">
+                    <TextBlock Text="PILOTES" Foreground="#606060" FontSize="10" FontWeight="Bold"
+                               HorizontalAlignment="Center" Padding="0,11,0,8"/>
+                    <Border Height="2" CornerRadius="1" Background="Transparent"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3" Cursor="Hand" MouseLeftButtonDown="Tab_Course_Click">
+                    <TextBlock Text="COURSE" Foreground="#606060" FontSize="10" FontWeight="Bold"
+                               HorizontalAlignment="Center" Padding="0,11,0,8"/>
+                    <Border Height="2" CornerRadius="1" Background="Transparent"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ═══ CONTENU ═══ -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Hidden" Background="#0A0A0A">
+            <StackPanel Margin="16,14,16,14">
+
+                <!-- STATUS -->
+                <TextBlock x:Name="TxtStatus" Text="⏳ Chargement..."
+                           Foreground="#888888" FontSize="11"
+                           HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+                <!-- TITRE + SAISON -->
+                <Grid Margin="0,0,0,16">
+                    <StackPanel>
+                        <TextBlock>
+                            <Run Text="STATS " Foreground="White" FontSize="24" FontWeight="Bold"/>
+                            <Run Text="&amp; RANKINGS" Foreground="#E8002D"
+                                 FontSize="24" FontWeight="Bold" FontStyle="Italic"/>
+                        </TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock Text="Saison " Foreground="#888888" FontSize="12"/>
+                            <TextBlock x:Name="TxtSaison" Text="2025"
+                                       Foreground="#E8002D" FontSize="12" FontWeight="Bold"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <!-- BOUTONS CATÉGORIES -->
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="8"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Border Grid.Row="0" Grid.Column="0" CornerRadius="12" Height="90"
+                            Cursor="Hand" MouseLeftButtonDown="BtnPilotes_Click">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#1A0A0A" Offset="0"/>
+                                <GradientStop Color="#2A0808" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border BorderBrush="#E8002D" BorderThickness="1" CornerRadius="12">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="👤" FontSize="24" HorizontalAlignment="Center"/>
+                                <TextBlock Text="PILOTES" Foreground="White" FontSize="11"
+                                           FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                <TextBlock Text="Classement" Foreground="#888888"
+                                           FontSize="9" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Border>
+
+                    <Border Grid.Row="0" Grid.Column="2" CornerRadius="12" Height="90"
+                            Cursor="Hand" MouseLeftButtonDown="BtnConstructeurs_Click">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#0A0A1A" Offset="0"/>
+                                <GradientStop Color="#08082A" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border BorderBrush="#3B6FE8" BorderThickness="1" CornerRadius="12">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="🏎" FontSize="24" HorizontalAlignment="Center"/>
+                                <TextBlock Text="CONSTRUCTEURS" Foreground="White" FontSize="11"
+                                           FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                <TextBlock Text="Classement" Foreground="#888888"
+                                           FontSize="9" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.Column="0" CornerRadius="12" Height="90"
+                            Cursor="Hand" MouseLeftButtonDown="BtnCourses_Click">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#0A1A0A" Offset="0"/>
+                                <GradientStop Color="#08280A" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border BorderBrush="#00C851" BorderThickness="1" CornerRadius="12">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="🏁" FontSize="24" HorizontalAlignment="Center"/>
+                                <TextBlock Text="COURSES" Foreground="White" FontSize="11"
+                                           FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                <TextBlock Text="Résultats" Foreground="#888888"
+                                           FontSize="9" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Border>
+
+                    <Border Grid.Row="2" Grid.Column="2" CornerRadius="12" Height="90"
+                            Cursor="Hand" MouseLeftButtonDown="BtnCircuits_Click">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#1A1A0A" Offset="0"/>
+                                <GradientStop Color="#28280A" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border BorderBrush="#FFD700" BorderThickness="1" CornerRadius="12">
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <TextBlock Text="🗺" FontSize="24" HorizontalAlignment="Center"/>
+                                <TextBlock Text="CIRCUITS" Foreground="White" FontSize="11"
+                                           FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                                <TextBlock Text="Telemetry" Foreground="#888888"
+                                           FontSize="9" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Border>
+                </Grid>
+
+                <!-- STATS SAISON -->
+                <Border Background="#141414" BorderBrush="#252525" BorderThickness="1"
+                        CornerRadius="14" Padding="16,14" Margin="0,0,0,14">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,14">
+                            <Border Background="#E8002D" Width="3" CornerRadius="2"
+                                    Margin="0,0,8,0" Height="14"/>
+                            <TextBlock Text="SAISON EN CHIFFRES" Foreground="White"
+                                       FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="1"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="1"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                                <TextBlock x:Name="TxtNbCourses" Text="—" Foreground="#E8002D"
+                                           FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="COURSES" Foreground="#555555" FontSize="9"
+                                           FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <Rectangle Grid.Column="1" Fill="#2A2A2A"/>
+                            <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                                <TextBlock x:Name="TxtNbPilotes" Text="—" Foreground="#E8002D"
+                                           FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="PILOTES" Foreground="#555555" FontSize="9"
+                                           FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <Rectangle Grid.Column="3" Fill="#2A2A2A"/>
+                            <StackPanel Grid.Column="4" HorizontalAlignment="Center">
+                                <TextBlock Text="10" Foreground="#E8002D"
+                                           FontSize="26" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <TextBlock Text="ÉCURIES" Foreground="#555555" FontSize="9"
+                                           FontWeight="Bold" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <!-- DERNIÈRE + PROCHAINE COURSE -->
+                <Grid Margin="0,0,0,14">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Dernière course -->
+                    <Border Grid.Column="0" Background="#141414" BorderBrush="#252525"
+                            BorderThickness="1" CornerRadius="12" Padding="12,10">
+                        <StackPanel>
+                            <TextBlock Text="DERNIÈRE COURSE" Foreground="#888888"
+                                       FontSize="8" FontWeight="Bold" Margin="0,0,0,8"/>
+                            <TextBlock x:Name="TxtDerniereRound" Text="—"
+                                       Foreground="#E8002D" FontSize="9" FontWeight="Bold"/>
+                            <TextBlock x:Name="TxtDerniereRace" Text="—"
+                                       Foreground="White" FontSize="12" FontWeight="Bold"
+                                       TextWrapping="Wrap" Margin="0,2,0,4"/>
+                            <TextBlock x:Name="TxtDerniereCircuit" Text="—"
+                                       Foreground="#888888" FontSize="10" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="TxtDerniereDate" Text="—"
+                                       Foreground="#555555" FontSize="9" Margin="0,2,0,6"/>
+                            <Rectangle Height="1" Fill="#2A2A2A" Margin="0,0,0,6"/>
+                            <TextBlock Text="🏆 VAINQUEUR" Foreground="#555555"
+                                       FontSize="8" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBlock x:Name="TxtDerniereWinner" Text="—"
+                                       Foreground="White" FontSize="11" FontWeight="Bold"
+                                       TextWrapping="Wrap"/>
+                            <TextBlock x:Name="TxtDerniereTeam" Text="—"
+                                       Foreground="#888888" FontSize="9"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Prochaine course -->
+                    <Border Grid.Column="2" Background="#141414" BorderBrush="#E8002D"
+                            BorderThickness="1" CornerRadius="12" Padding="12,10">
+                        <StackPanel>
+                            <TextBlock Text="PROCHAINE COURSE" Foreground="#E8002D"
+                                       FontSize="8" FontWeight="Bold" Margin="0,0,0,8"/>
+                            <TextBlock x:Name="TxtProchainRound" Text="—"
+                                       Foreground="#E8002D" FontSize="9" FontWeight="Bold"/>
+                            <TextBlock x:Name="TxtProchainRace" Text="—"
+                                       Foreground="White" FontSize="12" FontWeight="Bold"
+                                       TextWrapping="Wrap" Margin="0,2,0,4"/>
+                            <TextBlock x:Name="TxtProchainCircuit" Text="—"
+                                       Foreground="#888888" FontSize="10" TextWrapping="Wrap"/>
+                            <TextBlock x:Name="TxtProchainDate" Text="—"
+                                       Foreground="#555555" FontSize="9" Margin="0,2,0,6"/>
+                            <Rectangle Height="1" Fill="#2A2A2A" Margin="0,0,0,6"/>
+                            <Border Background="#2A0000" CornerRadius="6" Padding="8,4"
+                                    HorizontalAlignment="Left">
+                                <TextBlock x:Name="TxtProchainDays" Text="—"
+                                           Foreground="#E8002D" FontSize="10" FontWeight="Bold"/>
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- CLASSEMENT PILOTES TOP 10 -->
+                <Border Background="#141414" BorderBrush="#252525" BorderThickness="1"
+                        CornerRadius="14" Padding="16,14" Margin="0,0,0,14">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <Border Background="#E8002D" Width="3" CornerRadius="2"
+                                    Margin="0,0,8,0" Height="14"/>
+                            <TextBlock Text="CLASSEMENT PILOTES" Foreground="White"
+                                       FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ItemsControl x:Name="ListPilotes">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,0,0,6">
+                                        <StackPanel>
+                                            <Grid Margin="0,0,0,3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="24"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="40"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{Binding Position}"
+                                                           Foreground="{Binding PositionColor}"
+                                                           FontSize="12" FontWeight="Bold"
+                                                           FontStyle="Italic"
+                                                           VerticalAlignment="Center"/>
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                            VerticalAlignment="Center">
+                                                    <Border Width="3" CornerRadius="2"
+                                                            Background="{Binding TeamColor}"
+                                                            Margin="0,0,8,0"/>
+                                                    <TextBlock Text="{Binding ShortName}"
+                                                               Foreground="White" FontSize="12"
+                                                               FontWeight="Bold"/>
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="2"
+                                                           Text="{Binding Wins, StringFormat='{}{0}W'}"
+                                                           Foreground="#555555" FontSize="9"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,0,8,0"/>
+                                                <TextBlock Grid.Column="3"
+                                                           Text="{Binding Points}"
+                                                           Foreground="White" FontSize="11"
+                                                           FontWeight="Bold"
+                                                           HorizontalAlignment="Right"
+                                                           VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Border Background="#2A2A2A" CornerRadius="2" Height="4">
+                                                <Border Background="{Binding TeamColor}"
+                                                        CornerRadius="2" Height="4"
+                                                        HorizontalAlignment="Left"
+                                                        Width="{Binding BarWidth}"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <!-- CLASSEMENT CONSTRUCTEURS TOP 10 -->
+                <Border Background="#141414" BorderBrush="#252525" BorderThickness="1"
+                        CornerRadius="14" Padding="16,14" Margin="0,0,0,14">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                            <Border Background="#E8002D" Width="3" CornerRadius="2"
+                                    Margin="0,0,8,0" Height="14"/>
+                            <TextBlock Text="CLASSEMENT CONSTRUCTEURS" Foreground="White"
+                                       FontSize="11" FontWeight="Bold" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <ItemsControl x:Name="ListConstructeurs">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="0,0,0,6">
+                                        <StackPanel>
+                                            <Grid Margin="0,0,0,3">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="24"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="50"/>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{Binding Position}"
+                                                           Foreground="{Binding PositionColor}"
+                                                           FontSize="12" FontWeight="Bold"
+                                                           FontStyle="Italic"
+                                                           VerticalAlignment="Center"/>
+                                                <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                            VerticalAlignment="Center">
+                                                    <Border Width="3" CornerRadius="2"
+                                                            Background="{Binding TeamColor}"
+                                                            Margin="0,0,8,0"/>
+                                                    <TextBlock Text="{Binding TeamName}"
+                                                               Foreground="White" FontSize="11"
+                                                               FontWeight="Bold"
+                                                               TextTrimming="CharacterEllipsis"/>
+                                                </StackPanel>
+                                                <TextBlock Grid.Column="2"
+                                                           Text="{Binding Wins, StringFormat='{}{0}W'}"
+                                                           Foreground="#555555" FontSize="9"
+                                                           VerticalAlignment="Center"
+                                                           Margin="0,0,8,0"/>
+                                                <TextBlock Grid.Column="3"
+                                                           Text="{Binding Points}"
+                                                           Foreground="White" FontSize="11"
+                                                           FontWeight="Bold"
+                                                           HorizontalAlignment="Right"
+                                                           VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <Border Background="#2A2A2A" CornerRadius="2" Height="4">
+                                                <Border Background="{Binding TeamColor}"
+                                                        CornerRadius="2" Height="4"
+                                                        HorizontalAlignment="Left"
+                                                        Width="{Binding BarWidth}"/>
+                                            </Border>
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ═══ BOTTOM NAV ═══ -->
+        <Border Grid.Row="3" Background="#0F0F0F"
+                BorderBrush="#1E1E1E" BorderThickness="0,1,0,0" Height="75">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="📊" FontSize="22" HorizontalAlignment="Center"/>
+                    <TextBlock Text="STATS" Foreground="#E8002D" FontSize="8" FontWeight="Bold"
+                               HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                    <Border Height="2" Width="20" CornerRadius="1"
+                            HorizontalAlignment="Center" Margin="0,3,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#E8002D" Offset="0"/>
+                                <GradientStop Color="#FF4455" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                </StackPanel>
+
+                <Border Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top"
+                        Width="58" Height="58" CornerRadius="29" Background="#E8002D"
+                        Margin="0,-20,0,0" Cursor="Hand" MouseLeftButtonDown="Nav_Live_Click">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#E8002D" BlurRadius="16" Opacity="0.5" ShadowDepth="0"/>
+                    </Border.Effect>
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock Text="🤖" FontSize="20" HorizontalAlignment="Center"/>
+                        <TextBlock Text="CHATBOT" Foreground="White" FontSize="7" FontWeight="Bold"
+                                   HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
+
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                            Cursor="Hand" MouseLeftButtonDown="Nav_Profil_Click">
+                    <TextBlock Text="👤" FontSize="22" HorizontalAlignment="Center"/>
+                    <TextBlock Text="PROFIL" Foreground="#555555" FontSize="8" FontWeight="Bold"
+                               HorizontalAlignment="Center" Margin="0,4,0,0"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
     </Grid>
 </Window>

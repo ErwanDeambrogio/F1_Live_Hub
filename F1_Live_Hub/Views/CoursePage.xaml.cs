@@ -104,15 +104,17 @@ namespace F1_Live_Hub.Views
             => OpenWindow(new PilotesPage());
 
         // ── BOTTOM NAV ───────────────────────────────────────────
-        private void Nav_Accueil_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new AccueilPage());
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new LivePage());
-        private void Nav_Stats_Click(object sender, MouseButtonEventArgs e)
+        {
+            var live = new LivePage();
+            live.Owner = this;
+            live.ShowDialog();
+        }
+        private void Nav_Stats_Click(object sender, RoutedEventArgs e)
             => OpenWindow(new StatPage());
         private void Nav_Profil_Click(object sender, RoutedEventArgs e)
             => OpenWindow(new ProfilPage());
-        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new ProfilPage());
+        private void Nav_Accueil_Click(object sender, RoutedEventArgs e)
+            => OpenWindow(new AccueilPage());
     }
 }

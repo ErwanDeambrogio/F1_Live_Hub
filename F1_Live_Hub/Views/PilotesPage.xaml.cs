@@ -40,7 +40,6 @@ namespace F1_Live_Hub.Views
             if (e.ButtonState == MouseButtonState.Pressed) this.DragMove();
         }
 
-        // ── Chargement liste ──────────────────────────────────────
         private async void LoadDriversAsync()
         {
             TxtStatus.Text = "⏳ Chargement...";
@@ -51,10 +50,8 @@ namespace F1_Live_Hub.Views
                 _allPilotes = await _apiService.GetCurrentDriversAsync();
                 foreach (var p in _allPilotes)
                     p.IsFavorite = _favService.IsFavorite(p.DriverId);
-
                 TxtStatus.Visibility = Visibility.Collapsed;
                 RefreshList();
-
                 if (_allPilotes.Count > 0)
                     await LoadDriverDetail(_allPilotes[0]);
             }
@@ -175,23 +172,29 @@ namespace F1_Live_Hub.Views
         }
 
         // ── TABS ─────────────────────────────────────────────────
-        private void Tab_Accueil_Click(object sender, RoutedEventArgs e)
-            => OpenWindow(new AccueilPage());
         private void Tab_Classement_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new ClassementPage());
         private void Tab_Course_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new CoursePage());
+        private void Tab_Circuits_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CircuitsPage());
 
         // ── BOTTOM NAV ───────────────────────────────────────────
-        private void Nav_Accueil_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new AccueilPage());
         private void Nav_Live_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new LivePage());
+        {
+            var live = new LivePage();
+            live.Owner = this;
+            live.ShowDialog();
+        }
         private void Nav_Stats_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new StatPage());
-        private void Nav_Course_Click(object sender, MouseButtonEventArgs e)
-            => OpenWindow(new CoursePage());
-        private void Nav_Profil_Click(object sender, RoutedEventArgs e)
+        private void Nav_Profil_Click(object sender, MouseButtonEventArgs e)
             => OpenWindow(new ProfilPage());
+        private void Nav_Hub_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new AccueilPage());
+        private void Nav_Saison_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new CoursePage());
+        private void Tab_Accueil_Click(object sender, MouseButtonEventArgs e)
+            => OpenWindow(new AccueilPage());
     }
 }
