@@ -525,34 +525,34 @@
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Accueil_Click">
                     <TextBlock Text="🏠" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock Text="ACCUEIL" Foreground="#444444" FontSize="7"
+                    <TextBlock Text="ACCUEIL" Foreground="White" FontSize="7"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Live_Click">
                     <TextBlock Text="📡" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock Text="LIVE" Foreground="#444444" FontSize="7"
+                    <TextBlock Text="LIVE" Foreground="White" FontSize="7"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="2" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Stats_Click">
                     <TextBlock Text="📊" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock Text="STATS" Foreground="#444444" FontSize="7"
+                    <TextBlock Text="STATS" Foreground="Red" FontSize="7"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
 
                 <!-- COURSES actif -->
                 <StackPanel Grid.Column="3" HorizontalAlignment="Center">
                     <TextBlock Text="🏎" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock Text="COURSES" Foreground="#E8002D" FontSize="7"
+                    <TextBlock Text="COURSES" Foreground="White" FontSize="7"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                     <Border Height="2" Width="20" CornerRadius="1"
                             HorizontalAlignment="Center" Margin="0,4,0,0">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Color="#E8002D" Offset="0"/>
+                                <GradientStop Color="White" Offset="0"/>
                                 <GradientStop Color="#FF4455" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -562,7 +562,7 @@
                 <StackPanel Grid.Column="4" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Profil_Click">
                     <TextBlock Text="👤" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock Text="PROFIL" Foreground="#444444" FontSize="7"
+                    <TextBlock Text="PROFIL" Foreground="WHITE" FontSize="7"
                                FontWeight="Bold" HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
 

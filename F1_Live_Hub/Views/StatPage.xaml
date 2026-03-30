@@ -442,13 +442,13 @@
 
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="📊" FontSize="22" HorizontalAlignment="Center"/>
-                    <TextBlock Text="STATS" Foreground="#E8002D" FontSize="8" FontWeight="Bold"
+                    <TextBlock Text="STATS" Foreground="White" FontSize="8" FontWeight="Bold"
                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                     <Border Height="2" Width="20" CornerRadius="1"
                             HorizontalAlignment="Center" Margin="0,3,0,0">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Color="#E8002D" Offset="0"/>
+                                <GradientStop Color="White" Offset="0"/>
                                 <GradientStop Color="#FF4455" Offset="1"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -471,7 +471,7 @@
                 <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Profil_Click">
                     <TextBlock Text="👤" FontSize="22" HorizontalAlignment="Center"/>
-                    <TextBlock Text="PROFIL" Foreground="#555555" FontSize="8" FontWeight="Bold"
+                    <TextBlock Text="PROFIL" Foreground="White" FontSize="8" FontWeight="Bold"
                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
             </Grid>
