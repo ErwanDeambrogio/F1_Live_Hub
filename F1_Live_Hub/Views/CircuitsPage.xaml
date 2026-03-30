@@ -700,7 +700,7 @@
                 <StackPanel Grid.Column="0" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Home_Click">
                     <TextBlock Text="🏠" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock Text="ACCUEIL" Foreground="#444444"
+                    <TextBlock Text="ACCUEIL" Foreground="White"
                                FontSize="7" FontWeight="Bold"
                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
@@ -709,7 +709,7 @@
                 <StackPanel Grid.Column="1" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Pilotes_Click">
                     <TextBlock Text="👤" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock Text="PILOTES" Foreground="#444444"
+                    <TextBlock Text="PILOTES" Foreground="White"
                                FontSize="7" FontWeight="Bold"
                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
@@ -735,7 +735,7 @@
                 <StackPanel Grid.Column="3" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Saison_Click">
                     <TextBlock Text="🏁" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock Text="SAISON" Foreground="#444444"
+                    <TextBlock Text="SAISON" Foreground="White"
                                FontSize="7" FontWeight="Bold"
                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
@@ -744,7 +744,7 @@
                 <StackPanel Grid.Column="4" HorizontalAlignment="Center"
                             Cursor="Hand" MouseLeftButtonDown="Nav_Profil_Click">
                     <TextBlock Text="⚙" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock Text="PROFIL" Foreground="#444444"
+                    <TextBlock Text="PROFIL" Foreground="White"
                                FontSize="7" FontWeight="Bold"
                                HorizontalAlignment="Center" Margin="0,4,0,0"/>
                 </StackPanel>
