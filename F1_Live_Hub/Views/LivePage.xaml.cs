@@ -15,7 +15,7 @@ namespace F1_Live_Hub.Views
     public partial class LivePage : Window
     {
        
-        private const string TOKEN = "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";
+        private const string TOKEN = "";
 
         private readonly HttpClient _client = new HttpClient();
 
